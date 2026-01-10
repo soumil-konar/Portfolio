@@ -26,12 +26,13 @@ const SkillsTicker = ({ theme, isDarkMode }) => {
       <div className="absolute top-0 left-0 h-full w-12 z-20 pointer-events-none" style={{ background: `linear-gradient(to right, ${fadeColor}, transparent)` }}></div>
       <div className="absolute top-0 right-0 h-full w-12 z-20 pointer-events-none" style={{ background: `linear-gradient(to left, ${fadeColor}, transparent)` }}></div>
 
-      {/* Speed increased to 60s for smoother flow */}
-      <InfiniteMarquee speed={45} direction="left">
+      {/* Speed 0.8 is a nice slow pace */}
+      <InfiniteMarquee speed={0.8} direction="left">
         {SKILLS.map((skill, index) => (
           <div 
             key={index} 
-            className={`flex items-center space-x-2 px-4 py-2 rounded-full border shadow-sm text-xs font-mono whitespace-nowrap transition-transform hover:scale-105 ${pillClass}`}
+            // Removed 'hover:scale' to prevent glitches during drag
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full border shadow-sm text-xs font-mono whitespace-nowrap select-none ${pillClass}`}
           >
             <span className="opacity-70">{skill.icon}</span>
             <span className="font-bold tracking-wide">{skill.name}</span>
