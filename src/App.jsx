@@ -5,7 +5,7 @@ import { PASTEL_PALETTE } from './data';
 // Import Components
 import ThemeToggle from './components/ThemeToggle';
 import Header from './components/Header';
-import SkillsTicker from './components/SkillsTicker'; // Newly Added
+import SkillsTicker from './components/SkillsTicker';
 import ProjectCarousel from './components/ProjectCarousel';
 import ChatInterface from './components/ChatInterface';
 import EasterEgg from './components/EasterEgg';
@@ -14,9 +14,11 @@ import CommandPalette from './components/CommandPalette';
 import Konami from './components/Konami';
 import ThemeTransition from './components/ThemeTransition';
 import GradientMesh from './components/GradientMesh';
+import ScrollProgress from './components/ScrollProgress';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [show3DAvatar, setShow3DAvatar] = useState(false);
   
   // Transition Logic States
   const [transitionMode, setTransitionMode] = useState(0); 
@@ -83,6 +85,9 @@ const App = () => {
         )}
       </AnimatePresence>
 
+      {/* --- Scroll Progress Bar --- */}
+      <ScrollProgress />
+
       {/* --- Main Content --- */}
       <div className="relative z-10">
         <CommandPalette isDarkMode={isDarkMode} toggleTheme={handleThemeToggle} />
@@ -99,8 +104,9 @@ const App = () => {
           {/* New Skills Ticker */}
           <SkillsTicker theme={theme} isDarkMode={isDarkMode} />
 
-          {/* Project Carousel (Now receives isDarkMode for styling) */}
+          {/* Project Carousel */}
           <ProjectCarousel theme={theme} isDarkMode={isDarkMode} />
+          
           
           <ChatInterface isDarkMode={isDarkMode} theme={theme} />
           <StatusFooter theme={theme} />

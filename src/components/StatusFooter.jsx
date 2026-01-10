@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Wifi, Globe, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const StatusFooter = ({ theme }) => {
   const [latency, setLatency] = useState(24);
@@ -12,7 +13,13 @@ const StatusFooter = ({ theme }) => {
   }, []);
 
   return (
-    <footer className={`w-full py-3 md:py-2 px-0 md:px-6 border-t flex justify-between items-center text-[10px] uppercase tracking-widest opacity-60 ${theme.text} border-gray-200/20 mt-auto`}>
+    <motion.footer
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className={`w-full py-3 md:py-2 px-0 md:px-6 border-t flex justify-between items-center text-[10px] uppercase tracking-widest opacity-60 ${theme.text} border-gray-200/20 mt-auto`}
+    >
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-1">
           <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
@@ -31,7 +38,8 @@ const StatusFooter = ({ theme }) => {
         </div>
         <span className="font-mono">v1.0.4</span>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
+
 export default StatusFooter;

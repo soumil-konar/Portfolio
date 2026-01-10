@@ -5,16 +5,22 @@ import InfiniteMarquee from './InfiniteMarquee';
 
 const ProjectCarousel = ({ theme, isDarkMode }) => {
   return (
-    <section className="my-8 md:my-10 shrink-0 relative group">
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="my-8 md:my-10 shrink-0 relative group"
+    >
        <div className="mb-5 md:mb-6 px-2 opacity-60 text-[11px] md:text-xs uppercase tracking-widest font-bold">
           Featured Deployments
        </div>
 
-      {/* CSS mask for seamless fade that works with gradient mesh background */}
+      {/* CSS mask with smoother fade for seamless blending */}
       <div 
         style={{
-          maskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
+          maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
         }}
       >
         {/* Speed 1.0 is better for larger cards */}
@@ -44,7 +50,7 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
           ))}
         </InfiniteMarquee>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

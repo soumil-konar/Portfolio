@@ -73,7 +73,11 @@ const GradientMesh = ({ isDarkMode }) => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ mixBlendMode: 'normal' }}
+      style={{ 
+        mixBlendMode: 'normal',
+        willChange: 'transform',
+        transform: 'translate3d(0, 0, 0)',
+      }}
     />
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import InfiniteMarquee from './InfiniteMarquee';
 import { Database, Server, Cpu, Code, Cloud, Terminal, Layers, Globe } from 'lucide-react';
 
@@ -20,13 +21,19 @@ const SkillsTicker = ({ theme, isDarkMode }) => {
 
 
   return (
-    <div className="w-full py-8 md:py-10 overflow-hidden relative z-10">
-      {/* Using mask-image for seamless fade that works with gradient mesh background */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="w-full py-8 md:py-10 overflow-hidden relative z-10"
+    >
+      {/* CSS mask with percentage-based fade for seamless blending */}
       <div 
         className="w-full h-full"
         style={{
-          maskImage: 'linear-gradient(to right, transparent, black 64px, black calc(100% - 64px), transparent)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black 64px, black calc(100% - 64px), transparent)',
+          maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
         }}
       >
         {/* Speed 0.8 is a nice slow pace */}
@@ -43,7 +50,7 @@ const SkillsTicker = ({ theme, isDarkMode }) => {
           ))}
         </InfiniteMarquee>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
