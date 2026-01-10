@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Terminal, Command } from 'lucide-react'; 
-import { SUGGESTED_QUESTIONS, SOCIAL_LINKS } from '../data'; // Ensure SOCIAL_LINKS is imported
+import { SUGGESTED_QUESTIONS, SOCIAL_LINKS } from '../data'; 
 
 const ChatInterface = ({ isDarkMode, theme }) => {
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
+  
+  // --- FIX: Track first render to prevent auto-scrolling on load ---
+  const isFirstRender = useRef(true);
   
   const [modifierKey, setModifierKey] = useState('Ctrl');
   useEffect(() => {
@@ -16,14 +19,23 @@ const ChatInterface = ({ isDarkMode, theme }) => {
     { type: 'bot', text: "Hello! I am Soumil's virtual assistant. Ask me anything about his work in AI." }
   ]);
 
-  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chatHistory, isTyping]);
+  // --- UPDATED USE EFFECT ---
+  useEffect(() => { 
+    // If it's the first time the page loads, DO NOT scroll.
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    // Otherwise (new messages), scroll to bottom gently
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }); 
+  }, [chatHistory, isTyping]);
+
 
   const handleAsk = (question) => {
-    // 1. Add User Question
     setChatHistory(prev => [...prev, { type: 'user', text: question }]);
     setIsTyping(true);
     
-    // 2. Simulate Delay
     setTimeout(() => {
       let answer = getAnswer(question);
       setChatHistory(prev => [...prev, { type: 'bot', text: answer }]);
@@ -31,9 +43,7 @@ const ChatInterface = ({ isDarkMode, theme }) => {
     }, 1000);
   };
 
-  // --- UPDATED LOGIC: Returns JSX for clickable links ---
   const getAnswer = (q) => {
-    // Helper class for links
     const linkStyle = "underline font-bold hover:text-indigo-500 transition-colors";
 
     if (q.includes("Who")) return "Soumil is a Full Stack Engineer specialized in Backend Systems and AI.";
@@ -50,7 +60,6 @@ const ChatInterface = ({ isDarkMode, theme }) => {
     }
 
     if (q.includes("hobbies")) return "He enjoys Fantasy Premier League (FPL), Sci-Fi novels, and tech tinkering.";
-    
     if (q.includes("RAG")) return "He builds Enterprise RAG systems using Vector DBs, customized chunking, and LLM orchestration.";
     
     return "I am not trained on that yet.";
@@ -83,8 +92,6 @@ const ChatInterface = ({ isDarkMode, theme }) => {
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`flex items-end gap-2 max-w-[80%]`}>
                 {msg.type === 'bot' && <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shrink-0"><Terminal size={14} className="text-white"/></div>}
-                
-                {/* Render the message content (Works for both String and JSX) */}
                 <div className={`rounded-lg px-4 py-2 text-sm shadow-sm ${msg.type === 'user' ? theme.chatUser : theme.chatBot}`}>
                   {msg.text}
                 </div>
