@@ -17,7 +17,7 @@ import GradientMesh from './components/GradientMesh';
 import ScrollProgress from './components/ScrollProgress';
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
   const [show3DAvatar, setShow3DAvatar] = useState(false);
   
   // Transition Logic States

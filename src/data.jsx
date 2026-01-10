@@ -3,20 +3,20 @@ import { Database, Cpu, Server } from 'lucide-react';
 
 export const PASTEL_PALETTE = {
   light: { 
-    bg: 'bg-[#FDFBF7]', 
+    bg: 'bg-[#fafaf9]', 
     text: 'text-slate-800', 
-    card: 'bg-[#EAE4D9]', 
-    chatUser: 'bg-[#2D3748] text-white',
-    chatBot: 'bg-[#E2E8F0] text-slate-800',
-    accent: 'text-[#6B8E23]' 
+    card: 'bg-[#f5f5f4]', 
+    chatUser: 'bg-[#6366f1] text-white',
+    chatBot: 'bg-[#e7e5e4] text-slate-800',
+    accent: 'text-[#4f46e5]' 
   },
   dark: { 
-    bg: 'bg-[#1a202c]', 
+    bg: 'bg-[#0f172a]', 
     text: 'text-slate-200', 
-    card: 'bg-[#2D3748]', 
-    chatUser: 'bg-[#805AD5] text-white',
-    chatBot: 'bg-[#4A5568] text-white',
-    accent: 'text-[#B794F4]' 
+    card: 'bg-[#1e293b]', 
+    chatUser: 'bg-[#6366f1] text-white',
+    chatBot: 'bg-[#334155] text-white',
+    accent: 'text-[#818cf8]' 
   }
 };
 
