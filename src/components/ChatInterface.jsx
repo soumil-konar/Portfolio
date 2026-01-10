@@ -67,10 +67,16 @@ const ChatInterface = ({ isDarkMode, theme }) => {
 
   return (
     <section className="flex-1 flex flex-col justify-end min-h-0 pb-4 group">
-      <div className={`w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border flex flex-col h-full max-h-[350px] md:max-h-[400px] ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+      <div className={`w-full max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl border flex flex-col h-full max-h-[350px] md:max-h-[400px] backdrop-blur-xl ${
+        isDarkMode 
+          ? 'bg-slate-800/40 border-slate-600/50' 
+          : 'bg-white/50 border-slate-200/60'
+      }`}>
         
         {/* Terminal Header */}
-        <div className={`h-8 shrink-0 ${isDarkMode ? 'bg-slate-800' : 'bg-slate-200'} flex items-center justify-between px-4`}>
+        <div className={`h-8 shrink-0 flex items-center justify-between px-4 backdrop-blur-md ${
+          isDarkMode ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-100/60 border-b border-slate-200/50'
+        }`}>
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
@@ -87,7 +93,9 @@ const ChatInterface = ({ isDarkMode, theme }) => {
         </div>
 
         {/* Chat Body */}
-        <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
+        <div className={`flex-1 overflow-y-auto p-4 space-y-4 backdrop-blur-sm ${
+          isDarkMode ? 'bg-slate-900/30' : 'bg-white/30'
+        }`}>
           {chatHistory.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`flex items-end gap-2 max-w-[80%]`}>
@@ -112,7 +120,11 @@ const ChatInterface = ({ isDarkMode, theme }) => {
         </div>
 
         {/* Suggestion Chips */}
-        <div className={`p-3 border-t ${isDarkMode ? 'border-slate-800 bg-slate-900' : 'border-slate-100 bg-white'}`}>
+        <div className={`p-3 border-t backdrop-blur-md ${
+          isDarkMode 
+            ? 'border-slate-700/50 bg-slate-900/40' 
+            : 'border-slate-200/50 bg-white/40'
+        }`}>
           <div className="flex flex-wrap gap-2">
             {SUGGESTED_QUESTIONS.map((q, i) => (
               <button key={i} onClick={() => handleAsk(q)} disabled={isTyping} className={`text-xs px-3 py-1.5 rounded-full border transition-all hover:-translate-y-0.5 ${isDarkMode ? 'border-slate-700 hover:bg-indigo-900/30 text-indigo-300' : 'border-slate-200 hover:bg-indigo-50 text-indigo-600'}`}>{q}</button>

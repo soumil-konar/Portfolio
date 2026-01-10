@@ -13,6 +13,7 @@ import StatusFooter from './components/StatusFooter';
 import CommandPalette from './components/CommandPalette';
 import Konami from './components/Konami';
 import ThemeTransition from './components/ThemeTransition';
+import GradientMesh from './components/GradientMesh';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -67,11 +68,12 @@ const App = () => {
   return (
     <div className={`min-h-dvh ${theme.bg} ${theme.text} overflow-x-hidden font-mono selection:bg-teal-200 selection:text-teal-900 relative`}>
       
-      {/* --- Background Grid & Spotlights --- */}
-      <div className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
-         <div className="absolute inset-0 bg-grid opacity-[0.6]"></div>
-         <div className={`absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-20 transition-colors duration-1000 ${isDarkMode ? 'bg-indigo-500' : 'bg-teal-300'}`}></div>
-         <div className={`absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-20 transition-colors duration-1000 ${isDarkMode ? 'bg-purple-500' : 'bg-yellow-300'}`}></div>
+      {/* --- Gradient Mesh Background --- */}
+      <GradientMesh isDarkMode={isDarkMode} />
+      
+      {/* --- Background Grid Overlay --- */}
+      <div className="fixed inset-0 z-[1] pointer-events-none transition-opacity duration-1000">
+         <div className="absolute inset-0 bg-grid opacity-[0.3]"></div>
       </div>
 
       {/* --- The Transition Overlay (with AnimatePresence) --- */}

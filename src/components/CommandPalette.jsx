@@ -35,11 +35,13 @@ const CommandPalette = ({ isDarkMode, toggleTheme }) => {
 
   const openLink = (url) => { window.open(url, '_blank'); setOpen(false); };
 
-  const paletteStyle = isDarkMode ? "bg-[#2D3748] text-slate-200 border-slate-600" : "bg-[#FDFBF7] text-slate-800 border-gray-200";
+  const paletteStyle = isDarkMode 
+    ? "bg-slate-800/60 text-slate-200 border-slate-600/50 backdrop-blur-2xl" 
+    : "bg-white/60 text-slate-800 border-slate-200/50 backdrop-blur-2xl";
   const itemStyle = `flex items-center gap-2 px-3 py-3 text-sm cursor-pointer rounded-lg transition-colors aria-selected:bg-indigo-500 aria-selected:text-white ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`;
 
   return (
-    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu" className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-[20vh] bg-black/50 backdrop-blur-sm">
+    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu" className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-[20vh] bg-black/60 backdrop-blur-md">
       <div className={`w-full max-w-lg rounded-xl shadow-2xl border overflow-hidden ${paletteStyle}`}>
         <Command.Input placeholder="Type a command or search..." className={`w-full px-4 py-4 text-base bg-transparent outline-none border-b ${isDarkMode ? 'border-slate-600 placeholder:text-slate-500' : 'border-gray-200 placeholder:text-gray-400'}`} />
         <Command.List className="max-h-[300px] overflow-y-auto p-2 scrollbar-hide">
