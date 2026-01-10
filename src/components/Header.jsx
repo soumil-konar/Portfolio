@@ -3,11 +3,11 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 import { SOCIAL_LINKS } from '../data';
 
 const Header = ({ theme }) => {
+  // --- EXISTING AVATAR LOGIC ---
   const [eyePos, setEyePos] = useState({ x: 0, y: 0 });
   const [isBlinking, setIsBlinking] = useState(false);
   const containerRef = useRef(null);
 
-  // 1. Math: Circular Eye Tracking
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (!containerRef.current) return;
@@ -24,7 +24,6 @@ const Header = ({ theme }) => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 2. Life: Random Blinking
   useEffect(() => {
     const triggerBlink = () => {
       setIsBlinking(true);
@@ -35,8 +34,60 @@ const Header = ({ theme }) => {
     return () => clearTimeout(initialTimeout);
   }, []);
 
+  // --- NEW: HACKER DECRYPTION LOGIC ---
+  const TARGET_TEXT = "Soumil";
+  const CYCLES_PER_LETTER = 2; // How many "scrambles" before fixing a letter
+  const SHUFFLE_TIME = 50; // Speed in ms
+
+  const [displayText, setDisplayText] = useState(TARGET_TEXT);
+  const [isScrambling, setIsScrambling] = useState(false);
+
+  // Trigger when theme changes to DARK (text is white/slate-200)
+  useEffect(() => {
+    // Only trigger if we are entering Dark Mode (detected by checking theme.bg)
+    // We assume 'bg-[#1a202c]' is your dark mode background from data.js
+    const isDark = theme.bg.includes('slate') || theme.bg.includes('#1a202c');
+
+    if (isDark) {
+      scrambleText();
+    } else {
+      // Optional: Reset immediately on Light mode, or scramble back? 
+      // Let's just reset to clean text for Light mode
+      setDisplayText(TARGET_TEXT);
+    }
+  }, [theme]);
+
+  const scrambleText = () => {
+    setIsScrambling(true);
+    let pos = 0;
+
+    const interval = setInterval(() => {
+      const scrambled = TARGET_TEXT.split('')
+        .map((char, index) => {
+          if (index < pos) {
+            return char; // Letter is solved
+          }
+          // Return random hacker char
+          const chars = '!@#$%^&*()_+[]{}|;:,.<>?/~';
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      setDisplayText(scrambled);
+      pos += 1 / CYCLES_PER_LETTER; // Move fractional steps to make it look cooler
+
+      if (pos > TARGET_TEXT.length) {
+        clearInterval(interval);
+        setIsScrambling(false);
+        setDisplayText(TARGET_TEXT);
+      }
+    }, SHUFFLE_TIME);
+  };
+
   return (
     <header className="flex flex-col items-center justify-center space-y-3 md:space-y-4 mt-8 md:mt-12 shrink-0">
+      
+      {/* Avatar (Same as before) */}
       <div ref={containerRef} className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-indigo-50/80 border-4 border-indigo-200 overflow-hidden shadow-xl">
          <svg viewBox="0 0 100 100" className="w-full h-full">
             <circle cx="50" cy="55" r="35" fill="#FDE2D3" />
@@ -61,7 +112,13 @@ const Header = ({ theme }) => {
       </div>
 
       <div className="text-center">
-        <h1 className="text-2xl md:text-4xl font-bold tracking-tight">Soumil</h1>
+        {/* --- HACKER NAME UPDATE --- */}
+        <h1 className={`text-2xl md:text-4xl font-bold tracking-tight transition-colors duration-300 ${
+          isScrambling ? 'text-emerald-400 font-mono' : ''
+        }`}>
+          {displayText}
+        </h1>
+        
         <p className={`text-xs md:text-sm opacity-75 font-mono ${theme.accent}`}>{'<'}Full Stack Engineer /{'>'}</p>
         <p className="text-[9px] md:text-[10px] opacity-60 mt-1 tracking-wider uppercase">AI & RAG Specialist</p>
       </div>
