@@ -37,13 +37,13 @@ const CommandPalette = ({ isDarkMode, toggleTheme }) => {
 
   const paletteStyle = isDarkMode 
     ? "bg-slate-800/60 text-slate-200 border-slate-600/50 backdrop-blur-2xl" 
-    : "bg-white/60 text-slate-800 border-slate-200/50 backdrop-blur-2xl";
-  const itemStyle = `flex items-center gap-2 px-3 py-3 text-sm cursor-pointer rounded-lg transition-colors aria-selected:bg-indigo-500 aria-selected:text-white ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`;
+    : "bg-indigo-50/70 text-slate-800 border-indigo-200/50 backdrop-blur-2xl shadow-2xl";
+  const itemStyle = `flex items-center gap-2 px-3 py-3 text-sm cursor-pointer rounded-lg transition-colors aria-selected:bg-indigo-500 aria-selected:text-white ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-indigo-100/50'}`;
 
   return (
     <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu" className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-[20vh] bg-black/60 backdrop-blur-md">
       <div className={`w-full max-w-lg rounded-xl shadow-2xl border overflow-hidden ${paletteStyle}`}>
-        <Command.Input placeholder="Type a command or search..." className={`w-full px-4 py-4 text-base bg-transparent outline-none border-b ${isDarkMode ? 'border-slate-600 placeholder:text-slate-500' : 'border-gray-200 placeholder:text-gray-400'}`} />
+        <Command.Input placeholder="Type a command or search..." className={`w-full px-4 py-4 text-base bg-transparent outline-none border-b ${isDarkMode ? 'border-slate-600 placeholder:text-slate-500' : 'border-indigo-100 placeholder:text-slate-400'}`} />
         <Command.List className="max-h-[300px] overflow-y-auto p-2 scrollbar-hide">
           <Command.Empty className="px-4 py-6 text-center text-sm opacity-50">No results found.</Command.Empty>
           <Command.Group heading="General" className="px-2 py-1.5 text-xs font-medium opacity-50 uppercase tracking-widest">
@@ -56,7 +56,7 @@ const CommandPalette = ({ isDarkMode, toggleTheme }) => {
             <Command.Item onSelect={() => openLink(SOCIAL_LINKS.linkedin)} className={itemStyle}><Linkedin size={14} /><span>LinkedIn</span><ExternalLink size={10} className="ml-auto opacity-50"/></Command.Item>
           </Command.Group>
         </Command.List>
-        <div className={`px-4 py-2 text-[10px] border-t flex justify-end opacity-50 ${isDarkMode ? 'border-slate-600' : 'border-gray-200'}`}>Use arrow keys <span className="mx-1 border rounded px-1">↑</span><span className="border rounded px-1">↓</span> to navigate</div>
+        <div className={`px-4 py-2 text-[10px] border-t flex justify-end opacity-50 ${isDarkMode ? 'border-slate-600' : 'border-indigo-100'}`}>Use arrow keys <span className="mx-1 border rounded px-1">↑</span><span className="border rounded px-1">↓</span> to navigate</div>
       </div>
     </Command.Dialog>
   );

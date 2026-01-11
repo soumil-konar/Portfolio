@@ -9,12 +9,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide default cursor on desktop (non-touch) devices */
-@media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-}
+
 
 * {
   -webkit-tap-highlight-color: transparent;

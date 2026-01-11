@@ -15,7 +15,7 @@ import Konami from './components/Konami';
 import ThemeTransition from './components/ThemeTransition';
 import GradientMesh from './components/GradientMesh';
 import ScrollProgress from './components/ScrollProgress';
-import CustomCursor from './components/CustomCursor';
+
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
@@ -89,8 +89,7 @@ const App = () => {
       {/* --- Scroll Progress Bar --- */}
       <ScrollProgress />
 
-      {/* --- Custom Cursor --- */}
-      <CustomCursor />
+
 
       {/* --- Main Content --- */}
       <div className="relative z-10">
