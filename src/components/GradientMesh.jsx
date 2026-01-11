@@ -33,29 +33,60 @@ const GradientMesh = ({ isDarkMode }) => {
       ctx.fillStyle = isDarkMode ? '#0f172a' : '#fafaf9';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw each blob with radial gradient
-      blobs.forEach((blob) => {
-        // Update position with smooth sine wave motion
-        const posX = (blob.x + Math.sin(time * blob.speedX * 100) * 0.1) * canvas.width;
-        const posY = (blob.y + Math.cos(time * blob.speedY * 100) * 0.1) * canvas.height;
-        const radius = blob.radius * Math.min(canvas.width, canvas.height);
+      if (isDarkMode) {
+        // Draw gradient blobs for dark mode
+        blobs.forEach((blob) => {
+          // Update position with smooth sine wave motion
+          const posX = (blob.x + Math.sin(time * blob.speedX * 100) * 0.1) * canvas.width;
+          const posY = (blob.y + Math.cos(time * blob.speedY * 100) * 0.1) * canvas.height;
+          const radius = blob.radius * Math.min(canvas.width, canvas.height);
 
-        // Create radial gradient
-        const gradient = ctx.createRadialGradient(posX, posY, 0, posX, posY, radius);
-        
-        if (isDarkMode) {
+          // Create radial gradient
+          const gradient = ctx.createRadialGradient(posX, posY, 0, posX, posY, radius);
           gradient.addColorStop(0, `${blob.color1}99`); // 60% opacity
           gradient.addColorStop(0.5, `${blob.color1}4D`); // 30% opacity
           gradient.addColorStop(1, `${blob.color1}00`); // 0% opacity
-        } else {
-          gradient.addColorStop(0, `${blob.color1}B3`); // 70% opacity
-          gradient.addColorStop(0.5, `${blob.color1}66`); // 40% opacity
-          gradient.addColorStop(1, `${blob.color1}00`); // 0% opacity
+
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+      } else {
+        // Draw grid pattern for light mode
+        const gridSize = 40; // Grid cell size in pixels
+        ctx.strokeStyle = '#e0e7ff'; // Soft indigo color matching the theme
+        ctx.lineWidth = 1;
+
+        // Draw vertical lines
+        for (let x = 0; x < canvas.width; x += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
         }
 
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      });
+        // Draw horizontal lines
+        for (let y = 0; y < canvas.height; y += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+        }
+
+        // Add subtle gradient overlay on top of grid
+        blobs.forEach((blob) => {
+          const posX = (blob.x + Math.sin(time * blob.speedX * 100) * 0.1) * canvas.width;
+          const posY = (blob.y + Math.cos(time * blob.speedY * 100) * 0.1) * canvas.height;
+          const radius = blob.radius * Math.min(canvas.width, canvas.height);
+
+          const gradient = ctx.createRadialGradient(posX, posY, 0, posX, posY, radius);
+          gradient.addColorStop(0, `${blob.color1}40`); // 25% opacity
+          gradient.addColorStop(0.5, `${blob.color1}20`); // 12% opacity
+          gradient.addColorStop(1, `${blob.color1}00`); // 0% opacity
+
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+      }
 
       animationFrameId = requestAnimationFrame(animate);
     };

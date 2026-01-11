@@ -67,15 +67,15 @@ const ChatInterface = ({ isDarkMode, theme }) => {
 
   return (
     <section className="flex-1 flex flex-col justify-end min-h-0 pb-4 group">
-      <div className={`w-full max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl border flex flex-col h-full max-h-[350px] md:max-h-[400px] backdrop-blur-xl ${
+      <div className={`w-full max-w-2xl mx-auto rounded-2xl overflow-hidden border flex flex-col h-full max-h-[350px] md:max-h-[400px] backdrop-blur-xl transition-all duration-300 ${
         isDarkMode 
-          ? 'bg-slate-800/40 border-slate-600/50' 
-          : 'bg-white/50 border-slate-200/60'
+          ? 'bg-slate-800/40 border-slate-600/50 shadow-2xl' 
+          : 'bg-indigo-50/30 border-transparent shadow-lg hover:shadow-xl'
       }`}>
         
         {/* Terminal Header */}
         <div className={`h-8 shrink-0 flex items-center justify-between px-4 backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-100/60 border-b border-slate-200/50'
+          isDarkMode ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-indigo-100/40 border-b border-indigo-200/30'
         }`}>
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
@@ -94,7 +94,7 @@ const ChatInterface = ({ isDarkMode, theme }) => {
 
         {/* Chat Body */}
         <div className={`flex-1 overflow-y-auto p-4 space-y-4 backdrop-blur-sm ${
-          isDarkMode ? 'bg-slate-900/30' : 'bg-white/30'
+          isDarkMode ? 'bg-slate-900/30' : 'bg-indigo-50/20'
         }`}>
           {chatHistory.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -123,7 +123,7 @@ const ChatInterface = ({ isDarkMode, theme }) => {
         <div className={`p-3 border-t backdrop-blur-md ${
           isDarkMode 
             ? 'border-slate-700/50 bg-slate-900/40' 
-            : 'border-slate-200/50 bg-white/40'
+            : 'border-indigo-200/30 bg-indigo-50/20'
         }`}>
           <div className="flex flex-wrap gap-2">
             {SUGGESTED_QUESTIONS.map((q, i) => (

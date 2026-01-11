@@ -17,7 +17,11 @@ const SKILLS = [
 const SkillsTicker = ({ theme, isDarkMode }) => {
   const pillClass = isDarkMode 
     ? "bg-slate-800 border-slate-700 text-slate-300" 
-    : "bg-white border-slate-200 text-slate-600";
+    : "bg-indigo-100/30 text-slate-700";
+
+  const shadowClass = isDarkMode
+    ? "shadow-md"
+    : "shadow-lg hover:shadow-xl";
 
 
   return (
@@ -42,7 +46,7 @@ const SkillsTicker = ({ theme, isDarkMode }) => {
             <div 
               key={index} 
               // Removed 'hover:scale' to prevent glitches during drag
-              className={`flex items-center space-x-2 md:space-x-3 px-5 md:px-6 py-2.5 md:py-3 rounded-full border shadow-md text-xs md:text-sm font-mono whitespace-nowrap select-none ${pillClass}`}
+              className={`flex items-center space-x-2 md:space-x-3 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-mono whitespace-nowrap select-none transition-shadow duration-300 ${isDarkMode ? 'border' : ''} ${pillClass} ${shadowClass}`}
             >
               <span className="opacity-70">{skill.icon}</span>
               <span className="font-bold tracking-wide">{skill.name}</span>

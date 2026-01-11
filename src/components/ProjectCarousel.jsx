@@ -32,10 +32,10 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                 whileHover={{ scale: 1.05, y: -6 }}
                 whileTap={{ scale: 0.98 }}
                 data-cursor-hover
-                className={`w-72 md:w-80 lg:w-96 p-6 md:p-7 rounded-2xl shadow-2xl cursor-pointer select-none backdrop-blur-xl border transition-all duration-300 ${
+                className={`w-72 md:w-80 lg:w-96 p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 ${isDarkMode ? 'border' : ''} ${
                   isDarkMode 
-                    ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/60 hover:bg-slate-700/50' 
-                    : 'bg-white/40 border-slate-200/60 hover:border-indigo-300/70 hover:bg-white/60'
+                    ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/60 hover:bg-slate-700/50 shadow-2xl' 
+                    : 'bg-indigo-50/40 hover:bg-blue-50/50 shadow-lg hover:shadow-xl'
                 }`}
               >
                 <div className={`mb-4 ${theme.accent} p-3 md:p-4 rounded-xl w-fit backdrop-blur-sm ${

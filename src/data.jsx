@@ -5,9 +5,9 @@ export const PASTEL_PALETTE = {
   light: { 
     bg: 'bg-[#fafaf9]', 
     text: 'text-slate-800', 
-    card: 'bg-[#f5f5f4]', 
+    card: 'bg-indigo-50/40', 
     chatUser: 'bg-[#6366f1] text-white',
-    chatBot: 'bg-[#e7e5e4] text-slate-800',
+    chatBot: 'bg-indigo-100/60 text-slate-700',
     accent: 'text-[#4f46e5]' 
   },
   dark: { 

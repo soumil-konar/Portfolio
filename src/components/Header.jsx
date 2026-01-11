@@ -88,7 +88,7 @@ const Header = ({ theme }) => {
     <header className="flex flex-col items-center justify-center space-y-3 md:space-y-4 mt-8 md:mt-12 shrink-0">
       
       {/* Avatar (Same as before) */}
-      <div ref={containerRef} className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-indigo-50/80 border-4 border-indigo-200 overflow-hidden shadow-xl">
+      <div ref={containerRef} className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-indigo-100/50 border-4 border-indigo-300/40 overflow-hidden shadow-xl">
          <svg viewBox="0 0 100 100" className="w-full h-full">
             <circle cx="50" cy="55" r="35" fill="#FDE2D3" />
             <path d="M15,45 Q50,5 85,45 L90,40 Q50,-15 10,40 Z" fill="#2D3748" />
