@@ -34,52 +34,62 @@ const Header = ({ theme }) => {
     return () => clearTimeout(initialTimeout);
   }, []);
 
-  // --- NEW: HACKER DECRYPTION LOGIC ---
+  // --- HACKER DECRYPTION LOGIC ---
   const TARGET_TEXT = "Soumil";
-  const CYCLES_PER_LETTER = 2; // How many "scrambles" before fixing a letter
-  const SHUFFLE_TIME = 50; // Speed in ms
+  const CYCLES_PER_LETTER = 3; // How many "scrambles" before fixing a letter
+  const SHUFFLE_TIME = 60; // Speed in ms for smoother animation
 
-  const [displayText, setDisplayText] = useState(TARGET_TEXT);
+  const [displayText, setDisplayText] = useState("");
   const [isScrambling, setIsScrambling] = useState(false);
+  const hasDecryptedRef = useRef(false); // Use ref to persist across theme changes
 
-  // Trigger when theme changes to DARK (text is white/slate-200)
+  // Trigger decryption only once on initial dark mode load
   useEffect(() => {
-    // Only trigger if we are entering Dark Mode (detected by checking theme.bg)
-    // We assume 'bg-[#1a202c]' is your dark mode background from data.js
-    const isDark = theme.bg.includes('slate') || theme.bg.includes('#1a202c');
+    const isDark = theme.bg.includes('slate') || theme.bg.includes('0f172a');
 
-    if (isDark) {
-      scrambleText();
-    } else {
-      // Optional: Reset immediately on Light mode, or scramble back? 
-      // Let's just reset to clean text for Light mode
+    if (isDark && !hasDecryptedRef.current) {
+      // Start with encrypted text
+      setDisplayText("######");
+      setTimeout(() => scrambleText(), 300); // Small delay before decryption starts
+    } else if (!isDark) {
+      // In light mode, show clean text immediately
+      setDisplayText(TARGET_TEXT);
+      // Don't reset hasDecryptedRef - keep it true so animation won't re-trigger
+    } else if (isDark && hasDecryptedRef.current) {
+      // Already decrypted, just show the name
       setDisplayText(TARGET_TEXT);
     }
   }, [theme]);
 
   const scrambleText = () => {
     setIsScrambling(true);
-    let pos = 0;
+    let iteration = 0;
+    const totalIterations = TARGET_TEXT.length * CYCLES_PER_LETTER;
 
     const interval = setInterval(() => {
       const scrambled = TARGET_TEXT.split('')
         .map((char, index) => {
-          if (index < pos) {
-            return char; // Letter is solved
+          // Calculate if this letter should be "solved" yet
+          const solvePoint = index * CYCLES_PER_LETTER;
+          
+          if (iteration > solvePoint) {
+            return char; // Letter is decrypted
           }
-          // Return random hacker char
-          const chars = '!@#$%^&*()_+[]{}|;:,.<>?/~';
+          
+          // Return random hacker-style character (alphanumeric + symbols)
+          const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?/~';
           return chars[Math.floor(Math.random() * chars.length)];
         })
         .join('');
 
       setDisplayText(scrambled);
-      pos += 1 / CYCLES_PER_LETTER; // Move fractional steps to make it look cooler
+      iteration++;
 
-      if (pos > TARGET_TEXT.length) {
+      if (iteration > totalIterations) {
         clearInterval(interval);
         setIsScrambling(false);
         setDisplayText(TARGET_TEXT);
+        hasDecryptedRef.current = true; // Mark as decrypted using ref
       }
     }, SHUFFLE_TIME);
   };
@@ -112,10 +122,18 @@ const Header = ({ theme }) => {
       </div>
 
       <div className="text-center">
-        {/* --- HACKER NAME UPDATE --- */}
-        <h1 className={`text-2xl md:text-4xl font-bold tracking-tight transition-colors duration-300 ${
-          isScrambling ? 'text-emerald-400 font-mono' : ''
-        }`}>
+        {/* --- HACKER NAME WITH DECRYPTION EFFECT --- */}
+        <h1 
+          className={`text-2xl md:text-4xl font-bold tracking-tight transition-all duration-300 ${
+            isScrambling 
+              ? 'text-emerald-400 font-mono' 
+              : 'font-sans'
+          }`}
+          style={isScrambling ? {
+            textShadow: '0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)',
+            letterSpacing: '0.05em'
+          } : {}}
+        >
           {displayText}
         </h1>
         
