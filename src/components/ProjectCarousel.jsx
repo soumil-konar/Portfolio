@@ -29,13 +29,13 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
           {PROJECTS.map((proj) => (
             <SpotlightCard key={proj.id} className="group shrink-0 mx-2 md:mx-4">
               <motion.div 
-                whileHover={{ scale: 1.05, y: -6 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{}}
+                whileTap={{ scale: 0.99 }}
                 data-cursor-hover
                 className={`w-72 md:w-80 lg:w-96 p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 ${isDarkMode ? 'border' : ''} ${
                   isDarkMode 
-                    ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/60 hover:bg-slate-700/50 shadow-2xl' 
-                    : 'bg-indigo-50/40 hover:bg-blue-50/50 shadow-lg hover:shadow-xl'
+                    ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/70 hover:bg-slate-700/60 shadow-2xl hover:shadow-indigo-500/20' 
+                    : 'bg-indigo-50/40 hover:bg-blue-50/60 shadow-lg hover:shadow-2xl hover:shadow-indigo-200/50'
                 }`}
               >
                 <div className={`mb-4 ${theme.accent} p-3 md:p-4 rounded-xl w-fit backdrop-blur-sm ${
