@@ -266,6 +266,317 @@ export const PROJECTS = [
   },
 ];
 
+export const SKILLS = [
+  {
+    id: "langgraph",
+    name: "LangGraph",
+    iconName: "Workflow",
+    category: "Agentic Frameworks & Multi-Actor Graphs",
+    experience: "Production Architecture",
+    overview: "Architects deterministic, stateful multi-actor agent graphs with custom conditional routers, dynamic tool dispatching, and fallback recovery.",
+    capabilities: [
+      "Cyclic StateGraph orchestration",
+      "Conditional branch routing",
+      "Multi-turn memory persistence",
+      "Graceful fallback recovery"
+    ],
+    relatedProjects: [
+      {
+        projectId: 1,
+        usage: "Engineered 4-node deterministic graph routing natural language queries across 5 enterprise domains with YAML descriptor validation."
+      },
+      {
+        projectId: 3,
+        usage: "Built NLQ-to-SQL generation and multi-turn context rewriting stategraphs across 8 microservices."
+      }
+    ]
+  },
+  {
+    id: "semantic-kernel",
+    name: "Semantic Kernel",
+    iconName: "Brain",
+    category: "Enterprise Agent SDKs",
+    experience: "Core Stack",
+    overview: "Constructs enterprise AI plugin registries, semantic functions, native function calling, and structured memory orchestration.",
+    capabilities: [
+      "Native plugin / tool registration",
+      "Multi-system autonomous routing",
+      "Prompt template chaining",
+      "Planner execution"
+    ],
+    relatedProjects: [
+      {
+        projectId: 3,
+        usage: "Engineered autonomous tool-calling plugins and multi-system routing across internal enterprise databases."
+      },
+      {
+        projectId: 8,
+        usage: "Implemented autonomous reasoning loops and CRM tool execution for customer query resolution."
+      }
+    ]
+  },
+  {
+    id: "neo4j",
+    name: "Neo4j",
+    iconName: "Network",
+    category: "Property Graph Databases",
+    experience: "High-Throughput Production",
+    overview: "Engineers graph data models, complex Cypher pathfinding traversals, hierarchical dependency queries, and high-performance batch ingestion.",
+    capabilities: [
+      "Cypher pathfinding queries",
+      "Topological graph modeling",
+      "500-node transactional batch commits",
+      "Graph RAG retrieval"
+    ],
+    relatedProjects: [
+      {
+        projectId: 1,
+        usage: "Dispatches multi-hop Cypher queries to evaluate downstream schedule delays and critical-path milestone impact."
+      },
+      {
+        projectId: 2,
+        usage: "Created custom ETL parser transforming relational schedules into a 10+ node label, 8 edge type property graph."
+      }
+    ]
+  },
+  {
+    id: "mcp",
+    name: "MCP (Model Context Protocol)",
+    iconName: "Boxes",
+    category: "AI Tooling & Interoperability",
+    experience: "Protocol Implementations",
+    overview: "Builds standard Model Context Protocol servers exposing graph and relational databases as secured, inspectable tools for AI models.",
+    capabilities: [
+      "MCP standard tool definitions",
+      "Federated multi-source state queries",
+      "JSON-RPC protocol transport",
+      "Secure context virtualization"
+    ],
+    relatedProjects: [
+      {
+        projectId: 2,
+        usage: "Engineered dual MCP servers enabling AI assistants to securely query Neo4j (Cypher) and SQL Server (T-SQL) as intelligent tools."
+      }
+    ]
+  },
+  {
+    id: "fastapi",
+    name: "FastAPI",
+    iconName: "Zap",
+    category: "High-Performance Python APIs",
+    experience: "Production Microservices",
+    overview: "Develops asynchronous, OpenAPI-compliant Python microservices with streaming responses, Pydantic validation, and enterprise authentication.",
+    capabilities: [
+      "Async streaming endpoints",
+      "Pydantic v2 data validation",
+      "Enterprise JWT & CredHub auth",
+      "High concurrency workloads"
+    ],
+    relatedProjects: [
+      {
+        projectId: 3,
+        usage: "Architected 8 production RAG microservices on Cloud Foundry / TAS with sub-second response times."
+      },
+      {
+        projectId: 9,
+        usage: "Built high-throughput API gateway with distributed rate limiting and secret management."
+      }
+    ]
+  },
+  {
+    id: "vector-dbs",
+    name: "ChromaDB / pgvector",
+    iconName: "Database",
+    category: "Vector Embeddings & Hybrid Search",
+    experience: "Vector Search Architecture",
+    overview: "Deploys scalable dense and sparse vector indexes (HNSW, IVFFlat) with cosine similarity and metadata-filtered hybrid retrieval.",
+    capabilities: [
+      "HNSW vector indexing",
+      "Hybrid keyword + vector search",
+      "Pre/post-retrieval metadata filtering",
+      "Cross-encoder re-ranking"
+    ],
+    relatedProjects: [
+      {
+        projectId: 3,
+        usage: "Integrated hybrid vector search with metadata filtering across multi-domain document stores."
+      },
+      {
+        projectId: 7,
+        usage: "Built vector search architecture processing 1,000,000+ technical documents with sub-200ms query latency."
+      }
+    ]
+  },
+  {
+    id: "python",
+    name: "Python",
+    iconName: "Code",
+    category: "Primary Engineering Language",
+    experience: "Expert",
+    overview: "Builds robust asynchronous backends, ETL pipelines, scientific algorithms, and machine learning architectures with clean modular design.",
+    capabilities: [
+      "Asyncio & concurrent pipelines",
+      "Object-oriented & functional design",
+      "NumPy & scientific computing",
+      "Package & type architecture"
+    ],
+    relatedProjects: [
+      {
+        projectId: 1,
+        usage: "Developed entire descriptor orchestrator engine and dynamic resolver plugins."
+      },
+      {
+        projectId: 6,
+        usage: "Engineered backend clustering algorithms and OpenCV image quantization pipelines."
+      },
+      {
+        projectId: 4,
+        usage: "Created core recommendation engine combining NLP analysis with style compatibility models."
+      }
+    ]
+  },
+  {
+    id: "ml-frameworks",
+    name: "PyTorch & TensorFlow",
+    iconName: "Cpu",
+    category: "Deep Learning & Computer Vision",
+    experience: "Model Architecture & Training",
+    overview: "Designs and deploys deep learning architectures for computer vision, transformer embeddings, and recommendation scoring.",
+    capabilities: [
+      "CNN image recognition",
+      "Transformer fine-tuning",
+      "Embeddings extraction",
+      "Model inference optimization"
+    ],
+    relatedProjects: [
+      {
+        projectId: 4,
+        usage: "Trained TensorFlow vision models to categorize apparel cuts, colors, and textures from user uploads."
+      },
+      {
+        projectId: 6,
+        usage: "Applied vector quantization and clustering algorithms for image segmentation."
+      }
+    ]
+  },
+  {
+    id: "databases",
+    name: "PostgreSQL & SQL Server",
+    iconName: "Database",
+    category: "Relational Databases & T-SQL",
+    experience: "Enterprise Scale",
+    overview: "Architects normalized schemas, optimized indexing, complex T-SQL queries, window functions, and pgvector extension integrations.",
+    capabilities: [
+      "Complex T-SQL & stored procedures",
+      "Index optimization & execution plans",
+      "pgvector extension support",
+      "ACID transactional integrity"
+    ],
+    relatedProjects: [
+      {
+        projectId: 1,
+        usage: "Dispatched dynamic parameterized SQL queries to calculate resource allocations and budget constraints."
+      },
+      {
+        projectId: 2,
+        usage: "Extracted relational schedule dependencies for property graph ETL transformation."
+      }
+    ]
+  },
+  {
+    id: "devops",
+    name: "Docker & GitLab CI/CD",
+    iconName: "Layers",
+    category: "Containerization & DevOps",
+    experience: "Production CI/CD",
+    overview: "Creates multi-stage container builds, automated unit/integration testing pipelines, and zero-downtime deployment workflows.",
+    capabilities: [
+      "Multi-stage Docker builds",
+      "GitLab CI pipeline automation",
+      "Automated lint & test stages",
+      "Container vulnerability scanning"
+    ],
+    relatedProjects: [
+      {
+        projectId: 3,
+        usage: "Maintained automated CI/CD pipelines deploying RAG microservices with CredHub secrets."
+      },
+      {
+        projectId: 9,
+        usage: "Containerized modular microservices with automated health checks and Docker orchestration."
+      }
+    ]
+  },
+  {
+    id: "react",
+    name: "React.js",
+    iconName: "Globe",
+    category: "Frontend UI & Interactive Systems",
+    experience: "Modern Frontend",
+    overview: "Builds high-performance interactive interfaces, component design systems, Framer Motion animations, and state management.",
+    capabilities: [
+      "Custom hooks & state architecture",
+      "Framer Motion animations",
+      "Tailwind CSS design systems",
+      "Accessible UI componentry"
+    ],
+    relatedProjects: [
+      {
+        projectId: 4,
+        usage: "Built interactive drag-and-drop outfit canvas and real-time palette exploration interface."
+      }
+    ]
+  },
+  {
+    id: "nodejs",
+    name: "Node.js",
+    iconName: "Server",
+    category: "Asynchronous Server Runtime",
+    experience: "Backend Systems",
+    overview: "Develops event-driven backends, RESTful APIs, and integration layers with streaming and asynchronous event loops.",
+    capabilities: [
+      "Event-driven architecture",
+      "Express & Fastify REST APIs",
+      "Async streams & buffers",
+      "External API integrations"
+    ],
+    relatedProjects: [
+      {
+        projectId: 8,
+        usage: "Engineered CRM and telemetry integration server for automated diagnostic resolution."
+      },
+      {
+        projectId: 9,
+        usage: "Built streaming worker nodes handling concurrent enterprise message streams."
+      }
+    ]
+  },
+  {
+    id: "linux",
+    name: "Linux / Bash",
+    iconName: "Terminal",
+    category: "Systems & Environment",
+    experience: "Core Tooling",
+    overview: "System automation, shell scripting, environment configuration, process management, and production server diagnostics.",
+    capabilities: [
+      "Advanced Bash automation scripts",
+      "Systemd process & service management",
+      "Performance profiling & logs",
+      "SSH & networking configuration"
+    ],
+    relatedProjects: [
+      {
+        projectId: 2,
+        usage: "Automated batch ETL execution and scheduled cron ingestion pipelines."
+      },
+      {
+        projectId: 9,
+        usage: "Managed Linux container host configurations and production log streaming."
+      }
+    ]
+  }
+];
+
 export const SUGGESTED_QUESTIONS = [
   "Who is Soumil?",
   "Tell me about the RAG Orchestrator.",

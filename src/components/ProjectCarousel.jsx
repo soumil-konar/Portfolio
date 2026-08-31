@@ -6,8 +6,11 @@ import InfiniteMarquee from './InfiniteMarquee';
 import SpotlightCard from './SpotlightCard';
 import ProjectModal from './ProjectModal';
 
-const ProjectCarousel = ({ theme, isDarkMode }) => {
-  const [selectedProject, setSelectedProject] = useState(null);
+const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProject, onSelectProject }) => {
+  const [internalSelectedProject, setInternalSelectedProject] = useState(null);
+  const selectedProject = propSelectedProject !== undefined ? propSelectedProject : internalSelectedProject;
+  const setSelectedProject = onSelectProject || setInternalSelectedProject;
+
   const pointerStartRef = React.useRef({ x: 0, y: 0 });
   const hasDraggedRef = React.useRef(false);
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { PASTEL_PALETTE } from './data';
+import { PASTEL_PALETTE, PROJECTS, SKILLS } from './data';
 
 // Import Components
 import ThemeToggle from './components/ThemeToggle';
@@ -17,9 +17,12 @@ import ThemeTransition from './components/ThemeTransition';
 import GradientMesh from './components/GradientMesh';
 import ScrollProgress from './components/ScrollProgress';
 import CustomCursor from './components/CustomCursor';
+import SkillModal from './components/SkillModal';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
+  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
   
   // Sync dark class with document root for Tailwind class strategy
   useEffect(() => {
@@ -119,12 +122,21 @@ const App = () => {
           
           {/* Expanded Full-Width Marquee Skills Ticker */}
           <div className="w-full max-w-[1440px] mx-auto px-2 md:px-6 my-2">
-            <SkillsTicker theme={theme} isDarkMode={isDarkMode} />
+            <SkillsTicker 
+              theme={theme} 
+              isDarkMode={isDarkMode} 
+              onSelectSkill={setSelectedSkill}
+            />
           </div>
 
           {/* Expanded Full-Width Project Carousel */}
           <div className="w-full max-w-[1440px] mx-auto px-2 md:px-6 my-2">
-            <ProjectCarousel theme={theme} isDarkMode={isDarkMode} />
+            <ProjectCarousel 
+              theme={theme} 
+              isDarkMode={isDarkMode} 
+              selectedProject={selectedProject}
+              onSelectProject={setSelectedProject}
+            />
           </div>
           
           {/* Main Focused Content Section */}
@@ -140,6 +152,20 @@ const App = () => {
             <EasterEgg isDarkMode={isDarkMode} />
           </div>
         </div>
+
+        {/* Interactive Skill Inspector Drawer */}
+        <SkillModal
+          skill={selectedSkill}
+          isOpen={!!selectedSkill}
+          onClose={() => setSelectedSkill(null)}
+          onSelectProject={(proj) => {
+            setSelectedSkill(null);
+            setSelectedProject(proj);
+          }}
+          projects={PROJECTS}
+          isDarkMode={isDarkMode}
+          theme={theme}
+        />
       </div>
       
     </div>
