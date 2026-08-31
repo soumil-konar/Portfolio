@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText, Download } from 'lucide-react';
 import { SOCIAL_LINKS } from '../data';
 
-const Header = ({ theme }) => {
+const Header = ({ theme, isDarkMode }) => {
   // --- HACKER DECRYPTION LOGIC ---
   const TARGET_TEXT = "Soumil";
   const CYCLES_PER_LETTER = 3; // How many "scrambles" before fixing a letter
@@ -107,31 +107,54 @@ const Header = ({ theme }) => {
         <p className="text-[10px] md:text-[11px] mt-1 tracking-wider uppercase font-semibold text-slate-600 dark:text-slate-300">LLMs, RAG & Agentic Systems</p>
       </div>
 
-      <div className="flex space-x-5 pt-1.5 text-slate-600 dark:text-slate-300">
+      {/* Hero CTA & Social Connect Bar */}
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-1.5">
+        {/* Direct Resume Download Button */}
         <a 
-          href={SOCIAL_LINKS.github} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          aria-label="GitHub Profile"
+          href="/resume.pdf" 
+          download="Soumil_Resume.pdf"
+          className={`flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold border transition-all duration-200 shadow-md hover:scale-105 active:scale-95 group ${
+            isDarkMode 
+              ? 'bg-indigo-600/30 border-indigo-400/80 hover:bg-indigo-600 text-white shadow-indigo-500/20' 
+              : 'bg-indigo-50 border-indigo-300 hover:bg-indigo-600 hover:text-white text-indigo-700 shadow-sm'
+          }`}
+          title="Download Full Resume PDF"
         >
-          <Github className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-indigo-600 dark:hover:text-indigo-400" />
+          <FileText size={13} className="text-indigo-400 dark:text-indigo-300 group-hover:text-white transition-colors" />
+          <span>Resume (PDF)</span>
+          <Download size={12} className="opacity-80 group-hover:translate-y-0.5 transition-transform" />
         </a>
 
-        <a 
-          href={SOCIAL_LINKS.linkedin} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          aria-label="LinkedIn Profile"
-        >
-          <Linkedin className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2] dark:hover:text-[#38bdf8]" />
-        </a>
+        {/* Social Icons */}
+        <div className="flex space-x-4 pl-2 text-slate-600 dark:text-slate-300 items-center">
+          <a 
+            href={SOCIAL_LINKS.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="GitHub Profile"
+            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <Github className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-indigo-600 dark:hover:text-indigo-400" />
+          </a>
 
-        <a 
-          href={SOCIAL_LINKS.email}
-          aria-label="Send Email"
-        >
-          <Mail className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-red-500 dark:hover:text-red-400" />
-        </a>
+          <a 
+            href={SOCIAL_LINKS.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="LinkedIn Profile"
+            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <Linkedin className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2] dark:hover:text-[#38bdf8]" />
+          </a>
+
+          <a 
+            href={SOCIAL_LINKS.email}
+            aria-label="Send Email"
+            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <Mail className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-red-500 dark:hover:text-red-400" />
+          </a>
+        </div>
       </div>
     </header>
   );

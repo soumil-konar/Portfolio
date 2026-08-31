@@ -117,7 +117,7 @@ const App = () => {
         <div className="w-full py-6 flex flex-col min-h-dvh">
           {/* Centered Hero Header */}
           <div className="w-full max-w-4xl mx-auto px-4 md:px-6">
-            <Header theme={theme} />
+            <Header theme={theme} isDarkMode={isDarkMode} />
           </div>
           
           {/* Expanded Full-Width Marquee Skills Ticker */}
