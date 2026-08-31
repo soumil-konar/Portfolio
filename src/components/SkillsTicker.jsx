@@ -1,17 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import InfiniteMarquee from './InfiniteMarquee';
-import { Database, Server, Cpu, Code, Cloud, Terminal, Layers, Globe } from 'lucide-react';
+import { Database, Server, Cpu, Code, Cloud, Terminal, Layers, Globe, Workflow, Brain, Zap, Boxes, Network } from 'lucide-react';
 
 const SKILLS = [
+  { name: "LangGraph", icon: <Workflow size={16} /> },
+  { name: "Semantic Kernel", icon: <Brain size={16} /> },
+  { name: "Neo4j", icon: <Network size={16} /> },
+  { name: "MCP (Model Context Protocol)", icon: <Boxes size={16} /> },
+  { name: "FastAPI", icon: <Zap size={16} /> },
+  { name: "ChromaDB / pgvector", icon: <Database size={16} /> },
   { name: "Python", icon: <Code size={16} /> },
-  { name: "React", icon: <Globe size={16} /> },
-  { name: "AWS", icon: <Cloud size={16} /> },
-  { name: "Docker", icon: <Layers size={16} /> },
-  { name: "PostgreSQL", icon: <Database size={16} /> },
+  { name: "PyTorch & TensorFlow", icon: <Cpu size={16} /> },
+  { name: "PostgreSQL & SQL Server", icon: <Database size={16} /> },
+  { name: "Docker & GitLab CI/CD", icon: <Layers size={16} /> },
+  { name: "React.js", icon: <Globe size={16} /> },
   { name: "Node.js", icon: <Server size={16} /> },
-  { name: "LLMs / RAG", icon: <Cpu size={16} /> },
-  { name: "Linux", icon: <Terminal size={16} /> },
+  { name: "Linux / Bash", icon: <Terminal size={16} /> },
 ];
 
 const SkillsTicker = ({ theme, isDarkMode }) => {

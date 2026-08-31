@@ -45,10 +45,37 @@ const ChatInterface = ({ isDarkMode, theme }) => {
 
   const getAnswer = (q) => {
     const linkStyle = "underline font-bold hover:text-indigo-500 transition-colors";
+    const lower = q.toLowerCase();
 
-    if (q.includes("Who")) return "Soumil is a Full Stack Engineer specialized in Backend Systems and AI.";
+    if (lower.includes("who")) {
+      return "Soumil is a Generative AI Engineer specialized in architecting production-grade LLM systems, RAG microservices, and agentic workflows for mission-critical enterprise platforms.";
+    }
+
+    if (lower.includes("orchestrator") || lower.includes("langgraph")) {
+      return "He architected a descriptor-driven RAG orchestrator with a 4-node LangGraph pipeline routing across 5 use cases (schedule impact, resource recommendation, conflict detection, copilot, and fallback) over 10,000+ enterprise task schedules.";
+    }
+
+    if (lower.includes("mcp") || lower.includes("tool")) {
+      return "He built dual Model Context Protocol (MCP) servers enabling AI assistants to securely query Neo4j (Cypher) and SQL Server (T-SQL) directly as intelligent tool interfaces.";
+    }
+
+    if (lower.includes("skill") || lower.includes("tech") || lower.includes("core")) {
+      return "His core expertise covers LangGraph, Semantic Kernel, Neo4j, FastAPI, ChromaDB, pgvector, Python, PyTorch/TensorFlow, SQL Server, Docker, and GitLab CI/CD.";
+    }
+
+    if (lower.includes("graph") || lower.includes("etl") || lower.includes("neo4j")) {
+      return "He engineered a high-throughput Neo4j graph ETL pipeline transforming relational schedules into a 10+ label property graph with predecessor parsing for downstream impact analysis.";
+    }
+
+    if (lower.includes("rag") || lower.includes("experience")) {
+      return "He has built 8+ production RAG microservices using FastAPI, Semantic Kernel, and LangGraph with NLQ-to-SQL, hybrid vector/metadata search, and multi-turn query rewriting.";
+    }
+
+    if (lower.includes("outfit") || lower.includes("fashion")) {
+      return "He created a fashion recommendation engine combining NLP and computer vision with LLM-based trend analysis for context-aware personalized styling.";
+    }
     
-    if (q.includes("contact")) {
+    if (lower.includes("contact") || lower.includes("email") || lower.includes("reach")) {
       return (
         <span>
           You can reach him via{' '}
@@ -59,10 +86,11 @@ const ChatInterface = ({ isDarkMode, theme }) => {
       );
     }
 
-    if (q.includes("hobbies")) return "He enjoys Fantasy Premier League (FPL), Sci-Fi novels, and tech tinkering.";
-    if (q.includes("RAG")) return "He builds Enterprise RAG systems using Vector DBs, customized chunking, and LLM orchestration.";
+    if (lower.includes("hobbies") || lower.includes("hobby")) {
+      return "He enjoys Fantasy Premier League (FPL), Sci-Fi novels, 3D modeling, and exploring new AI architectures.";
+    }
     
-    return "I am not trained on that yet.";
+    return "I am trained on Soumil's AI engineering work, RAG architectures, and agentic workflows. Feel free to ask about his LangGraph pipelines, MCP servers, or technical stack!";
   };
 
   return (

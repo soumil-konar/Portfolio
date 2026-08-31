@@ -137,8 +137,8 @@ const Header = ({ theme }) => {
           {displayText}
         </h1>
         
-        <p className={`text-xs md:text-sm opacity-75 font-mono ${theme.accent}`}>{'<'}Full Stack Engineer /{'>'}</p>
-        <p className="text-[9px] md:text-[10px] opacity-60 mt-1 tracking-wider uppercase">AI & RAG Specialist</p>
+        <p className={`text-xs md:text-sm opacity-75 font-mono ${theme.accent}`}>{'<'}Generative AI Engineer /{'>'}</p>
+        <p className="text-[9px] md:text-[10px] opacity-60 mt-1 tracking-wider uppercase">LLMs, RAG & Agentic Systems</p>
       </div>
 
       <div className="flex space-x-5 opacity-60 pt-1">
