@@ -149,7 +149,6 @@ const Header = ({ theme }) => {
           aria-label="GitHub Profile"
         >
           <Github className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-[#6B8E23] dark:hover:text-[#B794F4]" />
-          {/* <Github className="w-5 h-5 md:w-6 md:h-6 hover:text-[#6B8E23]" /> */}
         </a>
 
         <a 

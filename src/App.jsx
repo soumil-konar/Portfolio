@@ -7,6 +7,7 @@ import ThemeToggle from './components/ThemeToggle';
 import Header from './components/Header';
 import SkillsTicker from './components/SkillsTicker';
 import ProjectCarousel from './components/ProjectCarousel';
+import AgentPipelineVisualizer from './components/AgentPipelineVisualizer';
 import ChatInterface from './components/ChatInterface';
 import EasterEgg from './components/EasterEgg';
 import StatusFooter from './components/StatusFooter';
@@ -15,11 +16,10 @@ import Konami from './components/Konami';
 import ThemeTransition from './components/ThemeTransition';
 import GradientMesh from './components/GradientMesh';
 import ScrollProgress from './components/ScrollProgress';
-
+import CustomCursor from './components/CustomCursor';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
-  const [show3DAvatar, setShow3DAvatar] = useState(false);
   
   // Transition Logic States
   const [transitionMode, setTransitionMode] = useState(0); 
@@ -43,7 +43,7 @@ const App = () => {
     const successStyle = 'color: #48BB78; font-weight: bold; font-size: 12px;';
 
     console.clear(); // Clear default browser noise
-    console.log('%cHello! If you are looking here, we should probably talk. Email me: soumil@example.com', styles);
+    console.log('%cHello! If you are looking here, we should probably talk. Email me: soumil.konar2001@gmail.com', styles);
     console.log('%cSystem Status: [OK] 🟢', successStyle);
     console.log('%cSecret Code: Try the Konami Code (↑↑↓↓←→←→BA)', 'color: #A0AEC0; font-style: italic; font-size: 10px;');
   }, []);
@@ -71,6 +71,9 @@ const App = () => {
   return (
     <div className={`min-h-dvh ${theme.bg} ${theme.text} overflow-x-hidden font-mono selection:bg-teal-200 selection:text-teal-900 relative`}>
       
+      {/* --- Desktop Custom Cursor --- */}
+      <CustomCursor />
+
       {/* --- Gradient Mesh Background --- */}
       <GradientMesh isDarkMode={isDarkMode} />
       
@@ -89,8 +92,6 @@ const App = () => {
       {/* --- Scroll Progress Bar --- */}
       <ScrollProgress />
 
-
-
       {/* --- Main Content --- */}
       <div className="relative z-10">
         <CommandPalette isDarkMode={isDarkMode} toggleTheme={handleThemeToggle} />
@@ -104,14 +105,19 @@ const App = () => {
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 flex flex-col min-h-dvh">
           <Header theme={theme} />
           
-          {/* New Skills Ticker */}
+          {/* Skills Ticker */}
           <SkillsTicker theme={theme} isDarkMode={isDarkMode} />
 
           {/* Project Carousel */}
           <ProjectCarousel theme={theme} isDarkMode={isDarkMode} />
           
+          {/* Live Agent & LangGraph Pipeline Visualizer */}
+          <AgentPipelineVisualizer theme={theme} isDarkMode={isDarkMode} />
           
+          {/* Interactive AI Terminal */}
           <ChatInterface isDarkMode={isDarkMode} theme={theme} />
+
+          {/* Footer & Easter Egg */}
           <StatusFooter theme={theme} />
           <EasterEgg isDarkMode={isDarkMode} />
         </div>

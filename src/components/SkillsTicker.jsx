@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import InfiniteMarquee from './InfiniteMarquee';
-import { Database, Server, Cpu, Code, Cloud, Terminal, Layers, Globe, Workflow, Brain, Zap, Boxes, Network } from 'lucide-react';
+import { Database, Server, Cpu, Code, Terminal, Layers, Globe, Workflow, Brain, Zap, Boxes, Network } from 'lucide-react';
 
 const SKILLS = [
   { name: "LangGraph", icon: <Workflow size={16} /> },
