@@ -1,5 +1,5 @@
 // src/data.js
-import { Database, Cpu, Server, Workflow, Network, Boxes, Sparkles } from 'lucide-react';
+import { Database, Cpu, Server, Workflow, Network, Boxes, Sparkles, Smartphone, ScanFace } from 'lucide-react';
 
 export const PASTEL_PALETTE = {
   light: { 
@@ -26,49 +26,72 @@ export const PROJECTS = [
     title: "Multi-Use-Case RAG Orchestrator", 
     desc: "Plug-and-play descriptor-driven engine with a 4-node LangGraph pipeline routing across 5 use cases with dynamic SQL, Cypher, and Python resolvers.", 
     icon: <Workflow size={24}/>,
-    tags: ["LangGraph", "Neo4j", "SQL Server", "Python"]
+    tags: ["LangGraph", "Neo4j", "SQL Server", "Python"],
+    isEnterprise: true
   },
   { 
     id: 2, 
     title: "Graph ETL Pipeline & MCP Servers", 
     desc: "ETL script transforming relational schedules into a Neo4j property graph with dual Model Context Protocol (MCP) servers for AI querying.", 
     icon: <Network size={24}/>,
-    tags: ["Neo4j", "MCP", "SQL Server", "ETL"]
+    tags: ["Neo4j", "MCP", "SQL Server", "ETL"],
+    isEnterprise: true
   },
   { 
     id: 3, 
     title: "Enterprise RAG Microservices Suite", 
     desc: "5 domain RAG microservices with NLQ-to-SQL pipelines, Semantic Kernel tool calling, hybrid vector/metadata search, and multi-turn context.", 
     icon: <Boxes size={24}/>,
-    tags: ["FastAPI", "Semantic Kernel", "ChromaDB", "LangGraph"]
+    tags: ["FastAPI", "Semantic Kernel", "ChromaDB", "LangGraph"],
+    isEnterprise: true
   },
   { 
     id: 4, 
     title: "Outfit Suggestion Website", 
     desc: "Fashion recommendation engine combining NLP and image recognition with LLM trend analysis for personalized, context-aware style exploration.", 
     icon: <Sparkles size={24}/>,
-    tags: ["Python", "TensorFlow", "JavaScript", "NLP"]
+    tags: ["Python", "TensorFlow", "JavaScript", "NLP"],
+    github: "https://github.com/d33pe8h-j4a/Flipkar-Grid"
   },
   { 
     id: 5, 
-    title: "Enterprise RAG System", 
-    desc: "Scalable vector search architecture processing 1M+ docs with high-precision retrieval.", 
-    icon: <Database size={24}/>,
-    tags: ["Vector DB", "LLMs", "Python"]
+    title: "Money Tracker (Android / Fintech)", 
+    desc: "SMS-first Android money tracker with event-driven debit/credit parsing, local-first Room DB, and automated WorkManager recurring subscription scans.", 
+    icon: <Smartphone size={24}/>,
+    tags: ["Kotlin", "Jetpack Compose", "Room DB", "Android"],
+    github: "https://github.com/soumil-konar/money-Tracker"
   },
   { 
     id: 6, 
-    title: "AI Query Agent", 
-    desc: "LLM-based agent reducing customer resolution time by 40% through autonomous reasoning.", 
-    icon: <Cpu size={24}/>,
-    tags: ["Agentic AI", "Prompt Eng", "Node.js"]
+    title: "K-Means Image Segmentation", 
+    desc: "Full-stack computer vision application clustering and segmenting images into K color clusters with client-server architecture.", 
+    icon: <ScanFace size={24}/>,
+    tags: ["Python", "OpenCV", "Clustering", "Computer Vision"],
+    github: "https://github.com/soumil-konar/image-segmentation"
   },
   { 
     id: 7, 
+    title: "Enterprise RAG System", 
+    desc: "Scalable vector search architecture processing 1M+ docs with high-precision retrieval.", 
+    icon: <Database size={24}/>,
+    tags: ["Vector DB", "LLMs", "Python"],
+    isEnterprise: true
+  },
+  { 
+    id: 8, 
+    title: "AI Query Agent", 
+    desc: "LLM-based agent reducing customer resolution time by 40% through autonomous reasoning.", 
+    icon: <Cpu size={24}/>,
+    tags: ["Agentic AI", "Prompt Eng", "Node.js"],
+    isEnterprise: true
+  },
+  { 
+    id: 9, 
     title: "Backend Microservices", 
     desc: "High-throughput services handling concurrent streaming connections and secure enterprise workloads.", 
     icon: <Server size={24}/>,
-    tags: ["Microservices", "REST APIs", "Docker"]
+    tags: ["Microservices", "REST APIs", "Docker"],
+    isEnterprise: true
   },
 ];
 

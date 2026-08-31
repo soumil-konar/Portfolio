@@ -1,10 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Github, ExternalLink, Lock } from 'lucide-react';
 import { PROJECTS } from '../data';
 import InfiniteMarquee from './InfiniteMarquee';
 import SpotlightCard from './SpotlightCard';
 
 const ProjectCarousel = ({ theme, isDarkMode }) => {
+  const handleCardClick = (proj) => {
+    if (proj.github) {
+      window.open(proj.github, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 30 }}
@@ -14,7 +21,7 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
       className="my-8 md:my-10 shrink-0 relative group"
     >
        <div className="mb-5 md:mb-6 px-2 opacity-60 text-[11px] md:text-xs uppercase tracking-widest font-bold">
-          Featured Deployments
+          Featured Deployments & Open Source
        </div>
 
       {/* CSS mask with smoother fade for seamless blending */}
@@ -29,21 +36,61 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
           {PROJECTS.map((proj) => (
             <SpotlightCard key={proj.id} className="group shrink-0 mx-2 md:mx-4">
               <motion.div 
-                whileHover={{}}
-                whileTap={{ scale: 0.99 }}
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleCardClick(proj)}
                 data-cursor-hover
-                className={`w-80 md:w-96 p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between h-[310px] md:h-[330px] ${isDarkMode ? 'border' : ''} ${
+                className={`w-80 md:w-96 p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between h-[320px] md:h-[340px] ${isDarkMode ? 'border' : ''} ${
                   isDarkMode 
-                    ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/70 hover:bg-slate-700/60 shadow-2xl hover:shadow-indigo-500/20' 
-                    : 'bg-indigo-50/40 hover:bg-blue-50/60 shadow-lg hover:shadow-2xl hover:shadow-indigo-200/50'
+                    ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/80 hover:bg-slate-700/60 shadow-2xl hover:shadow-indigo-500/20' 
+                    : 'bg-indigo-50/40 hover:bg-blue-50/70 shadow-lg hover:shadow-2xl hover:shadow-indigo-200/60'
                 }`}
               >
                 <div>
-                  <div className={`mb-4 ${theme.accent} p-3 rounded-xl w-fit backdrop-blur-sm ${
-                    isDarkMode ? 'bg-indigo-500/20' : 'bg-indigo-100/60'
-                  }`}>{proj.icon}</div>
-                  <h3 className="font-bold text-base md:text-lg mb-2 line-clamp-1">{proj.title}</h3>
-                  <p className="text-xs md:text-sm opacity-70 leading-relaxed font-sans pointer-events-none line-clamp-3 mb-3">{proj.desc}</p>
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`${theme.accent} p-3 rounded-xl backdrop-blur-sm ${
+                      isDarkMode ? 'bg-indigo-500/20' : 'bg-indigo-100/60'
+                    }`}>
+                      {proj.icon}
+                    </div>
+
+                    {proj.github ? (
+                      <a 
+                        href={proj.github} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        onClick={(e) => e.stopPropagation()}
+                        className={`p-1.5 px-2.5 rounded-lg border transition-all duration-200 flex items-center space-x-1.5 text-[11px] font-mono group/btn ${
+                          isDarkMode 
+                            ? 'bg-slate-900/70 border-slate-700 hover:border-indigo-400 hover:text-indigo-300 text-slate-300' 
+                            : 'bg-white/90 border-indigo-200 hover:border-indigo-500 hover:text-indigo-600 text-slate-700 shadow-sm'
+                        }`}
+                        title="View Source on GitHub"
+                      >
+                        <Github size={13} />
+                        <span className="font-semibold">GitHub</span>
+                        <ExternalLink size={10} className="opacity-60 group-hover/btn:translate-x-0.5 transition-transform" />
+                      </a>
+                    ) : (
+                      <div 
+                        className={`px-2 py-1 rounded-md border flex items-center space-x-1 text-[10px] font-mono opacity-60 ${
+                          isDarkMode 
+                            ? 'bg-slate-900/50 border-slate-800 text-slate-400' 
+                            : 'bg-indigo-100/50 border-indigo-200/50 text-slate-600'
+                        }`}
+                      >
+                        <Lock size={10} />
+                        <span>Enterprise</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <h3 className="font-bold text-base md:text-lg mb-2 line-clamp-1 group-hover:text-indigo-400 transition-colors">
+                    {proj.title}
+                  </h3>
+                  <p className="text-xs md:text-sm opacity-70 leading-relaxed font-sans pointer-events-none line-clamp-3 mb-3">
+                    {proj.desc}
+                  </p>
                 </div>
                 
                 <div>
@@ -65,8 +112,10 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                   )}
                   
                   <div className="flex items-center space-x-2 opacity-50 pt-1">
-                     <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                     <span className="text-[10px] uppercase tracking-wider">Production</span>
+                     <div className={`w-2 h-2 rounded-full ${proj.github ? 'bg-indigo-400' : 'bg-emerald-500'}`} />
+                     <span className="text-[10px] uppercase tracking-wider">
+                       {proj.github ? 'Open Source' : 'Production Platform'}
+                     </span>
                   </div>
                 </div>
               </motion.div>
