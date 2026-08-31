@@ -15,11 +15,9 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Hardware acceleration for better performance */
+/* Prevent layout shifts */
 body {
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+  overflow-x: hidden;
 }
 
 /* Aesthetic Dotted Grid Pattern */
