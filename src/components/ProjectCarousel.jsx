@@ -40,10 +40,10 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
         className="my-8 md:my-10 shrink-0 relative group"
       >
         <div className="flex items-center justify-between mb-5 md:mb-6 px-2">
-          <div className="opacity-60 text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono">
+          <div className="text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono text-slate-700 dark:text-slate-300">
             Featured Deployments & Open Source
           </div>
-          <div className="text-[10px] font-mono opacity-50 hidden sm:inline">
+          <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline font-medium">
             Click tile to inspect architecture ↗
           </div>
         </div>
@@ -66,16 +66,16 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                   onPointerMove={handlePointerMove}
                   onClick={() => handleCardClick(proj)}
                   data-cursor-hover
-                  className={`w-80 md:w-96 p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between h-[325px] md:h-[345px] ${isDarkMode ? 'border' : ''} ${
+                  className={`w-84 sm:w-96 md:w-[410px] lg:w-[430px] p-6 md:p-8 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between h-[335px] md:h-[355px] border ${
                     isDarkMode 
-                      ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/80 hover:bg-slate-700/60 shadow-2xl hover:shadow-indigo-500/20' 
-                      : 'bg-indigo-50/40 hover:bg-blue-50/70 shadow-lg hover:shadow-2xl hover:shadow-indigo-200/60'
+                      ? 'bg-slate-800/40 border-slate-600/50 hover:border-indigo-400/80 hover:bg-slate-700/60 shadow-2xl hover:shadow-indigo-500/20 text-slate-100' 
+                      : 'bg-white/95 border-slate-200/90 hover:border-indigo-400 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(99,102,241,0.12)] text-slate-900'
                   }`}
                 >
                   <div>
                     <div className="flex items-start justify-between mb-4">
-                      <div className={`${theme.accent} p-3 rounded-xl backdrop-blur-sm ${
-                        isDarkMode ? 'bg-indigo-500/20' : 'bg-indigo-100/60'
+                      <div className={`p-3 rounded-xl backdrop-blur-sm ${
+                        isDarkMode ? 'bg-indigo-500/20 text-indigo-300' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
                       }`}>
                         {proj.icon}
                       </div>
@@ -90,7 +90,7 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                             className={`p-1.5 px-2.5 rounded-lg border transition-all duration-200 flex items-center space-x-1.5 text-[11px] font-mono group/btn ${
                               isDarkMode 
                                 ? 'bg-slate-900/70 border-slate-700 hover:border-indigo-400 hover:text-indigo-300 text-slate-300' 
-                                : 'bg-white/90 border-indigo-200 hover:border-indigo-500 hover:text-indigo-600 text-slate-700 shadow-sm'
+                                : 'bg-slate-50 border-slate-200 hover:border-indigo-500 hover:text-indigo-600 text-slate-800 shadow-2xs'
                             }`}
                             title="View Source on GitHub"
                           >
@@ -102,10 +102,10 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
 
                         {proj.isEnterprise && (
                           <div 
-                            className={`px-2 py-1 rounded-md border flex items-center space-x-1 text-[10px] font-mono opacity-60 ${
+                            className={`px-2 py-1 rounded-md border flex items-center space-x-1 text-[10px] font-mono ${
                               isDarkMode 
                                 ? 'bg-slate-900/50 border-slate-800 text-slate-400' 
-                                : 'bg-indigo-100/50 border-indigo-200/50 text-slate-600'
+                                : 'bg-slate-100 border-slate-200 text-slate-700 font-medium'
                             }`}
                           >
                             <Lock size={10} />
@@ -115,11 +115,11 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                       </div>
                     </div>
 
-                    <h3 className="font-bold text-base md:text-lg mb-2 line-clamp-1 group-hover:text-indigo-400 transition-colors flex items-center justify-between">
+                    <h3 className="font-bold text-base md:text-lg mb-2 line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center justify-between">
                       <span>{proj.title}</span>
-                      <ChevronRight size={16} className="opacity-0 group-hover:opacity-80 -translate-x-2 group-hover:translate-x-0 transition-all text-indigo-400 shrink-0 ml-1" />
+                      <ChevronRight size={16} className="opacity-0 group-hover:opacity-80 -translate-x-2 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400 shrink-0 ml-1" />
                     </h3>
-                    <p className="text-xs md:text-sm opacity-70 leading-relaxed font-sans pointer-events-none line-clamp-3 mb-3">
+                    <p className="text-xs md:text-sm leading-relaxed font-sans pointer-events-none line-clamp-3 mb-3 text-slate-600 dark:text-slate-300">
                       {proj.desc}
                     </p>
                   </div>
@@ -133,7 +133,7 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                             className={`text-[10px] font-mono px-2 py-0.5 rounded-md border ${
                               isDarkMode 
                                 ? 'bg-slate-900/60 border-slate-700 text-indigo-300' 
-                                : 'bg-indigo-100/50 border-indigo-200/60 text-indigo-700'
+                                : 'bg-indigo-50 border-indigo-100 text-indigo-700 font-medium'
                             }`}
                           >
                             {tag}
@@ -142,15 +142,15 @@ const ProjectCarousel = ({ theme, isDarkMode }) => {
                       </div>
                     )}
                     
-                    <div className="flex items-center justify-between opacity-50 pt-1 text-[10px]">
-                       <div className="flex items-center space-x-1.5">
-                         <div className={`w-2 h-2 rounded-full ${proj.github ? 'bg-indigo-400' : 'bg-emerald-500'}`} />
+                    <div className="flex items-center justify-between pt-1 text-[10px] text-slate-600 dark:text-slate-400">
+                       <div className="flex items-center space-x-1.5 font-medium">
+                         <div className={`w-2 h-2 rounded-full ${proj.github ? 'bg-indigo-500' : 'bg-emerald-500'}`} />
                          <span className="uppercase tracking-wider">
                            {proj.github ? 'Open Source' : 'Production Platform'}
                          </span>
                        </div>
 
-                       <span className="font-mono text-indigo-400 group-hover:opacity-100 opacity-60">
+                       <span className="font-mono text-indigo-600 dark:text-indigo-400 font-bold group-hover:underline">
                          Case Study ↗
                        </span>
                     </div>

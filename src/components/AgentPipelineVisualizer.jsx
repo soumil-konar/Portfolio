@@ -164,11 +164,11 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
         <div>
           <div className="flex items-center space-x-2">
             <span className="w-2 h-2 rounded-full bg-indigo-500 animate-ping" />
-            <span className="opacity-60 text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono">
+            <span className="text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono text-indigo-600 dark:text-indigo-400">
               Live Architecture Simulator
             </span>
           </div>
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight mt-1">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight mt-1 text-slate-900 dark:text-slate-100">
             Descriptor-Driven LangGraph Orchestrator
           </h2>
         </div>
@@ -180,7 +180,7 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
             className={`flex items-center space-x-2 text-xs font-mono px-4 py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
               isRunning 
                 ? 'bg-indigo-500/50 text-white cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40'
+                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40 font-semibold'
             }`}
           >
             {isRunning ? (
@@ -203,12 +203,12 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
         className={`w-full rounded-2xl border backdrop-blur-xl p-5 md:p-7 transition-all duration-300 ${
           isDarkMode 
             ? 'bg-slate-800/40 border-slate-700/60 shadow-2xl' 
-            : 'bg-indigo-50/40 border-indigo-200/50 shadow-xl'
+            : 'bg-white/95 border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
         }`}
       >
         {/* Scenario Selection Chips */}
         <div className="mb-6">
-          <div className="text-[10px] font-mono uppercase tracking-wider opacity-60 mb-2.5">
+          <div className="text-[10px] font-mono uppercase tracking-wider font-semibold opacity-70 mb-2.5">
             Select Live Scenario:
           </div>
           <div className="flex flex-wrap gap-2">
@@ -223,10 +223,10 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
                     isSelected
                       ? isDarkMode
                         ? 'bg-indigo-500/20 border-indigo-400 text-indigo-200 shadow-sm'
-                        : 'bg-indigo-100 border-indigo-400 text-indigo-800 shadow-sm'
+                        : 'bg-indigo-50 border-indigo-400 text-indigo-700 shadow-2xs font-bold'
                       : isDarkMode
                       ? 'bg-slate-900/40 border-slate-700/60 text-slate-400 hover:border-slate-500 hover:text-slate-200'
-                      : 'bg-white/60 border-slate-200 text-slate-600 hover:border-indigo-300'
+                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-indigo-300 font-medium'
                   }`}
                 >
                   <span>{scenario.icon}</span>
@@ -242,11 +242,11 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
           className={`p-3.5 rounded-xl border mb-6 flex items-center space-x-3 text-xs font-mono ${
             isDarkMode 
               ? 'bg-slate-900/60 border-slate-700/80 text-slate-300' 
-              : 'bg-white/80 border-indigo-100 text-slate-700'
+              : 'bg-slate-50 border-slate-200 text-slate-900 font-medium'
           }`}
         >
-          <div className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-          <span className="opacity-50 select-none hidden sm:inline">query:</span>
+          <div className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+          <span className="opacity-60 select-none hidden sm:inline font-semibold">query:</span>
           <span className="font-medium truncate">{selectedScenario.query}</span>
         </div>
 
@@ -264,16 +264,18 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
                 whileHover={{ y: -2 }}
                 className={`relative rounded-xl p-4 border transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? 'border-indigo-400 ring-2 ring-indigo-500/40 shadow-lg shadow-indigo-500/10'
+                    ? isDarkMode
+                      ? 'border-indigo-400 ring-2 ring-indigo-500/40 shadow-lg shadow-indigo-500/10 bg-slate-900/80'
+                      : 'border-indigo-500 ring-2 ring-indigo-400/30 shadow-md bg-indigo-50/80 text-slate-900'
                     : isCompleted
                     ? isDarkMode
-                      ? 'bg-slate-900/40 border-slate-700/80'
-                      : 'bg-white/70 border-indigo-100'
+                      ? 'bg-slate-900/40 border-slate-700/80 text-slate-200'
+                      : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
                     : isDarkMode
-                    ? 'bg-slate-900/20 border-slate-800 opacity-60'
-                    : 'bg-white/40 border-slate-200 opacity-60'
+                    ? 'bg-slate-900/20 border-slate-800 opacity-60 text-slate-400'
+                    : 'bg-slate-50/80 border-slate-200 opacity-70 text-slate-600'
                 } ${
-                  isInspected ? 'ring-2 ring-emerald-400' : ''
+                  isInspected ? 'ring-2 ring-emerald-500' : ''
                 }`}
               >
                 {/* Node Header */}
@@ -284,32 +286,32 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
                         isActive
                           ? 'bg-indigo-500 text-white animate-pulse'
                           : isCompleted
-                          ? 'bg-emerald-500/20 text-emerald-400'
-                          : 'bg-slate-700/30 opacity-60'
+                          ? isDarkMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                          : isDarkMode ? 'bg-slate-700/30 opacity-60' : 'bg-slate-200 text-slate-700'
                       }`}
                     >
                       {node.icon}
                     </div>
-                    <span className="text-[10px] uppercase font-mono tracking-wider opacity-60">
+                    <span className="text-[10px] uppercase font-mono tracking-wider font-semibold opacity-70">
                       Node 0{node.id}
                     </span>
                   </div>
 
-                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
-                    isDarkMode ? 'bg-slate-800 text-indigo-300' : 'bg-indigo-50 text-indigo-600'
+                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-bold ${
+                    isDarkMode ? 'bg-slate-800 text-indigo-300' : 'bg-indigo-50 border border-indigo-100 text-indigo-700'
                   }`}>
                     {node.badge}
                   </span>
                 </div>
 
                 {/* Node Body */}
-                <h4 className="font-bold text-xs md:text-sm mb-1">{node.title}</h4>
-                <p className="text-[11px] font-mono opacity-70 truncate mb-1">{node.detail}</p>
-                <p className="text-[10px] opacity-50 font-sans truncate">{node.subdetail}</p>
+                <h4 className="font-bold text-xs md:text-sm mb-1 text-slate-900 dark:text-slate-100">{node.title}</h4>
+                <p className="text-[11px] font-mono opacity-80 truncate mb-1 text-slate-700 dark:text-slate-300">{node.detail}</p>
+                <p className="text-[10px] opacity-60 font-sans truncate text-slate-600 dark:text-slate-400">{node.subdetail}</p>
 
                 {/* Flow Connection Arrow for Desktop */}
                 {index < 3 && (
-                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-indigo-400/50">
+                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-indigo-400/60">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
@@ -323,49 +325,49 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
         {/* Telemetry & Output Inspector Drawer */}
         <div 
           className={`rounded-xl border overflow-hidden ${
-            isDarkMode ? 'bg-slate-900/80 border-slate-700/80' : 'bg-white border-indigo-100 shadow-sm'
+            isDarkMode ? 'bg-slate-900/80 border-slate-700/80' : 'bg-white border-slate-200 shadow-sm'
           }`}
         >
           {/* Tabs Bar */}
           <div 
             className={`flex items-center justify-between px-4 py-2 border-b text-xs font-mono ${
-              isDarkMode ? 'border-slate-800 bg-slate-950/40' : 'border-indigo-50 bg-indigo-50/40'
+              isDarkMode ? 'border-slate-800 bg-slate-950/40' : 'border-slate-200 bg-slate-50/70'
             }`}
           >
             <div className="flex space-x-4">
               <button
                 onClick={() => setActiveTab('output')}
-                className={`pb-1 border-b-2 transition-colors ${
+                className={`pb-1 border-b-2 transition-colors font-medium ${
                   activeTab === 'output'
-                    ? 'border-indigo-500 text-indigo-400 font-bold'
-                    : 'border-transparent opacity-60 hover:opacity-100'
+                    ? isDarkMode ? 'border-indigo-500 text-indigo-400 font-bold' : 'border-indigo-600 text-indigo-700 font-bold'
+                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
                 Synthesized Output
               </button>
               <button
                 onClick={() => setActiveTab('query')}
-                className={`pb-1 border-b-2 transition-colors ${
+                className={`pb-1 border-b-2 transition-colors font-medium ${
                   activeTab === 'query'
-                    ? 'border-indigo-500 text-indigo-400 font-bold'
-                    : 'border-transparent opacity-60 hover:opacity-100'
+                    ? isDarkMode ? 'border-indigo-500 text-indigo-400 font-bold' : 'border-indigo-600 text-indigo-700 font-bold'
+                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
                 Generated Query / Payload
               </button>
               <button
                 onClick={() => setActiveTab('telemetry')}
-                className={`pb-1 border-b-2 transition-colors ${
+                className={`pb-1 border-b-2 transition-colors font-medium ${
                   activeTab === 'telemetry'
-                    ? 'border-indigo-500 text-indigo-400 font-bold'
-                    : 'border-transparent opacity-60 hover:opacity-100'
+                    ? isDarkMode ? 'border-indigo-500 text-indigo-400 font-bold' : 'border-indigo-600 text-indigo-700 font-bold'
+                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
                 Execution Telemetry
               </button>
             </div>
 
-            <div className="flex items-center space-x-1.5 opacity-60 text-[10px]">
+            <div className="flex items-center space-x-1.5 text-[10px] text-slate-600 dark:text-slate-400 font-medium">
               <Activity size={12} />
               <span>{selectedScenario.metrics.total}ms total</span>
             </div>
@@ -375,12 +377,12 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
           <div className="p-4 font-mono text-xs">
             {activeTab === 'output' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-2">
-                <div className="flex items-center space-x-2 text-emerald-400 text-[11px] mb-1">
+                <div className="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 text-[11px] mb-1 font-semibold">
                   <CheckCircle2 size={13} />
                   <span>Pipeline Execution Finished Successfully</span>
                 </div>
-                <div className={`p-3 rounded-lg leading-relaxed ${
-                  isDarkMode ? 'bg-slate-950/60 text-slate-200' : 'bg-slate-50 text-slate-800'
+                <div className={`p-3.5 rounded-lg leading-relaxed border ${
+                  isDarkMode ? 'bg-slate-950/60 border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-900 font-medium'
                 }`}>
                   {selectedScenario.output}
                 </div>
@@ -389,7 +391,7 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
 
             {activeTab === 'query' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="text-[10px] opacity-50 uppercase tracking-wider mb-2">
+                <div className="text-[10px] uppercase tracking-wider mb-2 font-semibold text-slate-600 dark:text-slate-400">
                   Target Tool: {selectedScenario.toolName}
                 </div>
                 <pre className={`p-3 rounded-lg overflow-x-auto text-[11px] font-mono leading-normal ${
@@ -402,10 +404,10 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
 
             {activeTab === 'telemetry' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-                <div className="text-[10px] opacity-50 uppercase tracking-wider">
+                <div className="text-[10px] uppercase tracking-wider font-semibold text-slate-600 dark:text-slate-400">
                   Node Latency Breakdown
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {Object.entries({
                     'Intent Classifier': selectedScenario.metrics.classifier,
                     'Plugin & YAML Routing': selectedScenario.metrics.routing,
@@ -416,8 +418,8 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
                     return (
                       <div key={name} className="space-y-1">
                         <div className="flex justify-between text-[11px]">
-                          <span className="opacity-80">{name}</span>
-                          <span className="font-bold opacity-60">{ms}ms</span>
+                          <span className="text-slate-700 dark:text-slate-300 font-medium">{name}</span>
+                          <span className="font-bold text-indigo-600 dark:text-indigo-400">{ms}ms</span>
                         </div>
                         <div className={`h-1.5 w-full rounded-full overflow-hidden ${
                           isDarkMode ? 'bg-slate-800' : 'bg-slate-200'

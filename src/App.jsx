@@ -102,24 +102,34 @@ const App = () => {
           toggleTheme={handleThemeToggle} 
         />
 
-        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 flex flex-col min-h-dvh">
-          <Header theme={theme} />
+        <div className="w-full py-6 flex flex-col min-h-dvh">
+          {/* Centered Hero Header */}
+          <div className="w-full max-w-4xl mx-auto px-4 md:px-6">
+            <Header theme={theme} />
+          </div>
           
-          {/* Skills Ticker */}
-          <SkillsTicker theme={theme} isDarkMode={isDarkMode} />
+          {/* Expanded Full-Width Marquee Skills Ticker */}
+          <div className="w-full max-w-[1440px] mx-auto px-2 md:px-6 my-2">
+            <SkillsTicker theme={theme} isDarkMode={isDarkMode} />
+          </div>
 
-          {/* Project Carousel */}
-          <ProjectCarousel theme={theme} isDarkMode={isDarkMode} />
+          {/* Expanded Full-Width Project Carousel */}
+          <div className="w-full max-w-[1440px] mx-auto px-2 md:px-6 my-2">
+            <ProjectCarousel theme={theme} isDarkMode={isDarkMode} />
+          </div>
           
-          {/* Live Agent & LangGraph Pipeline Visualizer */}
-          <AgentPipelineVisualizer theme={theme} isDarkMode={isDarkMode} />
-          
-          {/* Interactive AI Terminal */}
-          <ChatInterface isDarkMode={isDarkMode} theme={theme} />
+          {/* Main Focused Content Section */}
+          <div className="w-full max-w-5xl mx-auto px-4 md:px-6 flex flex-col flex-1">
+            {/* Live Agent & LangGraph Pipeline Visualizer */}
+            <AgentPipelineVisualizer theme={theme} isDarkMode={isDarkMode} />
+            
+            {/* Interactive AI Terminal */}
+            <ChatInterface isDarkMode={isDarkMode} theme={theme} />
 
-          {/* Footer & Easter Egg */}
-          <StatusFooter theme={theme} />
-          <EasterEgg isDarkMode={isDarkMode} />
+            {/* Footer & Easter Egg */}
+            <StatusFooter theme={theme} />
+            <EasterEgg isDarkMode={isDarkMode} />
+          </div>
         </div>
       </div>
       

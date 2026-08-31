@@ -4,11 +4,11 @@ import { Database, Cpu, Server, Workflow, Network, Boxes, Sparkles, Smartphone, 
 export const PASTEL_PALETTE = {
   light: { 
     bg: 'bg-[#fafaf9]', 
-    text: 'text-slate-800', 
-    card: 'bg-indigo-50/40', 
-    chatUser: 'bg-[#6366f1] text-white',
-    chatBot: 'bg-indigo-100/60 text-slate-700',
-    accent: 'text-[#4f46e5]' 
+    text: 'text-slate-900', 
+    card: 'bg-white/90 border-slate-200/80 shadow-sm', 
+    chatUser: 'bg-indigo-600 text-white font-medium',
+    chatBot: 'bg-white border border-slate-200/90 text-slate-800 shadow-sm',
+    accent: 'text-indigo-600' 
   },
   dark: { 
     bg: 'bg-[#0f172a]', 

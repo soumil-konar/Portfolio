@@ -21,12 +21,12 @@ const SKILLS = [
 
 const SkillsTicker = ({ theme, isDarkMode }) => {
   const pillClass = isDarkMode 
-    ? "bg-slate-800 border-slate-700 text-slate-300" 
-    : "bg-indigo-100/30 text-slate-700";
+    ? "bg-slate-800/90 border-slate-700 text-slate-200" 
+    : "bg-white border-slate-200/90 text-slate-800 hover:border-indigo-300";
 
   const shadowClass = isDarkMode
     ? "shadow-md"
-    : "shadow-lg hover:shadow-xl";
+    : "shadow-xs hover:shadow-md";
 
 
   return (
