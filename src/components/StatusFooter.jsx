@@ -18,7 +18,7 @@ const StatusFooter = ({ theme }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className={`w-full py-3 md:py-2 px-0 md:px-6 border-t flex justify-between items-center text-[10px] uppercase tracking-widest opacity-60 ${theme.text} border-gray-200/20 mt-auto`}
+      className={`w-full py-3 md:py-2 px-0 md:px-6 border-t flex justify-between items-center text-[10px] uppercase tracking-widest text-slate-600 dark:text-slate-300 font-semibold border-slate-200 dark:border-slate-800/80 mt-auto`}
     >
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-1">

@@ -66,17 +66,17 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
         >
           {/* Top Bar / Header */}
           <div className={`px-6 py-5 border-b flex items-center justify-between shrink-0 ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/40' : 'border-slate-100 bg-slate-50/60'
+            isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/60'
           }`}>
             <div className="flex items-center space-x-3.5">
               <div className={`p-2.5 rounded-xl ${
-                isDarkMode ? 'bg-indigo-500/20 text-indigo-300' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
+                isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
               }`}>
                 {project.icon}
               </div>
               <div>
                 <div className="flex items-center space-x-2">
-                  <h3 className="font-bold text-lg md:text-xl tracking-tight text-slate-900 dark:text-slate-100">{project.title}</h3>
+                  <h3 className="font-bold text-lg md:text-xl tracking-tight text-slate-900 dark:text-white">{project.title}</h3>
                 </div>
                 <div className="flex items-center space-x-2 mt-0.5">
                   {project.github ? (
@@ -85,7 +85,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
                       <span>Open Source System</span>
                     </span>
                   ) : (
-                    <span className="text-[11px] font-mono font-medium text-slate-600 dark:text-slate-400 flex items-center space-x-1">
+                    <span className="text-[11px] font-mono font-medium text-slate-600 dark:text-slate-300 flex items-center space-x-1">
                       <Lock size={10} />
                       <span>Enterprise Production System</span>
                     </span>
@@ -116,7 +116,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
                 onClick={onClose}
                 className={`p-2 rounded-xl border transition-colors cursor-pointer ${
                   isDarkMode 
-                    ? 'border-slate-700/80 hover:bg-slate-800 text-slate-400 hover:text-white' 
+                    ? 'border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white' 
                     : 'border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900'
                 }`}
                 title="Close (Esc)"
@@ -128,7 +128,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
 
           {/* Sub Navigation Tabs */}
           <div className={`px-6 pt-3 flex space-x-6 border-b text-xs font-mono shrink-0 ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-100 bg-slate-50/30'
+            isDarkMode ? 'border-slate-800 bg-slate-950/40' : 'border-slate-100 bg-slate-50/30'
           }`}>
             {[
               { id: 'architecture', label: 'Architecture & Flow', icon: <Workflow size={13} /> },
@@ -138,10 +138,10 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-1.5 pb-2.5 border-b-2 transition-all cursor-pointer font-medium ${
+                className={`flex items-center space-x-1.5 pb-2.5 border-b-2 transition-all cursor-pointer font-semibold ${
                   activeTab === tab.id
-                    ? isDarkMode ? 'border-indigo-500 text-indigo-400 font-bold' : 'border-indigo-600 text-indigo-700 font-bold'
-                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
+                    ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
+                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <span>{tab.icon}</span>
@@ -156,10 +156,10 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
             {project.problem && (
               <div className={`p-4 rounded-xl border leading-relaxed text-xs md:text-sm font-sans ${
                 isDarkMode 
-                  ? 'bg-slate-950/40 border-slate-800/80 text-slate-300' 
+                  ? 'bg-slate-950/80 border-slate-700/80 text-slate-200 font-medium' 
                   : 'bg-indigo-50/70 border-indigo-100 text-slate-800 font-medium'
               }`}>
-                <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1 text-indigo-600 dark:text-indigo-400">
+                <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1.5 text-indigo-600 dark:text-indigo-400">
                   Engineering Challenge / Problem Statement:
                 </span>
                 {project.problem}
@@ -169,7 +169,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
             {/* TAB 1: ARCHITECTURE FLOW */}
             {activeTab === 'architecture' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-                <h4 className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-600 dark:text-slate-400 flex items-center space-x-1.5">
+                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
                   <Workflow size={13} />
                   <span>Pipeline Execution Flow:</span>
                 </h4>
@@ -181,7 +181,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
                         key={i}
                         className={`p-3.5 rounded-xl border transition-all ${
                           isDarkMode
-                            ? 'bg-slate-950/50 border-slate-800 hover:border-indigo-500/50 text-slate-300'
+                            ? 'bg-slate-950/80 border-slate-700/80 hover:border-indigo-400/80 text-slate-200'
                             : 'bg-slate-50 border-slate-200 shadow-2xs hover:border-indigo-300 text-slate-800'
                         }`}
                       >
@@ -189,7 +189,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
                           <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
                           <span>{node.step}</span>
                         </div>
-                        <p className="text-xs font-sans leading-relaxed text-slate-700 dark:text-slate-300">{node.detail}</p>
+                        <p className="text-xs font-sans leading-relaxed text-slate-700 dark:text-slate-200">{node.detail}</p>
                       </div>
                     ))}
                   </div>
@@ -200,7 +200,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
             {/* TAB 2: HIGHLIGHTS */}
             {activeTab === 'highlights' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-                <h4 className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-600 dark:text-slate-400 flex items-center space-x-1.5">
+                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
                   <CheckCircle2 size={13} />
                   <span>Technical Accomplishments:</span>
                 </h4>
@@ -211,11 +211,11 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
                       <div
                         key={i}
                         className={`flex items-start space-x-3 p-3 rounded-xl border ${
-                          isDarkMode ? 'bg-slate-950/40 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 shadow-2xs text-slate-800 font-medium'
+                          isDarkMode ? 'bg-slate-950/70 border-slate-700/80 text-slate-100 font-medium' : 'bg-slate-50 border-slate-200 shadow-2xs text-slate-800 font-medium'
                         }`}
                       >
                         <ShieldCheck size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="text-xs md:text-sm font-sans leading-relaxed text-slate-800 dark:text-slate-200">{item}</span>
+                        <span className="text-xs md:text-sm font-sans leading-relaxed text-slate-800 dark:text-slate-100">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -226,7 +226,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
             {/* TAB 3: METRICS */}
             {activeTab === 'metrics' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-                <h4 className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-600 dark:text-slate-400 flex items-center space-x-1.5">
+                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
                   <Activity size={13} />
                   <span>Telemetry & Measurable Outcomes:</span>
                 </h4>
@@ -238,11 +238,11 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
                         key={i}
                         className={`p-4 rounded-xl border text-center flex flex-col justify-center ${
                           isDarkMode
-                            ? 'bg-slate-950/60 border-slate-800'
+                            ? 'bg-slate-950/80 border-slate-700/80 shadow-md'
                             : 'bg-indigo-50/60 border-indigo-100 shadow-2xs'
                         }`}
                       >
-                        <span className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-600 dark:text-slate-400 block mb-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300 block mb-1">
                           {metric.label}
                         </span>
                         <span className="font-mono font-bold text-sm md:text-base text-indigo-600 dark:text-indigo-400">
@@ -258,16 +258,16 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
 
           {/* Footer Bar with Tech Tags */}
           <div className={`px-6 py-4 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/60' : 'border-slate-100 bg-slate-50/50'
+            isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/50'
           }`}>
             <div className="flex flex-wrap gap-1.5 items-center">
-              <span className="text-[10px] font-mono font-semibold text-slate-500 uppercase mr-1">Stack:</span>
+              <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase mr-1">Stack:</span>
               {project.tags.map((tag, i) => (
                 <span
                   key={i}
                   className={`text-[10px] font-mono px-2 py-0.5 rounded-md border ${
                     isDarkMode
-                      ? 'bg-slate-900 border-slate-700 text-indigo-300'
+                      ? 'bg-slate-800 border-slate-700 text-indigo-300 font-medium'
                       : 'bg-indigo-50 border-indigo-100 text-indigo-700 font-medium'
                   }`}
                 >
@@ -276,8 +276,8 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode, theme }) => {
               ))}
             </div>
 
-            <div className="text-[10px] font-mono text-slate-500 self-end sm:self-auto font-medium">
-              Press <kbd className="px-1 py-0.5 border border-slate-300 rounded bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">ESC</kbd> to exit
+            <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 self-end sm:self-auto font-medium">
+              Press <kbd className="px-1.5 py-0.5 border border-slate-300 dark:border-slate-700 rounded bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold">ESC</kbd> to exit
             </div>
           </div>
         </motion.div>

@@ -93,7 +93,7 @@ const Header = ({ theme }) => {
           className={`text-2xl md:text-4xl font-bold tracking-tight transition-all duration-300 ${
             isScrambling 
               ? 'text-emerald-400 font-mono' 
-              : 'font-sans'
+              : 'font-sans text-slate-900 dark:text-white'
           }`}
           style={isScrambling ? {
             textShadow: '0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)',
@@ -103,34 +103,34 @@ const Header = ({ theme }) => {
           {displayText}
         </h1>
         
-        <p className={`text-xs md:text-sm font-mono font-semibold ${theme.accent}`}>{'<'}Generative AI Engineer /{'>'}</p>
-        <p className="text-[10px] md:text-[11px] opacity-80 mt-1 tracking-wider uppercase font-medium">LLMs, RAG & Agentic Systems</p>
+        <p className={`text-xs md:text-sm font-mono font-bold ${theme.accent}`}>{'<'}Generative AI Engineer /{'>'}</p>
+        <p className="text-[10px] md:text-[11px] mt-1 tracking-wider uppercase font-semibold text-slate-600 dark:text-slate-300">LLMs, RAG & Agentic Systems</p>
       </div>
 
-      <div className="flex space-x-5 opacity-85 pt-1.5">
+      <div className="flex space-x-5 pt-1.5 text-slate-600 dark:text-slate-300">
         <a 
           href={SOCIAL_LINKS.github} 
           target="_blank" 
-          rel="noopener noreferrer"
+          rel="noopener noreferrer" 
           aria-label="GitHub Profile"
         >
-          <Github className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-[#6B8E23] dark:hover:text-[#B794F4]" />
+          <Github className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-indigo-600 dark:hover:text-indigo-400" />
         </a>
 
         <a 
           href={SOCIAL_LINKS.linkedin} 
           target="_blank" 
-          rel="noopener noreferrer"
+          rel="noopener noreferrer" 
           aria-label="LinkedIn Profile"
         >
-          <Linkedin className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2]" />
+          <Linkedin className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2] dark:hover:text-[#38bdf8]" />
         </a>
 
         <a 
           href={SOCIAL_LINKS.email}
           aria-label="Send Email"
         >
-          <Mail className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-red-400" />
+          <Mail className="w-5 h-5 cursor-pointer hover:scale-110 transition-transform hover:text-red-500 dark:hover:text-red-400" />
         </a>
       </div>
     </header>

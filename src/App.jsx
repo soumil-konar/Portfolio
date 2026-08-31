@@ -21,6 +21,15 @@ import CustomCursor from './components/CustomCursor';
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
   
+  // Sync dark class with document root for Tailwind class strategy
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   // Transition Logic States
   const [transitionMode, setTransitionMode] = useState(0); 
   const [isTransitioning, setIsTransitioning] = useState(false);

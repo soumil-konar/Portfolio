@@ -11,12 +11,12 @@ export const PASTEL_PALETTE = {
     accent: 'text-indigo-600' 
   },
   dark: { 
-    bg: 'bg-[#0f172a]', 
-    text: 'text-slate-200', 
-    card: 'bg-[#1e293b]', 
-    chatUser: 'bg-[#6366f1] text-white',
-    chatBot: 'bg-[#334155] text-white',
-    accent: 'text-[#818cf8]' 
+    bg: 'bg-[#0b0f19]', 
+    text: 'text-slate-100', 
+    card: 'bg-slate-900/90 border-slate-700/80 shadow-xl', 
+    chatUser: 'bg-indigo-600 text-white font-semibold',
+    chatBot: 'bg-slate-800/90 border border-slate-700 text-slate-100 shadow-md font-medium',
+    accent: 'text-indigo-400' 
   }
 };
 
