@@ -12,11 +12,12 @@ const GradientMesh = ({ isDarkMode }) => {
     let animationFrameId;
     let time = 0;
 
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
+    // Start with 0 so the initial resizeCanvas() call ALWAYS triggers full-screen sizing
+    let lastWidth = 0;
+    let lastHeight = 0;
 
     // Mouse tracking for subtle synaptic interaction
-    let mouse = { x: -1000, y: -1000, radius: 160 };
+    let mouse = { x: -1000, y: -1000, radius: 170 };
 
     const onMouseMove = (e) => {
       mouse.x = e.clientX;
@@ -34,7 +35,8 @@ const GradientMesh = ({ isDarkMode }) => {
     // Neural Constellation Nodes
     let nodes = [];
     const initNodes = (w, h) => {
-      const count = Math.min(55, Math.floor((w * h) / 24000));
+      if (w <= 0 || h <= 0) return;
+      const count = Math.min(50, Math.floor((w * h) / 26000));
       nodes = [];
       for (let i = 0; i < count; i++) {
         nodes.push({
@@ -42,7 +44,7 @@ const GradientMesh = ({ isDarkMode }) => {
           y: Math.random() * h,
           vx: (Math.random() - 0.5) * 0.35,
           vy: (Math.random() - 0.5) * 0.35,
-          baseRadius: Math.random() * 1.6 + 1.0,
+          baseRadius: Math.random() * 1.5 + 1.0,
           phase: Math.random() * Math.PI * 2,
         });
       }
@@ -52,7 +54,8 @@ const GradientMesh = ({ isDarkMode }) => {
       const newWidth = window.innerWidth;
       const newHeight = window.innerHeight;
       
-      if (canvas.width === 0 || newWidth !== lastWidth || Math.abs(newHeight - lastHeight) > 100) {
+      // Always resize on first run or on width/significant height change
+      if (lastWidth === 0 || newWidth !== lastWidth || Math.abs(newHeight - lastHeight) > 80) {
         lastWidth = newWidth;
         lastHeight = newHeight;
         canvas.width = newWidth;
@@ -60,28 +63,35 @@ const GradientMesh = ({ isDarkMode }) => {
         initNodes(newWidth, newHeight);
       }
     };
+    
+    // Explicitly set dimensions immediately
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
     // Dynamic Blobs
     const darkBlobs = [
-      { x: 0.2, y: 0.25, radius: 0.45, speedX: 0.00018, speedY: 0.00012, color: '#1e1b4b' }, // Deep Indigo
-      { x: 0.8, y: 0.7, radius: 0.5, speedX: -0.00015, speedY: 0.00018, color: '#0f172a' }, // Slate Obsidian
-      { x: 0.5, y: 0.85, radius: 0.38, speedX: 0.00012, speedY: -0.00014, color: '#1e293b' }, // Midnight
+      { x: 0.25, y: 0.3, radius: 0.5, speedX: 0.00015, speedY: 0.00012, color: '#1e1b4b' }, // Deep Indigo
+      { x: 0.75, y: 0.65, radius: 0.55, speedX: -0.00014, speedY: 0.00016, color: '#172554' }, // Deep Blue
+      { x: 0.5, y: 0.85, radius: 0.45, speedX: 0.00012, speedY: -0.00012, color: '#1e293b' }, // Slate Obsidian
     ];
 
     const lightBlobs = [
-      { x: 0.15, y: 0.2, radius: 0.45, speedX: 0.00015, speedY: 0.0001, color: '#e0e7ff' },
-      { x: 0.85, y: 0.6, radius: 0.5, speedX: -0.0001, speedY: 0.00015, color: '#f3e8ff' },
-      { x: 0.5, y: 0.85, radius: 0.4, speedX: 0.00012, speedY: -0.0001, color: '#e0f2fe' },
+      { x: 0.2, y: 0.25, radius: 0.5, speedX: 0.00012, speedY: 0.0001, color: '#e0e7ff' },
+      { x: 0.8, y: 0.65, radius: 0.55, speedX: -0.0001, speedY: 0.00012, color: '#f3e8ff' },
+      { x: 0.5, y: 0.85, radius: 0.45, speedX: 0.0001, speedY: -0.0001, color: '#e0f2fe' },
     ];
 
     const animate = () => {
-      time += 0.006;
+      time += 0.005;
       const w = canvas.width;
       const h = canvas.height;
 
-      // Base Background Fill
+      if (w === 0 || h === 0) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
+      // Base Background Fill across the entire viewport
       ctx.fillStyle = isDarkMode ? '#07090e' : '#f8fafc';
       ctx.fillRect(0, 0, w, h);
 
@@ -93,8 +103,8 @@ const GradientMesh = ({ isDarkMode }) => {
         const radius = blob.radius * Math.min(w, h);
 
         const gradient = ctx.createRadialGradient(posX, posY, 0, posX, posY, radius);
-        gradient.addColorStop(0, isDarkMode ? `${blob.color}90` : `${blob.color}75`);
-        gradient.addColorStop(0.55, isDarkMode ? `${blob.color}35` : `${blob.color}25`);
+        gradient.addColorStop(0, isDarkMode ? `${blob.color}80` : `${blob.color}70`);
+        gradient.addColorStop(0.5, isDarkMode ? `${blob.color}30` : `${blob.color}20`);
         gradient.addColorStop(1, isDarkMode ? `${blob.color}00` : `${blob.color}00`);
 
         ctx.fillStyle = gradient;
@@ -122,7 +132,7 @@ const GradientMesh = ({ isDarkMode }) => {
         const dy = mouse.y - n.y;
         const distToMouse = Math.sqrt(dx * dx + dy * dy);
         if (distToMouse < mouse.radius && distToMouse > 0) {
-          const force = (mouse.radius - distToMouse) / mouse.radius * 0.4;
+          const force = (mouse.radius - distToMouse) / mouse.radius * 0.35;
           n.x -= (dx / distToMouse) * force;
           n.y -= (dy / distToMouse) * force;
         }
@@ -132,7 +142,7 @@ const GradientMesh = ({ isDarkMode }) => {
           const n2 = nodes[j];
           const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
           if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * (isDarkMode ? 0.16 : 0.09);
+            const alpha = (1 - dist / maxDist) * (isDarkMode ? 0.15 : 0.08);
             ctx.strokeStyle = `${lineColor}${alpha})`;
             ctx.lineWidth = 0.75;
             ctx.beginPath();
@@ -144,7 +154,7 @@ const GradientMesh = ({ isDarkMode }) => {
 
         // Draw Node point
         const pulse = Math.sin(time * 2 + n.phase) * 0.3 + 0.7;
-        ctx.fillStyle = `${nodeColor}${isDarkMode ? 0.4 * pulse : 0.25 * pulse})`;
+        ctx.fillStyle = `${nodeColor}${isDarkMode ? 0.35 * pulse : 0.22 * pulse})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.baseRadius, 0, Math.PI * 2);
         ctx.fill();
@@ -166,12 +176,11 @@ const GradientMesh = ({ isDarkMode }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none"
+      className="fixed inset-0 w-full h-full z-0 pointer-events-none"
       style={{ 
         mixBlendMode: 'normal',
         willChange: 'transform',
-        transform: 'translate3d(0, 0, 0)',
-        contain: 'layout style paint',
+        contain: 'strict',
       }}
     />
   );
