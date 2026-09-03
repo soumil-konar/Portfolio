@@ -1,3 +1,4 @@
+// src/components/ProjectModal.jsx
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,12 +11,20 @@ import {
   CheckCircle2, 
   Activity, 
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Play,
+  Terminal,
+  Copy,
+  Check
 } from 'lucide-react';
+import { sound } from '../utils/audio';
 
 const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
-  const [activeTab, setActiveTab] = useState('architecture'); // 'architecture' | 'highlights' | 'metrics'
+  const [activeTab, setActiveTab] = useState('architecture'); // 'architecture' | 'highlights' | 'metrics' | 'trace'
   const [mounted] = useState(() => typeof window !== 'undefined');
+  const [isTracing, setIsTracing] = useState(false);
+  const [traceStep, setTraceStep] = useState(3);
+  const [copiedTrace, setCopiedTrace] = useState(false);
 
   // Handle ESC key press
   useEffect(() => {
@@ -29,6 +38,42 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
+
+  const runSimulation = () => {
+    sound.playPowerUp();
+    setIsTracing(true);
+    setTraceStep(0);
+
+    const stepInterval = setInterval(() => {
+      setTraceStep(prev => {
+        if (prev >= 3) {
+          clearInterval(stepInterval);
+          setIsTracing(false);
+          sound.playChime(600);
+          return 3;
+        }
+        sound.playClick();
+        return prev + 1;
+      });
+    }, 450);
+  };
+
+  const handleCopyTrace = () => {
+    sound.playClick();
+    const traceJson = JSON.stringify({
+      project_id: project?.id,
+      project_name: project?.title,
+      protocol: project?.isEnterprise ? "MCP/Enterprise" : "OpenSource/Apache2",
+      p50_latency_ms: 118,
+      p99_latency_ms: 380,
+      timestamp: new Date().toISOString(),
+      steps_executed: project?.architecture?.map(a => a.step) || []
+    }, null, 2);
+
+    navigator.clipboard.writeText(traceJson);
+    setCopiedTrace(true);
+    setTimeout(() => setCopiedTrace(false), 2000);
+  };
 
   if (!isOpen || !project || !mounted) return null;
 
@@ -51,7 +96,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-          className={`relative w-full max-w-3xl rounded-2xl border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh] sm:max-h-[85vh] backdrop-blur-2xl ${
+          className={`relative w-full max-w-3xl rounded-2xl border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh] sm:max-h-[86vh] backdrop-blur-2xl ${
             isDarkMode 
               ? 'bg-slate-900/95 border-slate-700/80 text-slate-100' 
               : 'bg-white border-slate-200 shadow-2xl text-slate-900'
@@ -94,6 +139,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => sound.playClick()}
                   className={`p-1.5 sm:p-2 px-2.5 sm:px-3 rounded-lg border text-xs font-mono flex items-center space-x-1.5 transition-all shadow-xs font-semibold ${
                     isDarkMode
                       ? 'bg-indigo-600 hover:bg-indigo-500 text-white border-indigo-400'
@@ -107,7 +153,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                 </a>
               )}
               <button
-                onClick={onClose}
+                onClick={() => { sound.playClick(); onClose(); }}
                 className={`p-1.5 sm:p-2 rounded-xl border transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center ${
                   isDarkMode 
                     ? 'border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white' 
@@ -121,18 +167,19 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
             </div>
           </div>
 
-          {/* Sub Navigation Tabs with Horizontal Scroll for Mobile */}
+          {/* Sub Navigation Tabs */}
           <div className={`px-4 sm:px-6 pt-2 sm:pt-3 flex space-x-4 sm:space-x-6 border-b text-xs font-mono shrink-0 overflow-x-auto no-scrollbar ${
             isDarkMode ? 'border-slate-800 bg-slate-950/40' : 'border-slate-100 bg-slate-50/30'
           }`}>
             {[
-              { id: 'architecture', label: 'Architecture', sublabel: '& Flow', icon: <Workflow size={13} /> },
-              { id: 'highlights', label: 'Highlights', sublabel: '', icon: <CheckCircle2 size={13} /> },
-              { id: 'metrics', label: 'Impact & Stats', sublabel: '', icon: <Activity size={13} /> },
+              { id: 'architecture', label: 'Architecture & Flow', icon: <Workflow size={13} /> },
+              { id: 'highlights', label: 'Highlights', icon: <CheckCircle2 size={13} /> },
+              { id: 'metrics', label: 'Impact & Stats', icon: <Activity size={13} /> },
+              { id: 'trace', label: 'Live Trace Playground', icon: <Terminal size={13} /> },
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => { sound.playClick(); setActiveTab(tab.id); }}
                 className={`flex items-center space-x-1.5 pb-2 sm:pb-2.5 border-b-2 transition-all cursor-pointer font-semibold whitespace-nowrap shrink-0 text-xs ${
                   activeTab === tab.id
                     ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
@@ -141,7 +188,6 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
               >
                 <span>{tab.icon}</span>
                 <span>{tab.label}</span>
-                {tab.sublabel && <span className="hidden sm:inline">{tab.sublabel}</span>}
               </button>
             ))}
           </div>
@@ -248,6 +294,83 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                     ))}
                   </div>
                 )}
+              </motion.div>
+            )}
+
+            {/* TAB 4: LIVE TRACE PLAYGROUND */}
+            {activeTab === 'trace' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
+                      <Terminal size={13} className="text-indigo-400" />
+                      <span>Live Multi-Step Agent Execution Simulator:</span>
+                    </h4>
+                    <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                      Trace pipeline dispatch, context retrieval, and token synthesis
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={runSimulation}
+                    disabled={isTracing}
+                    className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-semibold shadow-md active:scale-95 disabled:opacity-50 cursor-pointer"
+                  >
+                    <Play size={12} className={isTracing ? 'animate-spin' : ''} />
+                    <span>{isTracing ? 'Tracing...' : 'Run Live Trace'}</span>
+                  </button>
+                </div>
+
+                {/* Simulated Execution Steps */}
+                <div className="space-y-2 font-mono text-xs">
+                  {[
+                    { step: "01. Intake & Vector Embedding", latency: "14ms", detail: "Computed 1536-dim text embedding via sentence-transformers" },
+                    { step: "02. Tool / Graph Resolution", latency: "38ms", detail: "Federated query dispatched to Neo4j Cypher and SQL Server" },
+                    { step: "03. State Verification", latency: "22ms", detail: "Schema constraint check & hallucination suppression active" },
+                    { step: "04. Output Synthesis", latency: "48ms", detail: "Streamed markdown response payload back to client gateway" }
+                  ].map((s, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
+                        traceStep >= idx
+                          ? isDarkMode ? 'bg-slate-950/90 border-emerald-500/40 text-slate-200' : 'bg-emerald-50/50 border-emerald-300 text-slate-900'
+                          : 'opacity-40 border-slate-800 bg-slate-950/20'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5">
+                        <span className={`w-2 h-2 rounded-full ${traceStep >= idx ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}`} />
+                        <div>
+                          <span className="font-bold block">{s.step}</span>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-sans">{s.detail}</span>
+                        </div>
+                      </div>
+                      <span className="text-emerald-500 dark:text-emerald-400 font-bold shrink-0">{s.latency}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Raw Telemetry JSON Box */}
+                <div className="p-3 rounded-xl border border-slate-800 bg-slate-950/90 font-mono text-[11px] text-slate-300 relative group/trace">
+                  <div className="flex items-center justify-between text-[10px] text-slate-500 mb-1 border-b border-slate-800/80 pb-1">
+                    <span>telemetry_trace.json</span>
+                    <button
+                      onClick={handleCopyTrace}
+                      className="flex items-center space-x-1 text-indigo-400 hover:text-indigo-300 cursor-pointer"
+                    >
+                      {copiedTrace ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
+                      <span>{copiedTrace ? 'Copied' : 'Copy Trace'}</span>
+                    </button>
+                  </div>
+                  <pre className="overflow-x-auto text-[10px] text-indigo-300">
+{`{
+  "project": "${project.title}",
+  "trace_id": "tr_0x8f4c2e",
+  "total_latency_ms": 122,
+  "confidence_score": 0.984,
+  "status": "HEALTHY_200"
+}`}
+                  </pre>
+                </div>
               </motion.div>
             )}
           </div>
