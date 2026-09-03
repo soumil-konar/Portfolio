@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion, useSpring } from 'framer-motion';
 
+import { sound } from '../utils/audio';
+
 const ThemeToggle = ({ isDarkMode, toggleTheme }) => {
   const chainY = useSpring(0, { damping: 15, stiffness: 200, mass: 1.5 });
   const handlePull = () => {
+    sound.playChime(isDarkMode ? 540 : 440);
     chainY.set(60);
     setTimeout(() => chainY.set(0), 150);
     toggleTheme();
