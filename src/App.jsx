@@ -18,6 +18,7 @@ import GradientMesh from './components/GradientMesh';
 import ScrollProgress from './components/ScrollProgress';
 import CustomCursor from './components/CustomCursor';
 import SkillModal from './components/SkillModal';
+import { ToastProvider } from './components/Toast';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
@@ -81,10 +82,11 @@ const App = () => {
   };
 
   return (
-    <div className={`min-h-dvh ${theme.bg} ${theme.text} overflow-x-hidden font-mono selection:bg-teal-200 selection:text-teal-900 relative`}>
-      
-      {/* --- Desktop Custom Cursor --- */}
-      <CustomCursor />
+    <ToastProvider isDarkMode={isDarkMode}>
+      <div className={`min-h-dvh ${theme.bg} ${theme.text} overflow-x-hidden font-sans selection:bg-indigo-500/30 selection:text-indigo-200 relative`}>
+        
+        {/* --- Desktop Custom Cursor --- */}
+        <CustomCursor />
 
       {/* --- Gradient Mesh Background --- */}
       <GradientMesh isDarkMode={isDarkMode} />
@@ -164,11 +166,11 @@ const App = () => {
           }}
           projects={PROJECTS}
           isDarkMode={isDarkMode}
-          theme={theme}
         />
       </div>
       
     </div>
+  </ToastProvider>
   );
 };
 

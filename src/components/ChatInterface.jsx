@@ -1,13 +1,18 @@
+// src/components/ChatInterface.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Terminal, Command } from 'lucide-react'; 
+import { motion, AnimatePresence } from 'framer-motion';
+import { Terminal, Command, Send, Sparkles, ChevronDown, Copy, Check, Trash2, ArrowUpRight } from 'lucide-react'; 
 import { SUGGESTED_QUESTIONS, SOCIAL_LINKS } from '../data'; 
+import { sound } from '../utils/audio';
 
-const ChatInterface = ({ isDarkMode, theme }) => {
+const ChatInterface = ({ isDarkMode }) => {
+  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [streamingText, setStreamingText] = useState('');
+  const [streamingThinking, setStreamingThinking] = useState('');
+  const [copiedIndex, setCopiedIndex] = useState(null);
+
   const chatEndRef = useRef(null);
-  
-  // --- FIX: Track first render to prevent auto-scrolling on load ---
   const isFirstRender = useRef(true);
   
   const [modifierKey] = useState(() => {
@@ -16,163 +21,296 @@ const ChatInterface = ({ isDarkMode, theme }) => {
   });
   
   const [chatHistory, setChatHistory] = useState([
-    { type: 'bot', text: "Hello! I am Soumil's virtual assistant. Ask me anything about his work in AI." }
+    { 
+      type: 'bot', 
+      text: "Hello! I am Soumil's AI Assistant (v2.6). Ask me anything about his production LangGraph orchestrators, Model Context Protocol (MCP) servers, or enterprise RAG systems.",
+      thinking: "Initialized session: loaded knowledge graph indices and enterprise project context."
+    }
   ]);
 
-  // --- UPDATED USE EFFECT ---
   useEffect(() => { 
-    // If it's the first time the page loads, DO NOT scroll.
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-
-    // Otherwise (new messages), scroll to bottom gently
     chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }); 
-  }, [chatHistory, isTyping]);
+  }, [chatHistory, isTyping, streamingText]);
 
+  const streamResponse = (fullText, thinkingText) => {
+    setIsTyping(true);
+    setStreamingText('');
+    setStreamingThinking(thinkingText);
+
+    let charIndex = 0;
+    const streamInterval = setInterval(() => {
+      charIndex += 4;
+      if (charIndex % 12 === 0) {
+        sound.playTypeBlip();
+      }
+
+      if (charIndex >= fullText.length) {
+        clearInterval(streamInterval);
+        setStreamingText('');
+        setStreamingThinking('');
+        setChatHistory(prev => [...prev, { type: 'bot', text: fullText, thinking: thinkingText }]);
+        setIsTyping(false);
+        sound.playChime(560);
+      } else {
+        setStreamingText(fullText.slice(0, charIndex));
+      }
+    }, 28);
+  };
 
   const handleAsk = (question) => {
-    setChatHistory(prev => [...prev, { type: 'user', text: question }]);
-    setIsTyping(true);
+    if (!question.trim() || isTyping) return;
+    sound.playClick();
     
+    setChatHistory(prev => [...prev, { type: 'user', text: question }]);
+    setInputValue('');
+
+    const { text, thinking } = getAnswer(question);
     setTimeout(() => {
-      let answer = getAnswer(question);
-      setChatHistory(prev => [...prev, { type: 'bot', text: answer }]);
-      setIsTyping(false);
-    }, 1000);
+      streamResponse(text, thinking);
+    }, 300);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleAsk(inputValue);
+  };
+
+  const handleCopyMessage = (text, idx) => {
+    sound.playClick();
+    navigator.clipboard.writeText(typeof text === 'string' ? text : "Soumil's Contact info copied.");
+    setCopiedIndex(idx);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
+  const handleClearChat = () => {
+    sound.playClick();
+    setChatHistory([
+      { 
+        type: 'bot', 
+        text: "Terminal reset. How can I assist you with Soumil's AI engineering portfolio?",
+        thinking: "Memory buffer cleared."
+      }
+    ]);
   };
 
   const getAnswer = (q) => {
-    const linkStyle = "underline font-bold hover:text-indigo-500 transition-colors";
     const lower = q.toLowerCase();
 
+    if (lower.startsWith('/clear')) {
+      handleClearChat();
+      return { text: "Cleared.", thinking: "" };
+    }
+
+    if (lower.startsWith('/help') || lower.startsWith('/commands')) {
+      return {
+        text: "Supported slash commands:\n• /projects - Overview of key production architectures\n• /skills - Core AI and systems stack\n• /resume - Direct resume download\n• /contact - Email and LinkedIn links\n• /clear - Reset conversation session",
+        thinking: "Parsed /help command. Outputting available shell routing capabilities."
+      };
+    }
+
     if (lower.includes("who")) {
-      return "Soumil is a Generative AI Engineer specialized in architecting production-grade LLM systems, RAG microservices, and agentic workflows for mission-critical enterprise platforms.";
+      return {
+        text: "Soumil Konar is a Generative AI Systems Engineer specialized in architecting production-grade LLM systems, RAG microservices, and agentic workflows for enterprise platforms.",
+        thinking: "Intent: PROFILE_LOOKUP. Vector distance: 0.04. Retrieved executive summary."
+      };
     }
 
     if (lower.includes("orchestrator") || lower.includes("langgraph")) {
-      return "He architected a descriptor-driven RAG orchestrator with a 4-node LangGraph pipeline routing across 5 use cases (schedule impact, resource recommendation, conflict detection, copilot, and fallback) over 10,000+ enterprise task schedules.";
+      return {
+        text: "He architected a descriptor-driven RAG orchestrator with a 4-node LangGraph pipeline routing across 5 use cases (schedule impact, resource recommendation, conflict detection, copilot, and fallback) over 10,000+ enterprise task schedules.",
+        thinking: "Intent: ARCHITECTURE_LANGGRAPH. Querying property graph node for Multi-Use-Case Orchestrator."
+      };
     }
 
     if (lower.includes("mcp") || lower.includes("tool")) {
-      return "He built dual Model Context Protocol (MCP) servers enabling AI assistants to securely query Neo4j (Cypher) and SQL Server (T-SQL) directly as intelligent tool interfaces.";
+      return {
+        text: "He engineered dual Model Context Protocol (MCP) servers enabling AI assistants to securely query Neo4j (Cypher) and SQL Server (T-SQL) as standardized tools.",
+        thinking: "Intent: MCP_PROTOCOL. Dispatched tool metadata schema and transport details."
+      };
     }
 
-    if (lower.includes("skill") || lower.includes("tech") || lower.includes("core")) {
-      return "His core expertise covers LangGraph, Semantic Kernel, Neo4j, FastAPI, ChromaDB, pgvector, Python, PyTorch/TensorFlow, SQL Server, Docker, and GitLab CI/CD.";
+    if (lower.includes("skill") || lower.includes("tech") || lower.includes("stack")) {
+      return {
+        text: "His core stack covers LangGraph, Semantic Kernel, Neo4j, FastAPI, ChromaDB, pgvector, Python, PyTorch/TensorFlow, PostgreSQL, Docker, and GitLab CI/CD.",
+        thinking: "Intent: SKILLS_QUERY. Retaining 12 production-verified technical competencies."
+      };
     }
 
-    if (lower.includes("graph") || lower.includes("etl") || lower.includes("neo4j")) {
-      return "He engineered a high-throughput Neo4j graph ETL pipeline transforming relational schedules into a 10+ label property graph with predecessor parsing for downstream impact analysis.";
+    if (lower.includes("contact") || lower.includes("email") || lower.includes("reach") || lower.startsWith('/contact')) {
+      return {
+        text: `You can reach Soumil directly via Email at soumil.konar2001@gmail.com or connect on LinkedIn (https://linkedin.com/in/soumil-konar).`,
+        thinking: "Intent: CONTACT_DISPATCH. Retrieved validated social endpoints."
+      };
     }
 
-    if (lower.includes("rag") || lower.includes("experience")) {
-      return "He has built 8+ production RAG microservices using FastAPI, Semantic Kernel, and LangGraph with NLQ-to-SQL, hybrid vector/metadata search, and multi-turn query rewriting.";
-    }
-
-    if (lower.includes("outfit") || lower.includes("fashion")) {
-      return "He created a fashion recommendation engine combining NLP and computer vision with LLM-based trend analysis for context-aware personalized styling.";
-    }
-    
-    if (lower.includes("contact") || lower.includes("email") || lower.includes("reach")) {
-      return (
-        <span>
-          You can reach him via{' '}
-          <a href={SOCIAL_LINKS.email} className={linkStyle}>Email</a>
-          {' '}or connect on{' '}
-          <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className={linkStyle}>LinkedIn</a>.
-        </span>
-      );
+    if (lower.includes("resume") || lower.startsWith('/resume')) {
+      return {
+        text: "You can download Soumil's complete engineering resume in PDF format using the button in the hero header or by clicking the beacon icon in the bottom right corner.",
+        thinking: "Intent: RESUME_DOWNLOAD. Pointing to static asset /resume.pdf."
+      };
     }
 
     if (lower.includes("hobbies") || lower.includes("hobby")) {
-      return "He enjoys Fantasy Premier League (FPL), Sci-Fi novels, 3D modeling, and exploring new AI architectures.";
+      return {
+        text: "Outside of neural architectures, he enjoys Fantasy Premier League (FPL), Sci-Fi literature, 3D modeling, and exploring new AI research papers.",
+        thinking: "Intent: PERSONAL_INTERESTS. Retrieved non-work interests."
+      };
     }
     
-    return "I am trained on Soumil's AI engineering work, RAG architectures, and agentic workflows. Feel free to ask about his LangGraph pipelines, MCP servers, or technical stack!";
+    return {
+      text: "I am trained on Soumil's AI engineering work, RAG architectures, and agentic workflows. Feel free to ask about his LangGraph pipelines, MCP servers, or technical stack!",
+      thinking: "Intent: GENERAL_QUERY. Fallback to AI engineering domain context."
+    };
   };
 
   return (
-    <section className="flex-1 flex flex-col justify-end min-h-0 pb-4 group">
-      <div className={`w-full max-w-2xl mx-auto rounded-2xl overflow-hidden border flex flex-col h-[360px] sm:h-[380px] md:h-[400px] backdrop-blur-xl transition-all duration-300 ${
+    <section className="flex-1 flex flex-col justify-end min-h-0 pb-4 group select-none">
+      <div className={`w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border flex flex-col h-[400px] sm:h-[440px] md:h-[480px] backdrop-blur-xl transition-all duration-300 ${
         isDarkMode 
           ? 'bg-slate-900/90 border-slate-700/90 shadow-2xl' 
           : 'bg-white/95 border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
       }`}>
         
         {/* Terminal Header */}
-        <div className={`h-8 shrink-0 flex items-center justify-between px-3 sm:px-4 backdrop-blur-md ${
+        <div className={`h-9 shrink-0 flex items-center justify-between px-3 sm:px-4 backdrop-blur-md ${
           isDarkMode ? 'bg-slate-950 border-b border-slate-800' : 'bg-slate-100/90 border-b border-slate-200'
         }`}>
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-            <div className="ml-2 sm:ml-4 text-[10px] font-mono select-none text-slate-600 dark:text-slate-300 font-semibold">
-              <span className="hidden sm:inline">interactive_resume.sh</span>
-              <span className="sm:hidden">term.sh</span>
+            <div className="ml-2 text-[10px] font-mono select-none text-slate-600 dark:text-slate-300 font-semibold flex items-center space-x-1.5">
+              <span>soumil-agent-terminal.sh</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">v2.6</span>
             </div>
           </div>
 
-          {/* Command Palette Trigger: interactive button for mobile/touch, desktop shows hint */}
-          <button
-            onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
-            className={`flex items-center space-x-1 text-[10px] font-mono px-2 py-0.5 rounded border transition-colors cursor-pointer ${
-              isDarkMode 
-                ? 'border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 bg-slate-900/50' 
-                : 'border-slate-200 text-slate-600 hover:text-slate-900 bg-slate-50'
-            }`}
-            title="Open Command Palette (Ctrl+K)"
-          >
-            <Command size={10} />
-            <span className="hidden sm:inline">{modifierKey} + K</span>
-            <span className="sm:hidden">Menu</span>
-          </button>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleClearChat}
+              title="Clear Terminal Session"
+              className="text-slate-400 hover:text-red-400 transition-colors p-1 cursor-pointer"
+            >
+              <Trash2 size={12} />
+            </button>
+
+            {/* Command Palette Trigger */}
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
+              className={`flex items-center space-x-1 text-[10px] font-mono px-2 py-0.5 rounded border transition-colors cursor-pointer ${
+                isDarkMode 
+                  ? 'border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 bg-slate-900/50' 
+                  : 'border-slate-200 text-slate-600 hover:text-slate-900 bg-slate-50'
+              }`}
+              title="Open Command Palette (Ctrl+K)"
+            >
+              <Command size={10} />
+              <span className="hidden sm:inline">{modifierKey} + K</span>
+              <span className="sm:hidden">Menu</span>
+            </button>
+          </div>
         </div>
 
-        {/* Chat Body */}
+        {/* Chat Messages Body */}
         <div className={`flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 backdrop-blur-sm ${
           isDarkMode ? 'bg-slate-950/50' : 'bg-slate-50/50'
         }`}>
           {chatHistory.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`flex items-end gap-1.5 sm:gap-2 max-w-[88%] sm:max-w-[80%]`}>
-                {msg.type === 'bot' && <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 shadow-sm shadow-indigo-500/40"><Terminal size={14} className="text-white"/></div>}
-                <div className={`rounded-xl sm:rounded-lg px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm shadow-sm leading-relaxed ${msg.type === 'user' ? theme.chatUser : theme.chatBot}`}>
-                  {msg.text}
+              <div className="flex items-end gap-2 max-w-[90%] sm:max-w-[85%] group/msg">
+                {msg.type === 'bot' && (
+                  <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 shadow-sm shadow-indigo-500/40">
+                    <Terminal size={13} className="text-white"/>
+                  </div>
+                )}
+                
+                <div className="flex flex-col">
+                  {/* Optional Thinking Accordion */}
+                  {msg.thinking && (
+                    <div className="mb-1.5 text-[10px] font-mono text-slate-500 flex items-center space-x-1">
+                      <span className="text-indigo-400">⚡ Reasoning Graph:</span>
+                      <span className="italic">{msg.thinking}</span>
+                    </div>
+                  )}
+
+                  <div className={`relative rounded-xl px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm leading-relaxed ${
+                    msg.type === 'user'
+                      ? 'bg-indigo-600 text-white rounded-br-none shadow-md font-mono'
+                      : isDarkMode
+                        ? 'bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-none shadow-sm'
+                        : 'bg-white border border-slate-200 text-slate-800 rounded-bl-none shadow-xs'
+                  }`}>
+                    <div className="whitespace-pre-wrap font-sans">{msg.text}</div>
+
+                    {msg.type === 'bot' && (
+                      <button
+                        onClick={() => handleCopyMessage(msg.text, idx)}
+                        className="absolute -right-7 top-2 opacity-0 group-hover/msg:opacity-100 transition-opacity p-1 text-slate-400 hover:text-white"
+                        title="Copy Response"
+                      >
+                        {copiedIndex === idx ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
           ))}
+
+          {/* Real-Time Typewriter Streaming State */}
           {isTyping && (
-             <div className="flex items-center gap-2">
-                 <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shadow-sm shadow-indigo-500/40"><Terminal size={14} className="text-white"/></div>
-                 <div className={`${theme.chatBot} rounded-xl sm:rounded-lg px-3.5 sm:px-4 py-2.5 sm:py-3 flex space-x-1`}>
-                    <div className="w-1.5 h-1.5 bg-current rounded-full animate-bounce"></div>
-                    <div className="w-1.5 h-1.5 bg-current rounded-full animate-bounce delay-100"></div>
-                    <div className="w-1.5 h-1.5 bg-current rounded-full animate-bounce delay-200"></div>
-                 </div>
-             </div>
+            <div className="flex items-end gap-2 max-w-[90%]">
+              <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 shadow-sm shadow-indigo-500/40">
+                <Terminal size={13} className="text-white"/>
+              </div>
+
+              <div className="flex flex-col">
+                {streamingThinking && (
+                  <div className="mb-1.5 text-[10px] font-mono text-indigo-400 flex items-center space-x-1 animate-pulse">
+                    <span>⚡ Generating response...</span>
+                  </div>
+                )}
+
+                <div className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed border ${
+                  isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+                }`}>
+                  {streamingText ? (
+                    <span>
+                      {streamingText}
+                      <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-indigo-400 animate-pulse align-middle" />
+                    </span>
+                  ) : (
+                    <div className="flex space-x-1 py-1">
+                      <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce delay-100"></div>
+                      <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce delay-200"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           )}
+
           <div ref={chatEndRef} />
         </div>
 
-        {/* Suggestion Chips: Single-row horizontal scroll on mobile, multi-row flex on desktop */}
-        <div className={`p-2 sm:p-3 border-t backdrop-blur-md overflow-hidden ${
-          isDarkMode 
-            ? 'border-slate-800 bg-slate-950/80' 
-            : 'border-slate-200/90 bg-white/95'
+        {/* Suggestion Chips */}
+        <div className={`px-3 py-1.5 border-t backdrop-blur-md overflow-hidden ${
+          isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-200/90 bg-white/95'
         }`}>
-          <div className="flex sm:flex-wrap gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
+          <div className="flex sm:flex-wrap gap-1.5 overflow-x-auto no-scrollbar py-0.5">
             {SUGGESTED_QUESTIONS.map((q, i) => (
               <button 
                 key={i} 
                 onClick={() => handleAsk(q)} 
                 disabled={isTyping} 
-                className={`text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all hover:-translate-y-0.5 font-medium cursor-pointer whitespace-nowrap shrink-0 ${
+                className={`text-[10px] sm:text-[11px] px-2.5 py-1 rounded-full border transition-all hover:-translate-y-0.5 font-mono cursor-pointer whitespace-nowrap shrink-0 ${
                   isDarkMode 
-                    ? 'border-slate-700 bg-slate-900/80 hover:bg-indigo-950/60 hover:border-indigo-400 text-indigo-300 hover:text-white' 
+                    ? 'border-slate-800 bg-slate-900/80 hover:bg-indigo-950/60 hover:border-indigo-400 text-indigo-300 hover:text-white' 
                     : 'border-slate-200 bg-white hover:bg-indigo-50 hover:border-indigo-300 text-indigo-700 shadow-2xs'
                 }`}
               >
@@ -181,8 +319,36 @@ const ChatInterface = ({ isDarkMode, theme }) => {
             ))}
           </div>
         </div>
+
+        {/* Input Bar */}
+        <form
+          onSubmit={handleSubmit}
+          className={`p-2 sm:p-2.5 border-t flex items-center gap-2 backdrop-blur-md ${
+            isDarkMode ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-slate-50'
+          }`}
+        >
+          <span className="text-[11px] font-mono text-indigo-500 font-bold pl-2 hidden sm:inline">$</span>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            disabled={isTyping}
+            placeholder="Ask about LangGraph, MCP, or type /help..."
+            className={`flex-1 bg-transparent px-2 py-1.5 text-xs sm:text-sm font-mono outline-none ${
+              isDarkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
+            }`}
+          />
+          <button
+            type="submit"
+            disabled={isTyping || !inputValue.trim()}
+            className="p-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white disabled:opacity-40 transition-all cursor-pointer shrink-0 active:scale-95"
+          >
+            <Send size={13} />
+          </button>
+        </form>
       </div>
     </section>
   );
 };
+
 export default ChatInterface;

@@ -1,3 +1,4 @@
+// src/components/AgentPipelineVisualizer.jsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -14,8 +15,12 @@ import {
   Sparkles, 
   Network, 
   Server,
-  Zap
+  Zap,
+  ShieldCheck,
+  Clock,
+  LayoutGrid
 } from 'lucide-react';
+import { sound } from '../utils/audio';
 
 const SCENARIOS = [
   {
@@ -73,6 +78,20 @@ const SCENARIOS = [
     queryCode: `SELECT doc_chunk, 1 - (embedding <=> $query_vec) AS sim_score\nFROM engineering_specs\nWHERE sim_score > 0.82\nORDER BY sim_score DESC LIMIT 5;`,
     output: `📄 Generated ATA Spec #24-10-02 Scope-of-Work. 7-step prompt chain verified with 94.2% semantic relevance score.`,
     metrics: { classifier: 18, routing: 11, toolExec: 42, synthesis: 99, total: 170 }
+  },
+  {
+    id: 'stateful_rag',
+    label: 'Stateful Context Rewriting',
+    icon: <Brain size={14} />,
+    query: 'What about their contingency budget after the recent schedule adjustment?',
+    intent: 'MULTI_TURN_REWRITE',
+    confidence: 0.96,
+    plugin: 'stateful_conversation_rewriter.yaml',
+    toolName: 'LangGraph State Checkpointer + Hybrid Retrieval',
+    toolIcon: <Workflow size={16} />,
+    queryCode: `// LangGraph State Injection\n{\n  "session_id": "sess_8941",\n  "rewritten_query": "Avionics Task #4092 contingency budget reserves Q3",\n  "memory_turns": 4\n}`,
+    output: `💡 Context resolved: Contingency reserves for Task #4092 currently stand at $42,500 with $18,000 committed to auxiliary contractors.`,
+    metrics: { classifier: 10, routing: 7, toolExec: 31, synthesis: 60, total: 108 }
   }
 ];
 
@@ -80,31 +99,37 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
   const [selectedScenario, setSelectedScenario] = useState(SCENARIOS[0]);
   const [activeStep, setActiveStep] = useState(4); // 0 = idle, 1 = classifier, 2 = router, 3 = tool, 4 = complete
   const [isRunning, setIsRunning] = useState(false);
-  const [activeTab, setActiveTab] = useState('output'); // 'output' | 'query' | 'telemetry'
+  const [activeTab, setActiveTab] = useState('output'); // 'output' | 'query' | 'telemetry' | 'state'
+  const [viewMode, setViewMode] = useState('dag'); // 'dag' | 'waterfall'
   const [inspectedNode, setInspectedNode] = useState(null);
 
   // Run pipeline animation step-by-step
   const runSimulation = () => {
     if (isRunning) return;
+    sound.playPowerUp();
     setIsRunning(true);
     setActiveStep(1);
     setInspectedNode(null);
 
     setTimeout(() => {
+      sound.playClick();
       setActiveStep(2);
     }, 600);
 
     setTimeout(() => {
+      sound.playClick();
       setActiveStep(3);
     }, 1300);
 
     setTimeout(() => {
+      sound.playChime(620);
       setActiveStep(4);
       setIsRunning(false);
     }, 2000);
   };
 
   const handleScenarioChange = (scenario) => {
+    sound.playClick();
     setSelectedScenario(scenario);
     setInspectedNode(null);
     if (!isRunning) {
@@ -121,6 +146,11 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       detail: `Classified as: ${selectedScenario.intent}`,
       subdetail: `Confidence: ${(selectedScenario.confidence * 100).toFixed(0)}%`,
       badge: `${selectedScenario.metrics.classifier}ms`,
+      stateSnippet: {
+        intent: selectedScenario.intent,
+        confidence: selectedScenario.confidence,
+        raw_tokens: selectedScenario.query.split(' ').length
+      }
     },
     {
       id: 2,
@@ -130,6 +160,11 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       detail: `YAML: ${selectedScenario.plugin}`,
       subdetail: 'Dynamic Schema Mapped',
       badge: `${selectedScenario.metrics.routing}ms`,
+      stateSnippet: {
+        descriptor_file: selectedScenario.plugin,
+        target_executor: selectedScenario.toolName,
+        schema_validation: "VALIDATED_OK"
+      }
     },
     {
       id: 3,
@@ -139,6 +174,11 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       detail: selectedScenario.toolName,
       subdetail: 'Dynamic Query Dispatched',
       badge: `${selectedScenario.metrics.toolExec}ms`,
+      stateSnippet: {
+        tool_dispatched: selectedScenario.toolName,
+        execution_latency: `${selectedScenario.metrics.toolExec}ms`,
+        query_preview: selectedScenario.queryCode.slice(0, 60) + '...'
+      }
     },
     {
       id: 4,
@@ -146,8 +186,13 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       role: 'LLM Response',
       icon: <Terminal size={18} />,
       detail: 'Synthesized Context',
-      subdetail: 'ATA / JSON Format Verified',
+      subdetail: 'Verified Response Payload',
       badge: `${selectedScenario.metrics.synthesis}ms`,
+      stateSnippet: {
+        synthesis_model: "gpt-4o / Claude 3.5 Sonnet",
+        guardrails_status: "PASSED",
+        total_time_ms: selectedScenario.metrics.total
+      }
     },
   ];
 
@@ -157,7 +202,7 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="my-8 sm:my-10 md:my-14 shrink-0 relative group"
+      className="my-6 sm:my-10 md:my-14 shrink-0 relative group select-none"
     >
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-5 px-1 sm:px-2 gap-3">
@@ -171,26 +216,49 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight mt-1 text-slate-900 dark:text-white">
             Descriptor-Driven LangGraph Orchestrator
           </h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5 hidden sm:block">
+            Simulate real-time intent routing, dynamic tool dispatching, and state synthesis
+          </p>
         </div>
 
-        <div className="flex items-center space-x-2 self-stretch sm:self-auto">
+        <div className="flex items-center space-x-2 self-stretch sm:self-auto justify-between sm:justify-end">
+          {/* DAG vs Waterfall view switcher */}
+          <div className="flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md bg-slate-900/30 border-slate-800 text-[11px] font-mono">
+            <button
+              onClick={() => { sound.playClick(); setViewMode('dag'); }}
+              className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
+                viewMode === 'dag' ? 'bg-indigo-600 text-white font-semibold' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              DAG Graph
+            </button>
+            <button
+              onClick={() => { sound.playClick(); setViewMode('waterfall'); }}
+              className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
+                viewMode === 'waterfall' ? 'bg-indigo-600 text-white font-semibold' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Waterfall Trace
+            </button>
+          </div>
+
           <button
             onClick={runSimulation}
             disabled={isRunning}
-            className={`w-full sm:w-auto justify-center flex items-center space-x-2 text-xs font-mono px-4 py-2.5 sm:py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
+            className={`flex items-center space-x-2 text-xs font-mono px-4 py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
               isRunning 
-                ? 'bg-indigo-500/50 text-white cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40 font-semibold'
+                ? 'bg-indigo-900/60 border border-indigo-500/40 text-indigo-200 cursor-not-allowed' 
+                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20'
             }`}
           >
             {isRunning ? (
               <>
-                <Activity size={14} className="animate-spin" />
-                <span>Executing Pipeline...</span>
+                <RotateCcw size={13} className="animate-spin text-indigo-300" />
+                <span>Simulating...</span>
               </>
             ) : (
               <>
-                <Play size={14} className="fill-current" />
+                <Play size={13} className="fill-current" />
                 <span>Simulate Execution</span>
               </>
             )}
@@ -198,254 +266,210 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
         </div>
       </div>
 
-      {/* Main Container */}
-      <div 
-        className={`w-full rounded-2xl border backdrop-blur-xl p-4 sm:p-5 md:p-7 transition-all duration-300 ${
-          isDarkMode 
-            ? 'bg-slate-900/90 border-slate-700/90 shadow-2xl' 
-            : 'bg-white/95 border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
-        }`}
-      >
-        {/* Scenario Selection Chips */}
-        <div className="mb-6">
-          <div className="text-[11px] font-mono uppercase tracking-wider font-bold mb-2.5 text-slate-600 dark:text-slate-300">
-            Select Live Scenario:
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {SCENARIOS.map((scenario) => {
-              const isSelected = selectedScenario.id === scenario.id;
-              return (
-                <button
-                  key={scenario.id}
-                  onClick={() => handleScenarioChange(scenario)}
-                  disabled={isRunning}
-                  className={`flex items-center space-x-2 text-xs font-mono px-3.5 py-2 rounded-lg border transition-all duration-200 cursor-pointer ${
-                    isSelected
-                      ? isDarkMode
-                        ? 'bg-indigo-600/30 border-indigo-400 text-white shadow-md shadow-indigo-500/20 font-bold'
-                        : 'bg-indigo-50 border-indigo-400 text-indigo-700 shadow-2xs font-bold'
-                      : isDarkMode
-                      ? 'bg-slate-800/80 border-slate-700 text-slate-200 hover:border-indigo-400 hover:text-white hover:bg-slate-800 font-medium'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-indigo-300 font-medium'
-                  }`}
-                >
-                  <span>{scenario.icon}</span>
-                  <span className="font-semibold">{scenario.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+      {/* Scenario Selection Chips */}
+      <div className="flex overflow-x-auto no-scrollbar space-x-2 pb-2 mb-4 px-1">
+        {SCENARIOS.map((scenario) => (
+          <button
+            key={scenario.id}
+            onClick={() => handleScenarioChange(scenario)}
+            className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all whitespace-nowrap cursor-pointer shrink-0 ${
+              selectedScenario.id === scenario.id
+                ? isDarkMode 
+                  ? 'bg-indigo-600 text-white border-indigo-400 shadow-sm' 
+                  : 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                : isDarkMode 
+                  ? 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800' 
+                  : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+            }`}
+          >
+            <span className={selectedScenario.id === scenario.id ? 'text-white' : 'text-indigo-400'}>
+              {scenario.icon}
+            </span>
+            <span className="font-semibold">{scenario.label}</span>
+          </button>
+        ))}
+      </div>
 
-        {/* Live Input Bar */}
-        <div 
-          className={`p-3.5 rounded-xl border mb-6 flex items-center space-x-3 text-xs font-mono ${
-            isDarkMode 
-              ? 'bg-slate-950/80 border-slate-700/80 text-slate-100' 
-              : 'bg-slate-50 border-slate-200 text-slate-900 font-medium'
-          }`}
-        >
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0 shadow-sm shadow-emerald-500/50" />
-          <span className="font-bold select-none hidden sm:inline text-emerald-600 dark:text-emerald-400 uppercase tracking-wider text-[10px]">query:</span>
-          <span className="font-medium truncate text-slate-900 dark:text-slate-100">{selectedScenario.query}</span>
+      {/* Active Natural Language Query Card */}
+      <div className={`p-3.5 sm:p-4 rounded-xl border mb-5 backdrop-blur-md transition-all ${
+        isDarkMode 
+          ? 'bg-slate-950/80 border-slate-800 shadow-inner' 
+          : 'bg-white/90 border-slate-200/90 shadow-2xs'
+      }`}>
+        <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase tracking-widest font-semibold mb-1">
+          <span>Inbound Enterprise Query:</span>
+          <span className="text-emerald-500 flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Active Session</span>
+          </span>
         </div>
+        <p className="text-xs sm:text-sm font-sans font-medium text-slate-900 dark:text-slate-100 italic">
+          "{selectedScenario.query}"
+        </p>
+      </div>
 
-        {/* 4-Node LangGraph Flowchart */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 relative mb-6">
+      {/* MAIN VISUALIZATION: DAG FLOW vs WATERFALL */}
+      {viewMode === 'dag' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 relative mb-5">
           {nodes.map((node, index) => {
-            const isActive = activeStep === node.id;
-            const isCompleted = activeStep > node.id;
-            const isInspected = inspectedNode === node.id;
+            const isNodeActive = activeStep >= node.id;
+            const isCurrent = activeStep === node.id && isRunning;
+            const isInspected = inspectedNode?.id === node.id;
 
             return (
               <React.Fragment key={node.id}>
-                <motion.div
-                  onClick={() => setInspectedNode(node.id)}
-                  whileHover={{ y: -2 }}
-                  className={`relative rounded-xl p-3.5 sm:p-4 border transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? isDarkMode
-                        ? 'border-indigo-400 ring-2 ring-indigo-500/50 shadow-xl shadow-indigo-500/20 bg-slate-800/95 text-white'
-                        : 'border-indigo-500 ring-2 ring-indigo-400/30 shadow-md bg-indigo-50/80 text-slate-900'
-                      : isCompleted
-                      ? isDarkMode
-                        ? 'bg-slate-900/90 border-slate-700/90 text-slate-100'
-                        : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
-                      : isDarkMode
-                      ? 'bg-slate-900/60 border-slate-700/80 text-slate-200 hover:border-slate-500'
-                      : 'bg-slate-50/80 border-slate-200 opacity-70 text-slate-600'
-                  } ${
-                    isInspected ? 'ring-2 ring-emerald-500' : ''
+                <div
+                  onClick={() => {
+                    sound.playClick();
+                    setInspectedNode(node);
+                    setActiveTab('state');
+                  }}
+                  className={`p-4 rounded-xl border backdrop-blur-xl transition-all duration-300 cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[140px] group ${
+                    isInspected
+                      ? 'ring-2 ring-indigo-500 border-indigo-400 shadow-lg'
+                      : isNodeActive
+                        ? isDarkMode
+                          ? 'bg-slate-900/90 border-slate-700/90 shadow-lg hover:border-indigo-400'
+                          : 'bg-white/95 border-slate-200/90 shadow-sm hover:border-indigo-400'
+                        : isDarkMode
+                          ? 'bg-slate-950/40 border-slate-800/60 opacity-40'
+                          : 'bg-slate-100/40 border-slate-200/50 opacity-40'
                   }`}
                 >
-                  {/* Node Header */}
-                  <div className="flex items-center justify-between mb-2 sm:mb-2.5">
-                    <div className="flex items-center space-x-2">
-                      <div 
-                        className={`p-1.5 rounded-lg ${
-                          isActive
-                            ? 'bg-indigo-500 text-white animate-pulse'
-                            : isCompleted
-                            ? isDarkMode ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-                            : isDarkMode ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-slate-200 text-slate-700'
-                        }`}
-                      >
+                  {isCurrent && (
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 animate-pulse" />
+                  )}
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className={`p-2 rounded-lg ${
+                        isNodeActive ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'
+                      }`}>
                         {node.icon}
                       </div>
-                      <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-slate-500 dark:text-slate-300">
-                        Node 0{node.id}
-                      </span>
+
+                      <div className="flex items-center space-x-1.5">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                          {node.badge}
+                        </span>
+                        {isNodeActive && <CheckCircle2 size={14} className="text-emerald-400" />}
+                      </div>
                     </div>
 
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
-                      isDarkMode ? 'bg-slate-800 border border-slate-700 text-indigo-300' : 'bg-indigo-50 border border-indigo-100 text-indigo-700'
-                    }`}>
-                      {node.badge}
-                    </span>
+                    <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white font-mono">
+                      {node.title}
+                    </h4>
+                    <p className="text-[11px] font-sans text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                      {node.detail}
+                    </p>
                   </div>
 
-                  {/* Node Body */}
-                  <h4 className="font-bold text-xs md:text-sm mb-1 text-slate-900 dark:text-white">{node.title}</h4>
-                  <p className="text-[11px] font-mono truncate mb-1 text-indigo-700 dark:text-indigo-300 font-medium">{node.detail}</p>
-                  <p className="text-[10px] font-sans truncate text-slate-600 dark:text-slate-300">{node.subdetail}</p>
+                  <div className="mt-3 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[10px] font-mono text-indigo-400">
+                    <span>{node.subdetail}</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity">Inspect State ↗</span>
+                  </div>
+                </div>
 
-                  {/* Flow Connection Arrow for Desktop */}
-                  {index < 3 && (
-                    <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-indigo-400">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  )}
-                </motion.div>
-
-                {/* Vertical Downward Connector Arrow for Mobile (Single Column) */}
-                {index < 3 && (
-                  <div className="flex sm:hidden justify-center -my-1 text-indigo-400/60">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 5v14M5 12l7 7 7-7" />
-                    </svg>
+                {/* Arrow connector on mobile */}
+                {index < nodes.length - 1 && (
+                  <div className="sm:hidden flex justify-center text-slate-600 py-0.5">
+                    <span className="text-xs">↓</span>
                   </div>
                 )}
               </React.Fragment>
             );
           })}
         </div>
-
-        {/* Telemetry & Output Inspector Drawer */}
-        <div 
-          className={`rounded-xl border overflow-hidden ${
-            isDarkMode ? 'bg-slate-950/90 border-slate-700/80 shadow-lg' : 'bg-white border-slate-200 shadow-sm'
-          }`}
-        >
-          {/* Tabs Bar with Mobile Overflow Support */}
-          <div 
-            className={`flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 border-b text-xs font-mono gap-2 ${
-              isDarkMode ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-slate-50/70'
-            }`}
-          >
-            <div className="flex space-x-3 sm:space-x-4 overflow-x-auto no-scrollbar">
-              <button
-                onClick={() => setActiveTab('output')}
-                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer whitespace-nowrap ${
-                  activeTab === 'output'
-                    ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                <span className="hidden sm:inline">Synthesized </span>Output
-              </button>
-              <button
-                onClick={() => setActiveTab('query')}
-                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer whitespace-nowrap ${
-                  activeTab === 'query'
-                    ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                <span className="hidden sm:inline">Generated </span>Query<span className="hidden sm:inline"> / Payload</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('telemetry')}
-                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer whitespace-nowrap ${
-                  activeTab === 'telemetry'
-                    ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
-                    : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                <span className="hidden sm:inline">Execution </span>Telemetry
-              </button>
-            </div>
-
-            <div className="flex items-center space-x-1.5 text-[10px] text-slate-600 dark:text-slate-300 font-semibold self-end sm:self-auto shrink-0">
-              <Activity size={12} className="text-indigo-500 dark:text-indigo-400" />
-              <span>{selectedScenario.metrics.total}ms total</span>
-            </div>
+      ) : (
+        /* WATERFALL TRACE VIEW */
+        <div className={`p-4 rounded-xl border mb-5 backdrop-blur-md ${
+          isDarkMode ? 'bg-slate-950/90 border-slate-800' : 'bg-white border-slate-200'
+        }`}>
+          <div className="flex items-center justify-between mb-3 text-xs font-mono font-bold text-slate-700 dark:text-slate-300 border-b border-slate-800 pb-2">
+            <span>Execution Timeline Waterfall (Total: {selectedScenario.metrics.total}ms)</span>
+            <span className="text-emerald-400 font-normal">P99: Sub-200ms</span>
           </div>
 
-          {/* Tab Content */}
-          <div className="p-4 font-mono text-xs">
-            {activeTab === 'output' && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-2">
-                <div className="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 text-[11px] mb-1 font-bold">
-                  <CheckCircle2 size={14} />
-                  <span>Pipeline Execution Finished Successfully</span>
-                </div>
-                <div className={`p-4 rounded-lg leading-relaxed border font-medium ${
-                  isDarkMode ? 'bg-slate-900/90 border-slate-700/90 text-slate-100' : 'bg-slate-50 border-slate-200 text-slate-900'
-                }`}>
-                  {selectedScenario.output}
-                </div>
-              </motion.div>
-            )}
+          <div className="space-y-3 font-mono text-xs">
+            {nodes.map((node) => {
+              const ms = parseInt(node.badge.replace('ms', ''));
+              const pct = (ms / selectedScenario.metrics.total) * 100;
 
-            {activeTab === 'query' && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="text-[10px] uppercase tracking-wider mb-2 font-bold text-slate-600 dark:text-slate-300">
-                  Target Tool: <span className="text-indigo-600 dark:text-indigo-400 font-bold">{selectedScenario.toolName}</span>
+              return (
+                <div key={node.id} className="space-y-1">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-slate-300 font-semibold">{node.title} ({node.role})</span>
+                    <span className="text-indigo-400 font-bold">{node.badge}</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.max(12, pct)}%` }}
+                    />
+                  </div>
                 </div>
-                <pre className={`p-3.5 rounded-lg overflow-x-auto text-[11px] font-mono leading-normal border ${
-                  isDarkMode ? 'bg-slate-900 border-slate-700/80 text-indigo-300' : 'bg-slate-900 border-slate-800 text-indigo-200'
-                }`}>
-                  <code>{selectedScenario.queryCode}</code>
-                </pre>
-              </motion.div>
-            )}
-
-            {activeTab === 'telemetry' && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-                <div className="text-[10px] uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300">
-                  Node Latency Breakdown
-                </div>
-                <div className="space-y-2.5">
-                  {Object.entries({
-                    'Intent Classifier': selectedScenario.metrics.classifier,
-                    'Plugin & YAML Routing': selectedScenario.metrics.routing,
-                    'Tool / Database Execution': selectedScenario.metrics.toolExec,
-                    'Context Synthesizer': selectedScenario.metrics.synthesis,
-                  }).map(([name, ms]) => {
-                    const percentage = (ms / selectedScenario.metrics.total) * 100;
-                    return (
-                      <div key={name} className="space-y-1">
-                        <div className="flex justify-between text-[11px]">
-                          <span className="text-slate-800 dark:text-slate-200 font-semibold">{name}</span>
-                          <span className="font-bold text-indigo-600 dark:text-indigo-400">{ms}ms</span>
-                        </div>
-                        <div className={`h-2 w-full rounded-full overflow-hidden ${
-                          isDarkMode ? 'bg-slate-800 border border-slate-700/60' : 'bg-slate-200'
-                        }`}>
-                          <div
-                            className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            )}
+              );
+            })}
           </div>
+        </div>
+      )}
+
+      {/* INSPECTOR PANEL TABS */}
+      <div className={`rounded-xl border overflow-hidden backdrop-blur-md ${
+        isDarkMode ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200'
+      }`}>
+        <div className="flex items-center border-b border-slate-800 px-3 pt-2 space-x-3 text-xs font-mono">
+          {[
+            { id: 'output', label: 'Synthesized Context', icon: <Terminal size={12} /> },
+            { id: 'query', label: 'Generated Tool Query', icon: <Code size={12} /> },
+            { id: 'state', label: inspectedNode ? `Node State: ${inspectedNode.title}` : 'Node State Dict', icon: <Brain size={12} /> },
+            { id: 'telemetry', label: 'Telemetry Payload', icon: <Activity size={12} /> },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => { sound.playClick(); setActiveTab(tab.id); }}
+              className={`flex items-center space-x-1.5 pb-2 border-b-2 transition-all cursor-pointer font-semibold ${
+                activeTab === tab.id
+                  ? 'border-indigo-500 text-indigo-400'
+                  : 'border-transparent text-slate-500 hover:text-slate-300'
+              }`}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="p-4 font-mono text-xs text-slate-300 min-h-[120px]">
+          {activeTab === 'output' && (
+            <div className="text-xs sm:text-sm text-emerald-400 dark:text-emerald-300 leading-relaxed font-sans font-medium">
+              {selectedScenario.output}
+            </div>
+          )}
+
+          {activeTab === 'query' && (
+            <pre className="text-[11px] text-indigo-300 overflow-x-auto">
+              {selectedScenario.queryCode}
+            </pre>
+          )}
+
+          {activeTab === 'state' && (
+            <pre className="text-[11px] text-cyan-300 overflow-x-auto">
+              {JSON.stringify(inspectedNode ? inspectedNode.stateSnippet : nodes[0].stateSnippet, null, 2)}
+            </pre>
+          )}
+
+          {activeTab === 'telemetry' && (
+            <pre className="text-[11px] text-purple-300 overflow-x-auto">
+              {JSON.stringify({
+                scenario: selectedScenario.id,
+                latency_breakdown: selectedScenario.metrics,
+                langgraph_version: "0.2.28",
+                mcp_protocol_version: "2024-11-05",
+                status: "VERIFIED_OK"
+              }, null, 2)}
+            </pre>
+          )}
         </div>
       </div>
     </motion.section>
