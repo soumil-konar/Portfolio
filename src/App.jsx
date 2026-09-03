@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { PASTEL_PALETTE, PROJECTS, SKILLS } from './data';
+import { PASTEL_PALETTE, PROJECTS } from './data';
 
 // Import Components
 import ThemeToggle from './components/ThemeToggle';
 import Header from './components/Header';
 import SkillsTicker from './components/SkillsTicker';
-import ProjectCarousel from './components/ProjectCarousel';
+import ProjectArchive from './components/ProjectArchive';
+import ProjectParticlePortal from './components/ProjectParticlePortal';
 import ProductionArchitectureLab from './components/ProductionArchitectureLab';
 import ChatInterface from './components/ChatInterface';
 import EasterEgg from './components/EasterEgg';
@@ -24,6 +25,17 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Dark mode by default
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // Track global mouse position for the WebGL Particle Portal
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
   
   // Sync dark class with document root for Tailwind class strategy
   useEffect(() => {
@@ -116,37 +128,46 @@ const App = () => {
           toggleTheme={handleThemeToggle} 
         />
 
-        <div className="w-full py-3 sm:py-6 flex flex-col min-h-dvh">
-          {/* Centered Hero Header */}
-          <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 md:px-8">
-            <Header theme={theme} isDarkMode={isDarkMode} />
+        {/* WebGL Particle Dispersion Portal tracking cursor */}
+        <ProjectParticlePortal 
+          activeProject={hoveredProject} 
+          mousePos={mousePos} 
+          isDarkMode={isDarkMode} 
+        />
+
+        <div className="w-full py-2 sm:py-4 flex flex-col min-h-dvh">
+          {/* Editorial Museum-Grade Header */}
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+            <Header isDarkMode={isDarkMode} />
+          </div>
+
+          {/* Editorial Architectural Project Archive with WebGL Portal */}
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 my-2 sm:my-4">
+            <ProjectArchive 
+              isDarkMode={isDarkMode}
+              theme={theme}
+              selectedProject={selectedProject}
+              onSelectProject={setSelectedProject}
+              onHoverProject={setHoveredProject}
+            />
           </div>
           
-          {/* Expanded Full-Width Marquee Skills Ticker */}
-          <div className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 md:px-6 my-1 sm:my-2">
+          {/* Interactive AI Production Architecture Lab */}
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 my-2 sm:my-4">
+            <ProductionArchitectureLab theme={theme} isDarkMode={isDarkMode} onSelectProject={setSelectedProject} />
+          </div>
+
+          {/* 4-Quadrant System Engineering Bento Matrix */}
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 my-2 sm:my-4">
             <SkillsTicker 
               theme={theme} 
               isDarkMode={isDarkMode} 
               onSelectSkill={setSelectedSkill}
             />
           </div>
-
-          {/* Expanded Full-Width Project Carousel */}
-          <div className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 md:px-6 my-1 sm:my-2">
-            <ProjectCarousel 
-              theme={theme} 
-              isDarkMode={isDarkMode} 
-              selectedProject={selectedProject}
-              onSelectProject={setSelectedProject}
-            />
-          </div>
           
-          {/* Main Focused Content Section */}
-          <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 md:px-8 flex flex-col flex-1">
-            {/* Interactive AI Production Architecture Lab */}
-            <ProductionArchitectureLab theme={theme} isDarkMode={isDarkMode} onSelectProject={setSelectedProject} />
-            
-            {/* Interactive AI Terminal */}
+          {/* Interactive AI Dialogue Console */}
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col flex-1 my-2 sm:my-4">
             <ChatInterface isDarkMode={isDarkMode} theme={theme} />
 
             {/* Footer & Easter Egg */}
