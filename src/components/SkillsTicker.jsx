@@ -44,25 +44,25 @@ const BENTO_SECTORS = [
     id: 'agents',
     title: 'Agentic Systems & Multi-Actor Graphs',
     subtitle: 'Stateful DAGs, cyclic routers, human-in-the-loop & tool calling',
-    color: 'from-indigo-500/20 via-purple-500/10 to-transparent',
-    borderColor: 'border-indigo-500/30',
-    dotColor: 'bg-indigo-400',
+    color: 'from-amber-500/15 via-orange-500/10 to-transparent',
+    borderColor: 'border-amber-500/30',
+    dotColor: 'bg-amber-400',
     skillIds: ['langgraph', 'semantic-kernel'],
   },
   {
     id: 'graphs-protocols',
     title: 'Tooling Protocols & Knowledge Graphs',
     subtitle: 'Anthropic MCP servers, Cypher pathfinding, Neo4j batch ETL',
-    color: 'from-cyan-500/20 via-blue-500/10 to-transparent',
-    borderColor: 'border-cyan-500/30',
-    dotColor: 'bg-cyan-400',
+    color: 'from-sky-500/15 via-blue-500/10 to-transparent',
+    borderColor: 'border-sky-500/30',
+    dotColor: 'bg-sky-400',
     skillIds: ['mcp', 'neo4j'],
   },
   {
     id: 'rag-vectors',
     title: 'Enterprise RAG & Hybrid Vector Search',
     subtitle: 'HNSW pgvector indexing, semantic chunking & cross-encoder re-ranking',
-    color: 'from-emerald-500/20 via-teal-500/10 to-transparent',
+    color: 'from-emerald-500/15 via-teal-500/10 to-transparent',
     borderColor: 'border-emerald-500/30',
     dotColor: 'bg-emerald-400',
     skillIds: ['vector-dbs', 'databases'],
@@ -71,15 +71,15 @@ const BENTO_SECTORS = [
     id: 'infra-runtime',
     title: 'Production AI Infrastructure & Backend',
     subtitle: 'FastAPI async streaming, Docker CI/CD, PyTorch & Linux automation',
-    color: 'from-amber-500/20 via-orange-500/10 to-transparent',
-    borderColor: 'border-amber-500/30',
-    dotColor: 'bg-amber-400',
+    color: 'from-amber-600/15 via-stone-500/10 to-transparent',
+    borderColor: 'border-amber-600/30',
+    dotColor: 'bg-amber-500',
     skillIds: ['fastapi', 'python', 'ml-frameworks', 'devops', 'nodejs', 'linux', 'react'],
   }
 ];
 
 const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
-  const [viewMode, setViewMode] = useState('ticker'); // 'ticker' | 'bento'
+  const [viewMode, setViewMode] = useState('bento'); // 'bento' default
   const pointerStartRef = useRef({ x: 0, y: 0 });
   const hasDraggedRef = useRef(false);
 
@@ -110,12 +110,12 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
   };
 
   const pillClass = isDarkMode 
-    ? "bg-slate-900/90 border-slate-700 text-slate-100 hover:border-indigo-400 hover:bg-slate-800/95" 
-    : "bg-white border-slate-200 text-slate-900 hover:border-indigo-400 hover:bg-indigo-50/50 hover:text-indigo-600 shadow-2xs";
+    ? "bg-[#101014]/90 border-zinc-800 text-zinc-100 hover:border-amber-400 hover:bg-[#16161b]" 
+    : "bg-white border-zinc-200 text-zinc-900 hover:border-amber-500 hover:bg-amber-50/50 hover:text-amber-700 shadow-2xs";
 
   const shadowClass = isDarkMode
-    ? "shadow-lg shadow-black/20 hover:shadow-indigo-500/10"
-    : "shadow-xs hover:shadow-md hover:shadow-indigo-200/50";
+    ? "shadow-lg shadow-black/40 hover:shadow-amber-500/10"
+    : "shadow-xs hover:shadow-md hover:shadow-amber-200/50";
 
   return (
     <motion.section
@@ -128,42 +128,42 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
       {/* Top Header with Mode Switcher */}
       <div className="flex items-center justify-between gap-2.5 mb-2 sm:mb-3 px-3">
         <div className="flex items-center space-x-2">
-          <div className="p-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+          <div className="p-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-500 dark:text-amber-400">
             <Sparkles size={13} />
           </div>
-          <span className="text-xs uppercase font-mono tracking-wider font-bold text-slate-800 dark:text-slate-200">
+          <span className="text-xs uppercase font-mono tracking-wider font-bold text-zinc-800 dark:text-zinc-200">
             Core AI Engineering Matrix
           </span>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 font-semibold">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 font-semibold">
             {SKILLS.length} Domains
           </span>
         </div>
 
         {/* View Switcher Controls (Desktop/Tablet Only) */}
         <div className={`hidden sm:flex items-center space-x-1.5 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
-          isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
+          isDarkMode ? 'bg-[#101014]/90 border-zinc-800' : 'bg-zinc-100 border-zinc-200 shadow-2xs'
         }`}>
-          <button
-            onClick={() => toggleViewMode('ticker')}
-            className={`flex items-center space-x-1 px-2.5 py-1 rounded-md transition-all cursor-pointer ${
-              viewMode === 'ticker'
-                ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
-            }`}
-          >
-            <Activity size={12} />
-            <span>Ticker</span>
-          </button>
           <button
             onClick={() => toggleViewMode('bento')}
             className={`flex items-center space-x-1 px-2.5 py-1 rounded-md transition-all cursor-pointer ${
               viewMode === 'bento'
-                ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
+                ? 'bg-amber-500 text-black font-bold shadow-sm'
+                : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80 font-medium'
             }`}
           >
             <LayoutGrid size={12} />
             <span>Bento Matrix</span>
+          </button>
+          <button
+            onClick={() => toggleViewMode('ticker')}
+            className={`flex items-center space-x-1 px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+              viewMode === 'ticker'
+                ? 'bg-amber-500 text-black font-bold shadow-sm'
+                : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80 font-medium'
+            }`}
+          >
+            <Activity size={12} />
+            <span>Ticker</span>
           </button>
         </div>
       </div>
@@ -227,20 +227,20 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
                   key={sector.id}
                   className={`p-4 sm:p-5 rounded-2xl border backdrop-blur-xl transition-all duration-300 relative overflow-hidden group ${
                     isDarkMode 
-                      ? `bg-slate-900/80 ${sector.borderColor} shadow-xl hover:shadow-indigo-500/10` 
-                      : 'bg-white border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300'
+                      ? `bg-[#101014]/90 ${sector.borderColor} shadow-xl hover:shadow-amber-500/10` 
+                      : 'bg-white border-zinc-200 shadow-sm hover:shadow-md hover:border-amber-400'
                   }`}
                 >
                   <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${sector.color} rounded-full blur-3xl pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity`} />
 
                   <div className="flex items-center space-x-2 mb-1.5">
                     <span className={`w-2 h-2 rounded-full ${sector.dotColor} animate-pulse`} />
-                    <h3 className="text-xs sm:text-sm font-bold font-mono tracking-wide text-slate-900 dark:text-white">
+                    <h3 className="text-xs sm:text-sm font-bold font-mono tracking-wide text-zinc-900 dark:text-zinc-100">
                       {sector.title}
                     </h3>
                   </div>
 
-                  <p className="text-[11px] text-slate-600 dark:text-slate-400 font-sans mb-3.5 leading-relaxed font-medium">
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 font-sans mb-3.5 leading-relaxed font-medium">
                     {sector.subtitle}
                   </p>
 
@@ -253,13 +253,13 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
                           onClick={() => handleSkillClick(skill)}
                           className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-all hover:scale-105 active:scale-95 cursor-pointer ${
                             isDarkMode
-                              ? 'bg-slate-950/70 border-slate-800 hover:border-indigo-400 hover:bg-slate-800 text-slate-200'
-                              : 'bg-slate-50 border-slate-200 hover:border-indigo-400 hover:bg-white text-slate-800 font-semibold shadow-2xs'
+                              ? 'bg-[#16161b] border-zinc-800 hover:border-amber-400 hover:bg-[#1e1e24] text-zinc-200'
+                              : 'bg-zinc-50 border-zinc-200 hover:border-amber-400 hover:bg-amber-50/50 text-zinc-800 font-semibold shadow-2xs'
                           }`}
                         >
-                          <span className="text-indigo-600 dark:text-indigo-400">{icon}</span>
+                          <span className="text-amber-500 dark:text-amber-400">{icon}</span>
                           <span>{skill.name}</span>
-                          <span className="text-[10px] text-indigo-500 dark:text-indigo-400/80 font-bold">↗</span>
+                          <span className="text-[10px] text-amber-500 dark:text-amber-400/80 font-bold">↗</span>
                         </button>
                       );
                     })}
