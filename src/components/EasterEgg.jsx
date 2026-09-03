@@ -16,7 +16,7 @@ const EasterEgg = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed bottom-4 sm:bottom-6 right-3 sm:right-6 z-40 cursor-pointer group select-none"
+      className="hidden sm:block fixed bottom-6 right-6 z-40 cursor-pointer group select-none"
       onClick={handleDownload}
       title="Download System Log (Resume)"
       role="button"
