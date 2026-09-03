@@ -95,18 +95,13 @@ const App = () => {
 
   return (
     <ToastProvider isDarkMode={isDarkMode}>
-      <div className={`min-h-dvh ${theme.bg} ${theme.text} overflow-x-hidden font-sans selection:bg-indigo-500/30 selection:text-indigo-200 relative`}>
+      <div className={`min-h-dvh ${theme.bg} ${theme.text} overflow-x-hidden font-sans selection:bg-amber-500/30 selection:text-amber-200 relative`}>
         
         {/* --- Desktop Custom Cursor --- */}
         <CustomCursor />
 
-      {/* --- Gradient Mesh Background --- */}
+      {/* --- Parallax Zoom Background with Dual-Plane Depth --- */}
       <GradientMesh isDarkMode={isDarkMode} />
-      
-      {/* --- Background Grid Overlay --- */}
-      <div className="fixed inset-0 z-[1] pointer-events-none transition-opacity duration-1000">
-         <div className="absolute inset-0 bg-grid opacity-[0.3]"></div>
-      </div>
 
       {/* --- The Transition Overlay (with AnimatePresence) --- */}
       <AnimatePresence>
