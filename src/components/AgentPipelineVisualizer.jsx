@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Workflow, 
@@ -76,7 +76,7 @@ const SCENARIOS = [
   }
 ];
 
-const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
+const AgentPipelineVisualizer = ({ isDarkMode }) => {
   const [selectedScenario, setSelectedScenario] = useState(SCENARIOS[0]);
   const [activeStep, setActiveStep] = useState(4); // 0 = idle, 1 = classifier, 2 = router, 3 = tool, 4 = complete
   const [isRunning, setIsRunning] = useState(false);
@@ -157,27 +157,27 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="my-10 md:my-14 shrink-0 relative group"
+      className="my-8 sm:my-10 md:my-14 shrink-0 relative group"
     >
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-5 px-2 gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-5 px-1 sm:px-2 gap-3">
         <div>
           <div className="flex items-center space-x-2">
             <span className="w-2 h-2 rounded-full bg-indigo-500 animate-ping" />
-            <span className="text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono text-indigo-600 dark:text-indigo-400">
+            <span className="text-[10px] sm:text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono text-indigo-600 dark:text-indigo-400">
               Live Architecture Simulator
             </span>
           </div>
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight mt-1 text-slate-900 dark:text-white">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight mt-1 text-slate-900 dark:text-white">
             Descriptor-Driven LangGraph Orchestrator
           </h2>
         </div>
 
-        <div className="flex items-center space-x-2 self-start md:self-auto">
+        <div className="flex items-center space-x-2 self-stretch sm:self-auto">
           <button
             onClick={runSimulation}
             disabled={isRunning}
-            className={`flex items-center space-x-2 text-xs font-mono px-4 py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
+            className={`w-full sm:w-auto justify-center flex items-center space-x-2 text-xs font-mono px-4 py-2.5 sm:py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
               isRunning 
                 ? 'bg-indigo-500/50 text-white cursor-not-allowed'
                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/25 hover:shadow-indigo-500/40 font-semibold'
@@ -200,7 +200,7 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
 
       {/* Main Container */}
       <div 
-        className={`w-full rounded-2xl border backdrop-blur-xl p-5 md:p-7 transition-all duration-300 ${
+        className={`w-full rounded-2xl border backdrop-blur-xl p-4 sm:p-5 md:p-7 transition-all duration-300 ${
           isDarkMode 
             ? 'bg-slate-900/90 border-slate-700/90 shadow-2xl' 
             : 'bg-white/95 border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
@@ -258,66 +258,76 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
             const isInspected = inspectedNode === node.id;
 
             return (
-              <motion.div
-                key={node.id}
-                onClick={() => setInspectedNode(node.id)}
-                whileHover={{ y: -2 }}
-                className={`relative rounded-xl p-4 border transition-all duration-300 cursor-pointer ${
-                  isActive
-                    ? isDarkMode
-                      ? 'border-indigo-400 ring-2 ring-indigo-500/50 shadow-xl shadow-indigo-500/20 bg-slate-800/95 text-white'
-                      : 'border-indigo-500 ring-2 ring-indigo-400/30 shadow-md bg-indigo-50/80 text-slate-900'
-                    : isCompleted
-                    ? isDarkMode
-                      ? 'bg-slate-900/90 border-slate-700/90 text-slate-100'
-                      : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
-                    : isDarkMode
-                    ? 'bg-slate-900/60 border-slate-700/80 text-slate-200 hover:border-slate-500'
-                    : 'bg-slate-50/80 border-slate-200 opacity-70 text-slate-600'
-                } ${
-                  isInspected ? 'ring-2 ring-emerald-500' : ''
-                }`}
-              >
-                {/* Node Header */}
-                <div className="flex items-center justify-between mb-2.5">
-                  <div className="flex items-center space-x-2">
-                    <div 
-                      className={`p-1.5 rounded-lg ${
-                        isActive
-                          ? 'bg-indigo-500 text-white animate-pulse'
-                          : isCompleted
-                          ? isDarkMode ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-                          : isDarkMode ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-slate-200 text-slate-700'
-                      }`}
-                    >
-                      {node.icon}
+              <React.Fragment key={node.id}>
+                <motion.div
+                  onClick={() => setInspectedNode(node.id)}
+                  whileHover={{ y: -2 }}
+                  className={`relative rounded-xl p-3.5 sm:p-4 border transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? isDarkMode
+                        ? 'border-indigo-400 ring-2 ring-indigo-500/50 shadow-xl shadow-indigo-500/20 bg-slate-800/95 text-white'
+                        : 'border-indigo-500 ring-2 ring-indigo-400/30 shadow-md bg-indigo-50/80 text-slate-900'
+                      : isCompleted
+                      ? isDarkMode
+                        ? 'bg-slate-900/90 border-slate-700/90 text-slate-100'
+                        : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
+                      : isDarkMode
+                      ? 'bg-slate-900/60 border-slate-700/80 text-slate-200 hover:border-slate-500'
+                      : 'bg-slate-50/80 border-slate-200 opacity-70 text-slate-600'
+                  } ${
+                    isInspected ? 'ring-2 ring-emerald-500' : ''
+                  }`}
+                >
+                  {/* Node Header */}
+                  <div className="flex items-center justify-between mb-2 sm:mb-2.5">
+                    <div className="flex items-center space-x-2">
+                      <div 
+                        className={`p-1.5 rounded-lg ${
+                          isActive
+                            ? 'bg-indigo-500 text-white animate-pulse'
+                            : isCompleted
+                            ? isDarkMode ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                            : isDarkMode ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-slate-200 text-slate-700'
+                        }`}
+                      >
+                        {node.icon}
+                      </div>
+                      <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-slate-500 dark:text-slate-300">
+                        Node 0{node.id}
+                      </span>
                     </div>
-                    <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-slate-500 dark:text-slate-300">
-                      Node 0{node.id}
+
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
+                      isDarkMode ? 'bg-slate-800 border border-slate-700 text-indigo-300' : 'bg-indigo-50 border border-indigo-100 text-indigo-700'
+                    }`}>
+                      {node.badge}
                     </span>
                   </div>
 
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
-                    isDarkMode ? 'bg-slate-800 border border-slate-700 text-indigo-300' : 'bg-indigo-50 border border-indigo-100 text-indigo-700'
-                  }`}>
-                    {node.badge}
-                  </span>
-                </div>
+                  {/* Node Body */}
+                  <h4 className="font-bold text-xs md:text-sm mb-1 text-slate-900 dark:text-white">{node.title}</h4>
+                  <p className="text-[11px] font-mono truncate mb-1 text-indigo-700 dark:text-indigo-300 font-medium">{node.detail}</p>
+                  <p className="text-[10px] font-sans truncate text-slate-600 dark:text-slate-300">{node.subdetail}</p>
 
-                {/* Node Body */}
-                <h4 className="font-bold text-xs md:text-sm mb-1 text-slate-900 dark:text-white">{node.title}</h4>
-                <p className="text-[11px] font-mono truncate mb-1 text-indigo-700 dark:text-indigo-300 font-medium">{node.detail}</p>
-                <p className="text-[10px] font-sans truncate text-slate-600 dark:text-slate-300">{node.subdetail}</p>
+                  {/* Flow Connection Arrow for Desktop */}
+                  {index < 3 && (
+                    <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-indigo-400">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  )}
+                </motion.div>
 
-                {/* Flow Connection Arrow for Desktop */}
+                {/* Vertical Downward Connector Arrow for Mobile (Single Column) */}
                 {index < 3 && (
-                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-indigo-400">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
+                  <div className="flex sm:hidden justify-center -my-1 text-indigo-400/60">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M12 5v14M5 12l7 7 7-7" />
                     </svg>
                   </div>
                 )}
-              </motion.div>
+              </React.Fragment>
             );
           })}
         </div>
@@ -328,46 +338,46 @@ const AgentPipelineVisualizer = ({ theme, isDarkMode }) => {
             isDarkMode ? 'bg-slate-950/90 border-slate-700/80 shadow-lg' : 'bg-white border-slate-200 shadow-sm'
           }`}
         >
-          {/* Tabs Bar */}
+          {/* Tabs Bar with Mobile Overflow Support */}
           <div 
-            className={`flex items-center justify-between px-4 py-2.5 border-b text-xs font-mono ${
+            className={`flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 border-b text-xs font-mono gap-2 ${
               isDarkMode ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-slate-50/70'
             }`}
           >
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 sm:space-x-4 overflow-x-auto no-scrollbar">
               <button
                 onClick={() => setActiveTab('output')}
-                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer ${
+                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer whitespace-nowrap ${
                   activeTab === 'output'
                     ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
                     : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                Synthesized Output
+                <span className="hidden sm:inline">Synthesized </span>Output
               </button>
               <button
                 onClick={() => setActiveTab('query')}
-                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer ${
+                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer whitespace-nowrap ${
                   activeTab === 'query'
                     ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
                     : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                Generated Query / Payload
+                <span className="hidden sm:inline">Generated </span>Query<span className="hidden sm:inline"> / Payload</span>
               </button>
               <button
                 onClick={() => setActiveTab('telemetry')}
-                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer ${
+                className={`pb-1 border-b-2 transition-colors font-semibold cursor-pointer whitespace-nowrap ${
                   activeTab === 'telemetry'
                     ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
                     : 'border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                Execution Telemetry
+                <span className="hidden sm:inline">Execution </span>Telemetry
               </button>
             </div>
 
-            <div className="flex items-center space-x-1.5 text-[10px] text-slate-600 dark:text-slate-300 font-semibold">
+            <div className="flex items-center space-x-1.5 text-[10px] text-slate-600 dark:text-slate-300 font-semibold self-end sm:self-auto shrink-0">
               <Activity size={12} className="text-indigo-500 dark:text-indigo-400" />
               <span>{selectedScenario.metrics.total}ms total</span>
             </div>

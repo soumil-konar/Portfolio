@@ -13,8 +13,14 @@ const CommandPalette = ({ isDarkMode, toggleTheme }) => {
         setOpen((open) => !open);
       }
     };
+    const handleOpenCustom = () => setOpen(true);
+
     document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
+    window.addEventListener('open-command-palette', handleOpenCustom);
+    return () => {
+      document.removeEventListener('keydown', down);
+      window.removeEventListener('open-command-palette', handleOpenCustom);
+    };
   }, []);
 
   const handleCopyEmail = () => {
@@ -41,9 +47,12 @@ const CommandPalette = ({ isDarkMode, toggleTheme }) => {
   const itemStyle = `flex items-center gap-2 px-3 py-3 text-sm cursor-pointer rounded-lg transition-colors aria-selected:bg-indigo-600 aria-selected:text-white ${isDarkMode ? 'hover:bg-slate-800 text-slate-200' : 'hover:bg-indigo-50 text-slate-800'}`;
 
   return (
-    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu" className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-[20vh] bg-black/70 backdrop-blur-md">
+    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu" className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center p-3 sm:p-4 pt-12 sm:pt-0 bg-black/70 backdrop-blur-md">
       <div className={`w-full max-w-lg rounded-xl shadow-2xl border overflow-hidden ${paletteStyle}`}>
-        <Command.Input placeholder="Type a command or search..." className={`w-full px-4 py-4 text-base bg-transparent outline-none border-b ${isDarkMode ? 'border-slate-800 placeholder:text-slate-500 text-white' : 'border-slate-200 placeholder:text-slate-400 text-slate-900'}`} />
+        <div className="flex items-center border-b px-2">
+          <Command.Input placeholder="Type a command or search..." className={`w-full px-3 sm:px-4 py-3.5 sm:py-4 text-sm sm:text-base bg-transparent outline-none ${isDarkMode ? 'placeholder:text-slate-500 text-white' : 'placeholder:text-slate-400 text-slate-900'}`} />
+          <button onClick={() => setOpen(false)} className="sm:hidden text-xs font-mono px-2 py-1 text-slate-400 hover:text-white">✕</button>
+        </div>
         <Command.List className="max-h-[300px] overflow-y-auto p-2 scrollbar-hide">
           <Command.Empty className="px-4 py-6 text-center text-sm opacity-60 text-slate-400">No results found.</Command.Empty>
           <Command.Group heading="General" className="px-2 py-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
