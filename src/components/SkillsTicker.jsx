@@ -111,7 +111,7 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
 
   const pillClass = isDarkMode 
     ? "bg-slate-900/90 border-slate-700 text-slate-100 hover:border-indigo-400 hover:bg-slate-800/95" 
-    : "bg-white border-slate-200/90 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/50";
+    : "bg-white border-slate-200 text-slate-900 hover:border-indigo-400 hover:bg-indigo-50/50 hover:text-indigo-600 shadow-2xs";
 
   const shadowClass = isDarkMode
     ? "shadow-lg shadow-black/20 hover:shadow-indigo-500/10"
@@ -128,25 +128,27 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
       {/* Top Header with Mode Switcher */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 mb-3 px-3">
         <div className="flex items-center space-x-2">
-          <div className="p-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+          <div className="p-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400">
             <Sparkles size={13} />
           </div>
-          <span className="text-xs uppercase font-mono tracking-wider font-bold text-slate-700 dark:text-slate-300">
+          <span className="text-xs uppercase font-mono tracking-wider font-bold text-slate-800 dark:text-slate-200">
             Core AI Engineering Matrix
           </span>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 font-semibold">
             {SKILLS.length} Domains
           </span>
         </div>
 
         {/* View Switcher Controls */}
-        <div className="flex items-center space-x-1.5 p-1 rounded-lg border backdrop-blur-md bg-slate-900/30 border-slate-800 text-[11px] font-mono">
+        <div className={`flex items-center space-x-1.5 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
+          isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
+        }`}>
           <button
             onClick={() => toggleViewMode('ticker')}
             className={`flex items-center space-x-1 px-2.5 py-1 rounded-md transition-all cursor-pointer ${
               viewMode === 'ticker'
                 ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                : 'text-slate-400 hover:text-white'
+                : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
             }`}
           >
             <Activity size={12} />
@@ -157,7 +159,7 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
             className={`flex items-center space-x-1 px-2.5 py-1 rounded-md transition-all cursor-pointer ${
               viewMode === 'bento'
                 ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-                : 'text-slate-400 hover:text-white'
+                : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
             }`}
           >
             <LayoutGrid size={12} />
@@ -226,7 +228,7 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
                   className={`p-4 sm:p-5 rounded-2xl border backdrop-blur-xl transition-all duration-300 relative overflow-hidden group ${
                     isDarkMode 
                       ? `bg-slate-900/80 ${sector.borderColor} shadow-xl hover:shadow-indigo-500/10` 
-                      : 'bg-white/95 border-slate-200/90 shadow-sm hover:shadow-md'
+                      : 'bg-white border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300'
                   }`}
                 >
                   <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${sector.color} rounded-full blur-3xl pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity`} />
@@ -238,7 +240,7 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
                     </h3>
                   </div>
 
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-sans mb-3.5 leading-relaxed">
+                  <p className="text-[11px] text-slate-600 dark:text-slate-400 font-sans mb-3.5 leading-relaxed font-medium">
                     {sector.subtitle}
                   </p>
 
@@ -252,12 +254,12 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
                           className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-all hover:scale-105 active:scale-95 cursor-pointer ${
                             isDarkMode
                               ? 'bg-slate-950/70 border-slate-800 hover:border-indigo-400 hover:bg-slate-800 text-slate-200'
-                              : 'bg-slate-50 border-slate-200 hover:border-indigo-300 hover:bg-white text-slate-800'
+                              : 'bg-slate-50 border-slate-200 hover:border-indigo-400 hover:bg-white text-slate-800 font-semibold shadow-2xs'
                           }`}
                         >
-                          <span className="text-indigo-400">{icon}</span>
+                          <span className="text-indigo-600 dark:text-indigo-400">{icon}</span>
                           <span>{skill.name}</span>
-                          <span className="text-[10px] text-indigo-400/80">↗</span>
+                          <span className="text-[10px] text-indigo-500 dark:text-indigo-400/80 font-bold">↗</span>
                         </button>
                       );
                     })}

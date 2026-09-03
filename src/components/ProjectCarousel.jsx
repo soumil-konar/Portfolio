@@ -74,13 +74,15 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
 
           <div className="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-end">
             {/* Filter Pills */}
-            <div className="flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md bg-slate-900/30 border-slate-800 text-[10px] font-mono">
+            <div className={`flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[10px] font-mono ${
+              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
+            }`}>
               <button
                 onClick={() => { sound.playClick(); setFilterCategory('all'); }}
                 className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
                   filterCategory === 'all'
-                    ? 'bg-indigo-600 text-white font-semibold'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
+                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
                 }`}
               >
                 All ({PROJECTS.length})
@@ -89,8 +91,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                 onClick={() => { sound.playClick(); setFilterCategory('enterprise'); }}
                 className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
                   filterCategory === 'enterprise'
-                    ? 'bg-indigo-600 text-white font-semibold'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
+                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
                 }`}
               >
                 Enterprise ({enterpriseCount})
@@ -99,8 +101,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                 onClick={() => { sound.playClick(); setFilterCategory('opensource'); }}
                 className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
                   filterCategory === 'opensource'
-                    ? 'bg-indigo-600 text-white font-semibold'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
+                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
                 }`}
               >
                 OSS ({openSourceCount})
@@ -108,14 +110,16 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
             </div>
 
             {/* View Mode Switcher */}
-            <div className="flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md bg-slate-900/30 border-slate-800 text-[11px] font-mono">
+            <div className={`flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
+              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
+            }`}>
               <button
                 onClick={() => { sound.playClick(); setViewMode('track'); }}
                 title="Continuous Showcase Track"
                 className={`p-1 rounded transition-all cursor-pointer ${
                   viewMode === 'track'
                     ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
                 }`}
               >
                 <Activity size={13} />
@@ -126,7 +130,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                 className={`p-1 rounded transition-all cursor-pointer ${
                   viewMode === 'grid'
                     ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
                 }`}
               >
                 <LayoutGrid size={13} />
@@ -285,7 +289,9 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
 
                         <div className="flex items-center space-x-1.5">
                           {proj.isEnterprise && (
-                            <div className="px-2 py-0.5 rounded text-[10px] font-mono border bg-slate-800 border-slate-700 text-slate-300">
+                            <div className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
+                              isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700 font-semibold'
+                            }`}>
                               Enterprise
                             </div>
                           )}
@@ -295,7 +301,9 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="p-1.5 rounded-lg border border-slate-700 text-slate-300 hover:text-white"
+                              className={`p-1.5 rounded-lg border transition-colors ${
+                                isDarkMode ? 'border-slate-700 text-slate-300 hover:text-white' : 'border-slate-200 text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50'
+                              }`}
                             >
                               <Github size={12} />
                             </a>
@@ -303,7 +311,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                         </div>
                       </div>
 
-                      <h3 className="font-bold text-base mb-2 text-slate-900 dark:text-white group-hover:text-indigo-400 transition-colors">
+                      <h3 className="font-bold text-base mb-2 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                         {proj.title}
                       </h3>
                       <p className="text-xs leading-relaxed font-sans line-clamp-3 mb-3 text-slate-600 dark:text-slate-300">
@@ -314,13 +322,17 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                     <div>
                       <div className="flex flex-wrap gap-1.5 mb-3">
                         {proj.tags.slice(0, 3).map((tag, i) => (
-                          <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded border border-slate-800 bg-slate-950/50 text-indigo-300">
+                          <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                            isDarkMode ? 'border-slate-800 bg-slate-950/50 text-indigo-300' : 'border-indigo-100 bg-indigo-50 text-indigo-700 font-medium'
+                          }`}>
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 text-[10px] font-mono text-indigo-400">
+                      <div className={`flex items-center justify-between pt-2 border-t text-[10px] font-mono ${
+                        isDarkMode ? 'border-slate-800/80 text-indigo-400' : 'border-slate-100 text-indigo-600 font-semibold'
+                      }`}>
                         <span>Inspect Architecture</span>
                         <span>↗</span>
                       </div>
