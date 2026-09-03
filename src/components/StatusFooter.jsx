@@ -34,9 +34,9 @@ const StatusFooter = () => {
       <div className="flex items-center space-x-4">
          <div className="flex items-center space-x-1 hidden md:flex">
           <Globe size={10} />
-          <span>ap-south-1</span>
+          <span>ap-south-1 (Mumbai)</span>
         </div>
-        <span className="font-mono">v1.0.4</span>
+        <span className="font-mono">v2.6.0</span>
       </div>
     </motion.footer>
   );

@@ -95,7 +95,7 @@ const Header = ({ theme, isDarkMode }) => {
       {/* Live Availability & Location Ticker */}
       <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] sm:text-[11px] font-mono">
         <div className={`flex items-center space-x-1.5 px-3 py-1 rounded-full border backdrop-blur-md transition-all ${
-          isDarkMode ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-emerald-50 border-emerald-300 text-emerald-800'
+          isDarkMode ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 shadow-2xs font-semibold'
         }`}>
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -105,11 +105,11 @@ const Header = ({ theme, isDarkMode }) => {
         </div>
 
         <div className={`hidden sm:flex items-center space-x-1.5 px-3 py-1 rounded-full border backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-600'
+          isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-700 shadow-2xs font-semibold'
         }`}>
-          <span>Bengaluru, IN</span>
+          <span>Mumbai, IN</span>
           <span>•</span>
-          <span className="font-semibold text-indigo-400">{currentTime || '23:15'} IST</span>
+          <span className="font-semibold text-indigo-600 dark:text-indigo-400">{currentTime || '23:45'} IST</span>
         </div>
 
         {/* Audio Mute/Unmute Toggle */}
@@ -119,10 +119,10 @@ const Header = ({ theme, isDarkMode }) => {
           className={`flex items-center space-x-1 px-2.5 py-1 rounded-full border text-[10px] transition-all cursor-pointer ${
             isDarkMode 
               ? 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white' 
-              : 'bg-white border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900'
+              : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 shadow-2xs font-semibold'
           }`}
         >
-          {isAudioMuted ? <VolumeX size={12} className="text-slate-500" /> : <Volume2 size={12} className="text-indigo-400 animate-pulse" />}
+          {isAudioMuted ? <VolumeX size={12} className="text-slate-500" /> : <Volume2 size={12} className="text-indigo-600 dark:text-indigo-400 animate-pulse" />}
           <span className="hidden md:inline">{isAudioMuted ? "Sound Off" : "Sound On"}</span>
         </button>
       </div>
@@ -140,7 +140,7 @@ const Header = ({ theme, isDarkMode }) => {
           {/* Glowing Animated Gradient Ring */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-emerald-400 animate-spin-slow opacity-80 blur-[2px] group-hover/avatar:opacity-100 group-hover/avatar:blur-[4px] transition-all duration-500" />
           
-          <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-950 border-2 border-white/30 dark:border-slate-900">
+          <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-950 border-2 border-white/40 dark:border-slate-900 shadow-xl">
             <img 
               src="/avatar.jpg" 
               alt="Soumil Konar - Generative AI Engineer" 
@@ -181,14 +181,14 @@ const Header = ({ theme, isDarkMode }) => {
         </div>
 
         {/* Engineering Credential Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-2 font-mono text-[10px] sm:text-[11px] text-slate-600 dark:text-slate-300">
-          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800/80 bg-slate-100/50 dark:bg-slate-900/50">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-2 font-mono text-[10px] sm:text-[11px]">
+          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
             LangGraph Multi-Agent Workflows
           </span>
-          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800/80 bg-slate-100/50 dark:bg-slate-900/50">
+          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
             Dual MCP Server Author
           </span>
-          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800/80 bg-slate-100/50 dark:bg-slate-900/50">
+          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
             Enterprise RAG Microservices
           </span>
         </div>
@@ -207,11 +207,11 @@ const Header = ({ theme, isDarkMode }) => {
           className={`flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-mono font-bold border transition-all duration-200 shadow-md hover:scale-105 active:scale-95 group cursor-pointer ${
             isDarkMode 
               ? 'bg-indigo-600/30 border-indigo-400/80 hover:bg-indigo-600 text-white shadow-indigo-500/20' 
-              : 'bg-indigo-50 border-indigo-300 hover:bg-indigo-600 hover:text-white text-indigo-700 shadow-sm'
+              : 'bg-indigo-600 hover:bg-indigo-700 border-indigo-600 text-white shadow-md shadow-indigo-600/20'
           }`}
           title="Download Full Resume PDF"
         >
-          <FileText size={13} className="text-indigo-400 dark:text-indigo-300 group-hover:text-white transition-colors" />
+          <FileText size={13} className="text-indigo-200 dark:text-indigo-300 group-hover:text-white transition-colors" />
           <span>Resume (PDF)</span>
           <Download size={12} className="opacity-80 group-hover:translate-y-0.5 transition-transform" />
         </a>
@@ -219,35 +219,35 @@ const Header = ({ theme, isDarkMode }) => {
         {/* Copy Email Button with instant feedback */}
         <button
           onClick={handleCopyEmail}
-          className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-full text-xs font-mono font-medium border transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer ${
+          className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-full text-xs font-mono font-semibold border transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer ${
             isDarkMode 
               ? 'bg-slate-900/80 border-slate-700/80 hover:border-slate-600 text-slate-200 hover:text-white shadow-md' 
-              : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 hover:bg-slate-50 shadow-2xs'
           }`}
           title="Copy Email Address"
         >
           {copiedEmail ? (
             <>
-              <Check size={13} className="text-emerald-400" />
-              <span className="text-emerald-400 font-semibold">Copied!</span>
+              <Check size={13} className="text-emerald-500 dark:text-emerald-400" />
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied!</span>
             </>
           ) : (
             <>
-              <Copy size={13} className="text-slate-400" />
+              <Copy size={13} className="text-slate-500 dark:text-slate-400" />
               <span>Copy Email</span>
             </>
           )}
         </button>
 
         {/* Social Icons with accessible touch targets */}
-        <div className="flex space-x-1 sm:space-x-1.5 text-slate-600 dark:text-slate-300 items-center">
+        <div className="flex space-x-1 sm:space-x-1.5 text-slate-700 dark:text-slate-300 items-center">
           <a 
             href={SOCIAL_LINKS.github} 
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="GitHub Profile"
             onClick={() => sound.playClick()}
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
+            className="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
             <Github className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-indigo-600 dark:hover:text-indigo-400" />
           </a>
@@ -258,7 +258,7 @@ const Header = ({ theme, isDarkMode }) => {
             rel="noopener noreferrer" 
             aria-label="LinkedIn Profile"
             onClick={() => sound.playClick()}
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
+            className="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
             <Linkedin className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2] dark:hover:text-[#38bdf8]" />
           </a>
@@ -267,7 +267,7 @@ const Header = ({ theme, isDarkMode }) => {
             href={SOCIAL_LINKS.email} 
             aria-label="Send Email"
             onClick={() => sound.playClick()}
-            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
+            className="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
             <Mail className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-red-500 dark:hover:text-red-400" />
           </a>
