@@ -7,9 +7,16 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Menlo', 'monospace'],
+      },
       animation: {
         'left': 'scroll-left linear infinite',
         'right': 'scroll-right linear infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spin-slow': 'spin 12s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       spacing: {
         '84': '21rem',
@@ -18,11 +25,15 @@ export default {
       keyframes: {
         'scroll-left': {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }, // Changed from -100% to -50%
+          '100%': { transform: 'translateX(-50%)' },
         },
         'scroll-right': {
-          '0%': { transform: 'translateX(-50%)' }, // Start halfway
-          '100%': { transform: 'translateX(0)' },   // Move to start
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
         },
       },
     },
