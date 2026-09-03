@@ -268,14 +268,12 @@ const Header = ({ theme, isDarkMode }) => {
           </a>
 
           <a 
-            href={SOCIAL_LINKS.twitter} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            aria-label="Twitter Profile"
+            href={SOCIAL_LINKS.email} 
+            aria-label="Send Email"
             onClick={() => sound.playClick()}
             className="p-2 rounded-lg hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
-            <Twitter className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-amber-600 dark:hover:text-amber-400" />
+            <Mail className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-amber-600 dark:hover:text-amber-400" />
           </a>
         </div>
       </div>
