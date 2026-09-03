@@ -23,10 +23,26 @@ const InfiniteMarquee = ({
   const [contentWidth, setContentWidth] = useState(0);
 
   useEffect(() => {
-    if (contentRef.current) {
-      // Calculate the width of one set of children
-      setContentWidth(contentRef.current.scrollWidth / 3); 
+    const updateWidth = () => {
+      if (contentRef.current) {
+        setContentWidth(contentRef.current.scrollWidth / 3);
+      }
+    };
+
+    updateWidth();
+
+    // Recompute on resize or orientation change
+    window.addEventListener('resize', updateWidth);
+    let ro;
+    if (typeof ResizeObserver !== 'undefined' && contentRef.current) {
+      ro = new ResizeObserver(updateWidth);
+      ro.observe(contentRef.current);
     }
+
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+      if (ro) ro.disconnect();
+    };
   }, [children]);
 
   useAnimationFrame((t, delta) => {
@@ -56,13 +72,19 @@ const InfiniteMarquee = ({
     <div 
       ref={containerRef} 
       className={`overflow-hidden w-full ${className} cursor-grab active:cursor-grabbing touch-pan-y`}
-      // --- NEW HOVER LOGIC ---
-      onMouseEnter={() => setIsHovering(true)}
+      // Only pause on hover if device actually supports hover (prevents getting stuck on touch devices)
+      onMouseEnter={() => {
+        if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+          setIsHovering(true);
+        }
+      }}
       onMouseLeave={() => setIsHovering(false)}
+      onTouchStart={() => setIsDragging(true)}
+      onTouchEnd={() => setIsDragging(false)}
     >
       <motion.div
         ref={contentRef}
-        className="flex w-max items-center gap-8"
+        className="flex w-max items-center gap-4 sm:gap-6 md:gap-8"
         style={{ x }}
         
         // --- DRAG LOGIC ---
@@ -70,7 +92,7 @@ const InfiniteMarquee = ({
         dragConstraints={{ left: -10000, right: 10000 }}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={() => setIsDragging(false)}
-        dragElastic={0.1} 
+        dragElastic={0.08} 
         dragMomentum={false}
       >
         {children}

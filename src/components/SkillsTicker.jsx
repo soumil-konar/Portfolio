@@ -33,7 +33,7 @@ const ICON_MAP = {
   Terminal: <Terminal size={16} />,
 };
 
-const SkillsTicker = ({ theme, isDarkMode, onSelectSkill }) => {
+const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
   const pointerStartRef = useRef({ x: 0, y: 0 });
   const hasDraggedRef = useRef(false);
 
@@ -45,7 +45,7 @@ const SkillsTicker = ({ theme, isDarkMode, onSelectSkill }) => {
   const handlePointerMove = (e) => {
     const dx = Math.abs(e.clientX - pointerStartRef.current.x);
     const dy = Math.abs(e.clientY - pointerStartRef.current.y);
-    if (dx > 6 || dy > 6) {
+    if (dx > 12 || dy > 12) {
       hasDraggedRef.current = true;
     }
   };
@@ -71,7 +71,7 @@ const SkillsTicker = ({ theme, isDarkMode, onSelectSkill }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="w-full py-8 md:py-10 overflow-hidden relative z-10"
+      className="w-full py-5 sm:py-7 md:py-9 overflow-hidden relative z-10"
     >
       {/* Small Hint Label above ticker */}
       <div className="flex items-center justify-between mb-3 px-3">

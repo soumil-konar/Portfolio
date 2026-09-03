@@ -22,7 +22,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
   const handlePointerMove = (e) => {
     const dx = Math.abs(e.clientX - pointerStartRef.current.x);
     const dy = Math.abs(e.clientY - pointerStartRef.current.y);
-    if (dx > 6 || dy > 6) {
+    if (dx > 12 || dy > 12) {
       hasDraggedRef.current = true;
     }
   };
@@ -40,10 +40,10 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="my-8 md:my-10 shrink-0 relative group"
+        className="my-6 sm:my-8 md:my-10 shrink-0 relative group"
       >
-        <div className="flex items-center justify-between mb-5 md:mb-6 px-2">
-          <div className="text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono text-slate-800 dark:text-slate-200">
+        <div className="flex items-center justify-between mb-4 sm:mb-5 md:mb-6 px-3">
+          <div className="text-[10px] sm:text-[11px] md:text-xs uppercase tracking-widest font-bold font-mono text-slate-800 dark:text-slate-200">
             Featured Deployments & Open Source
           </div>
           <div className="text-[10px] font-mono text-slate-600 dark:text-slate-300 hidden sm:inline font-semibold">
@@ -54,14 +54,14 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
         {/* CSS mask with smoother fade for seamless blending */}
         <div 
           style={{
-            maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)',
           }}
         >
           {/* Speed 1.0 is better for larger cards */}
           <InfiniteMarquee speed={1.0} direction="right">
             {PROJECTS.map((proj) => (
-              <SpotlightCard key={proj.id} className="group shrink-0 mx-2 md:mx-4">
+              <SpotlightCard key={proj.id} className="group shrink-0 mx-1.5 sm:mx-2 md:mx-4">
                 <motion.div 
                   whileHover={{ y: -4 }}
                   whileTap={{ scale: 0.98 }}
@@ -69,7 +69,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                   onPointerMove={handlePointerMove}
                   onClick={() => handleCardClick(proj)}
                   data-cursor-hover
-                  className={`w-84 sm:w-96 md:w-[410px] lg:w-[430px] p-6 md:p-8 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between h-[335px] md:h-[355px] border ${
+                  className={`w-[82vw] max-w-[340px] sm:w-[380px] md:w-[410px] lg:w-[430px] p-4 sm:p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between min-h-[310px] sm:min-h-[330px] md:h-[350px] border ${
                     isDarkMode 
                       ? 'bg-slate-900/90 border-slate-700/90 hover:border-indigo-400 hover:bg-slate-800/95 shadow-2xl hover:shadow-indigo-500/20 text-slate-100' 
                       : 'bg-white/95 border-slate-200/90 hover:border-indigo-400 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(99,102,241,0.12)] text-slate-900'
