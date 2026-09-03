@@ -15,12 +15,9 @@ import {
   Server, 
   Terminal, 
   Network, 
-  ExternalLink, 
   Lock, 
-  Sparkles, 
   CheckCircle2, 
-  ChevronRight,
-  ArrowRight
+  ChevronRight
 } from 'lucide-react';
 
 const ICON_MAP = {
@@ -38,12 +35,8 @@ const ICON_MAP = {
   Terminal: <Terminal size={22} />,
 };
 
-const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], isDarkMode, theme }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], isDarkMode }) => {
+  const [mounted] = useState(() => typeof window !== 'undefined');
 
   // Handle ESC key press
   useEffect(() => {
@@ -73,7 +66,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
 
   return createPortal(
     <AnimatePresence>
-      <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6">
+      <div className="fixed inset-0 z-[99999] flex items-center justify-center p-2.5 sm:p-4 md:p-6">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -90,34 +83,32 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-          className={`relative w-full max-w-2xl rounded-2xl border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[85vh] backdrop-blur-2xl ${
+          className={`relative w-full max-w-2xl rounded-2xl border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh] sm:max-h-[85vh] backdrop-blur-2xl ${
             isDarkMode 
               ? 'bg-slate-900/95 border-slate-700/80 text-slate-100' 
               : 'bg-white border-slate-200 shadow-2xl text-slate-900'
           }`}
         >
           {/* Top Bar / Header */}
-          <div className={`px-6 py-5 border-b flex items-center justify-between shrink-0 ${
+          <div className={`px-4 sm:px-6 py-3.5 sm:py-5 border-b flex items-center justify-between shrink-0 gap-3 ${
             isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/60'
           }`}>
-            <div className="flex items-center space-x-3.5">
-              <div className={`p-2.5 rounded-xl shadow-sm ${
+            <div className="flex items-center space-x-3 min-w-0">
+              <div className={`p-2 sm:p-2.5 rounded-xl shadow-sm shrink-0 ${
                 isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
               }`}>
                 {skillIcon}
               </div>
-              <div>
-                <div className="flex items-center space-x-2">
-                  <h3 className="font-bold text-lg md:text-xl tracking-tight text-slate-900 dark:text-white">
-                    {skill.name}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap items-center gap-2 mt-0.5">
-                  <span className="text-[11px] font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+              <div className="min-w-0">
+                <h3 className="font-bold text-base sm:text-lg md:text-xl tracking-tight text-slate-900 dark:text-white truncate">
+                  {skill.name}
+                </h3>
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-0.5">
+                  <span className="text-[10px] sm:text-[11px] font-mono font-semibold text-indigo-600 dark:text-indigo-400">
                     {skill.category}
                   </span>
                   <span className="text-slate-400 dark:text-slate-600 text-xs">•</span>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md border font-medium ${
+                  <span className={`text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-md border font-medium ${
                     isDarkMode 
                       ? 'bg-slate-800 border-slate-700 text-slate-300' 
                       : 'bg-slate-100 border-slate-200 text-slate-700'
@@ -131,26 +122,27 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
             {/* Close Button */}
             <button
               onClick={onClose}
-              className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+              className={`p-1.5 sm:p-2 rounded-xl border transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center shrink-0 ${
                 isDarkMode 
                   ? 'border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white' 
                   : 'border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900'
               }`}
               title="Close (Esc)"
+              aria-label="Close dialog"
             >
               <X size={18} />
             </button>
           </div>
 
           {/* Scrollable Content Body */}
-          <div className="p-6 overflow-y-auto space-y-6 flex-1">
+          <div className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-6 flex-1">
             {/* Overview / Depth Card */}
-            <div className={`p-4 rounded-xl border leading-relaxed text-xs md:text-sm font-sans ${
+            <div className={`p-3.5 sm:p-4 rounded-xl border leading-relaxed text-xs md:text-sm font-sans ${
               isDarkMode 
                 ? 'bg-slate-950/80 border-slate-700/80 text-slate-200 font-medium' 
                 : 'bg-indigo-50/70 border-indigo-100 text-slate-800 font-medium'
             }`}>
-              <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1.5 text-indigo-600 dark:text-indigo-400">
+              <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1 text-indigo-600 dark:text-indigo-400">
                 Technical Depth & Engineering Application:
               </span>
               {skill.overview}
@@ -158,7 +150,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
 
             {/* Key Capabilities */}
             {skill.capabilities && skill.capabilities.length > 0 && (
-              <div className="space-y-2.5">
+              <div className="space-y-2 sm:space-y-2.5">
                 <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
                   <CheckCircle2 size={13} className="text-emerald-500" />
                   <span>Key Patterns & Implementation Strengths:</span>
@@ -183,13 +175,13 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
 
             {/* Related Projects Section */}
             {skill.relatedProjects && skill.relatedProjects.length > 0 && (
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
                   <Workflow size={13} className="text-indigo-500" />
                   <span>Deployed In These Portfolio Systems ({skill.relatedProjects.length}):</span>
                 </h4>
 
-                <div className="space-y-3">
+                <div className="space-y-2.5 sm:space-y-3">
                   {skill.relatedProjects.map((item, idx) => {
                     const fullProject = projects.find(p => p.id === item.projectId);
                     if (!fullProject) return null;
@@ -197,7 +189,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
                     return (
                       <div
                         key={idx}
-                        className={`p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between gap-3 ${
+                        className={`p-3.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between gap-3 ${
                           isDarkMode
                             ? 'bg-slate-950/80 border-slate-700/80 hover:border-indigo-400/80 shadow-md'
                             : 'bg-white border-slate-200 hover:border-indigo-300 shadow-xs'
@@ -205,7 +197,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
                       >
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-1.5">
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center space-x-2 flex-wrap gap-1">
                               <span className="font-bold text-sm text-slate-900 dark:text-white">
                                 {fullProject.title}
                               </span>
@@ -232,7 +224,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
                           </p>
                         </div>
 
-                        <div className="flex items-center justify-between pt-2 border-t border-slate-200/40 dark:border-slate-800/80">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-2 border-t border-slate-200/40 dark:border-slate-800/80 gap-2">
                           <div className="flex flex-wrap gap-1">
                             {fullProject.tags && fullProject.tags.slice(0, 3).map((tag, tIdx) => (
                               <span
@@ -248,7 +240,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
 
                           <button
                             onClick={() => handleOpenProject(fullProject)}
-                            className={`flex items-center space-x-1 text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                            className={`flex items-center justify-center space-x-1 text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all cursor-pointer self-stretch sm:self-auto ${
                               isDarkMode
                                 ? 'bg-indigo-600/30 border-indigo-400/80 hover:bg-indigo-600 text-white shadow-xs'
                                 : 'bg-indigo-50 border-indigo-200 hover:bg-indigo-600 hover:text-white text-indigo-700 shadow-2xs'
@@ -267,7 +259,7 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
           </div>
 
           {/* Footer Bar */}
-          <div className={`px-6 py-3.5 border-t flex items-center justify-between shrink-0 ${
+          <div className={`px-4 sm:px-6 py-3 sm:py-3.5 border-t flex items-center justify-between shrink-0 ${
             isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/50'
           }`}>
             <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">
