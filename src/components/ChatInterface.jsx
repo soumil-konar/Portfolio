@@ -169,7 +169,7 @@ const ChatInterface = ({ isDarkMode }) => {
 
   return (
     <section className="flex-1 flex flex-col justify-end min-h-0 pb-4 group select-none">
-      <div className={`w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border flex flex-col h-[400px] sm:h-[440px] md:h-[480px] backdrop-blur-xl transition-all duration-300 ${
+      <div className={`w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border flex flex-col h-[350px] sm:h-[440px] md:h-[480px] backdrop-blur-xl transition-all duration-300 ${
         isDarkMode 
           ? 'bg-slate-900/90 border-slate-700/90 shadow-2xl' 
           : 'bg-white/95 border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'

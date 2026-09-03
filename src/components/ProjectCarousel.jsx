@@ -57,7 +57,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
         className="my-5 sm:my-8 md:my-10 shrink-0 relative group select-none"
       >
         {/* Top Controls Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 sm:mb-5 px-3">
+        <div className="flex items-center justify-between gap-3 mb-3 sm:mb-5 px-3">
           <div>
             <div className="flex items-center space-x-2">
               <div className="p-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
@@ -72,7 +72,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
             </p>
           </div>
 
-          <div className="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-end">
+          <div className="flex items-center space-x-2">
             {/* Filter Pills */}
             <div className={`flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[10px] font-mono ${
               isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
@@ -109,8 +109,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
               </button>
             </div>
 
-            {/* View Mode Switcher */}
-            <div className={`flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
+            {/* View Mode Switcher (Desktop/Tablet Only) */}
+            <div className={`hidden sm:flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
               isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
             }`}>
               <button
@@ -163,15 +163,15 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                       onPointerMove={handlePointerMove}
                       onClick={() => handleCardClick(proj)}
                       data-cursor-hover
-                      className={`w-[82vw] max-w-[340px] sm:w-[380px] md:w-[410px] lg:w-[430px] p-4 sm:p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between min-h-[310px] sm:min-h-[330px] md:h-[350px] border ${
+                      className={`w-[84vw] max-w-[320px] sm:w-[380px] md:w-[410px] lg:w-[430px] p-4 sm:p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between min-h-[265px] sm:min-h-[330px] md:h-[350px] border ${
                         isDarkMode 
                           ? 'bg-slate-900/90 border-slate-700/90 hover:border-indigo-400 hover:bg-slate-800/95 shadow-2xl hover:shadow-indigo-500/20 text-slate-100' 
                           : 'bg-white/95 border-slate-200/90 hover:border-indigo-400 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(99,102,241,0.12)] text-slate-900'
                       }`}
                     >
                       <div>
-                        <div className="flex items-start justify-between mb-4">
-                          <div className={`p-3 rounded-xl backdrop-blur-sm ${
+                        <div className="flex items-start justify-between mb-3 sm:mb-4">
+                          <div className={`p-2.5 sm:p-3 rounded-xl backdrop-blur-sm ${
                             isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
                           }`}>
                             {proj.icon}
@@ -184,7 +184,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 onClick={(e) => e.stopPropagation()}
-                                className={`p-1.5 px-2.5 rounded-lg border transition-all duration-200 flex items-center space-x-1.5 text-[11px] font-mono group/btn ${
+                                className={`p-1.5 px-2 sm:px-2.5 rounded-lg border transition-all duration-200 flex items-center space-x-1.5 text-[11px] font-mono group/btn ${
                                   isDarkMode 
                                     ? 'bg-slate-800 border-slate-700 hover:border-indigo-400 hover:text-white text-slate-200' 
                                     : 'bg-slate-50 border-slate-200 hover:border-indigo-500 hover:text-indigo-600 text-slate-800 shadow-2xs'
@@ -212,11 +212,11 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                           </div>
                         </div>
 
-                        <h3 className="font-bold text-base md:text-lg mb-2 line-clamp-1 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors flex items-center justify-between">
+                        <h3 className="font-bold text-base md:text-lg mb-1.5 sm:mb-2 line-clamp-1 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors flex items-center justify-between">
                           <span>{proj.title}</span>
                           <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400 shrink-0 ml-1" />
                         </h3>
-                        <p className="text-xs md:text-sm leading-relaxed font-sans pointer-events-none line-clamp-3 mb-3 text-slate-600 dark:text-slate-200">
+                        <p className="text-xs md:text-sm leading-relaxed font-sans pointer-events-none line-clamp-2 sm:line-clamp-3 mb-2.5 sm:mb-3 text-slate-600 dark:text-slate-200">
                           {proj.desc}
                         </p>
                       </div>

@@ -123,10 +123,10 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="w-full py-4 sm:py-6 overflow-hidden relative z-10"
+      className="w-full py-2 sm:py-6 overflow-hidden relative z-10"
     >
       {/* Top Header with Mode Switcher */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 mb-3 px-3">
+      <div className="flex items-center justify-between gap-2.5 mb-2 sm:mb-3 px-3">
         <div className="flex items-center space-x-2">
           <div className="p-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400">
             <Sparkles size={13} />
@@ -139,8 +139,8 @@ const SkillsTicker = ({ isDarkMode, onSelectSkill }) => {
           </span>
         </div>
 
-        {/* View Switcher Controls */}
-        <div className={`flex items-center space-x-1.5 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
+        {/* View Switcher Controls (Desktop/Tablet Only) */}
+        <div className={`hidden sm:flex items-center space-x-1.5 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
           isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
         }`}>
           <button

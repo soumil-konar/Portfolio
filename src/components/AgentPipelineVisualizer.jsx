@@ -221,9 +221,9 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 self-stretch sm:self-auto justify-between sm:justify-end">
-          {/* DAG vs Waterfall view switcher */}
-          <div className={`flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
+        <div className="flex items-center space-x-2 self-stretch sm:self-auto justify-end">
+          {/* DAG vs Waterfall view switcher (Desktop Only) */}
+          <div className={`hidden sm:flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
             isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
           }`}>
             <button
@@ -251,7 +251,7 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
           <button
             onClick={runSimulation}
             disabled={isRunning}
-            className={`flex items-center space-x-2 text-xs font-mono px-4 py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
+            className={`flex items-center space-x-1.5 sm:space-x-2 text-xs font-mono px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl transition-all duration-200 shadow-md active:scale-95 cursor-pointer ${
               isRunning 
                 ? 'bg-indigo-900/60 border border-indigo-500/40 text-indigo-200 cursor-not-allowed' 
                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20'
@@ -265,7 +265,7 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
             ) : (
               <>
                 <Play size={13} className="fill-current" />
-                <span>Simulate Execution</span>
+                <span>Simulate</span>
               </>
             )}
           </button>
@@ -273,15 +273,15 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       </div>
 
       {/* Scenario Selection Chips */}
-      <div className="flex overflow-x-auto no-scrollbar space-x-2 pb-2 mb-4 px-1">
+      <div className="flex overflow-x-auto no-scrollbar space-x-1.5 sm:space-x-2 pb-1.5 sm:pb-2 mb-3 sm:mb-4 px-1">
         {SCENARIOS.map((scenario) => (
           <button
             key={scenario.id}
             onClick={() => handleScenarioChange(scenario)}
-            className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all whitespace-nowrap cursor-pointer shrink-0 ${
+            className={`flex items-center space-x-1.5 sm:space-x-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border text-[11px] sm:text-xs font-mono transition-all whitespace-nowrap cursor-pointer shrink-0 ${
               selectedScenario.id === scenario.id
                 ? isDarkMode 
-                  ? 'bg-indigo-600 text-white border-indigo-400 shadow-sm' 
+                  ? 'bg-indigo-600 text-white border-indigo-400 shadow-sm font-semibold' 
                   : 'bg-indigo-600 text-white border-indigo-600 shadow-sm font-semibold'
                 : isDarkMode 
                   ? 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800' 
@@ -297,31 +297,110 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
       </div>
 
       {/* Active Natural Language Query Card */}
-      <div className={`p-3.5 sm:p-4 rounded-xl border mb-5 backdrop-blur-md transition-all ${
+      <div className={`p-3 sm:p-4 rounded-xl border mb-3 sm:mb-5 backdrop-blur-md transition-all ${
         isDarkMode 
           ? 'bg-slate-950/80 border-slate-800 shadow-inner' 
           : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase tracking-widest font-semibold mb-1">
-          <span>Inbound Enterprise Query:</span>
-          <span className="text-indigo-600 dark:text-indigo-400 font-bold">Latency Budget: {selectedScenario.metrics.total}ms</span>
+          <span>Inbound Query:</span>
+          <span className="text-indigo-600 dark:text-indigo-400 font-bold">Budget: {selectedScenario.metrics.total}ms</span>
         </div>
-        <p className="text-xs sm:text-sm font-mono text-slate-800 dark:text-slate-200 font-medium">
+        <p className="text-xs sm:text-sm font-mono text-slate-800 dark:text-slate-200 font-medium line-clamp-2 sm:line-clamp-none">
           "{selectedScenario.query}"
         </p>
       </div>
 
       {/* MAIN VISUALIZATION: DAG FLOW vs WATERFALL */}
       {viewMode === 'dag' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 relative mb-5">
-          {nodes.map((node, index) => {
-            const isNodeActive = activeStep >= node.id;
-            const isCurrent = activeStep === node.id && isRunning;
-            const isInspected = inspectedNode?.id === node.id;
+        <>
+          {/* MOBILE STREAMLINED STEPPER & SINGLE CARD (< 640px) */}
+          <div className="sm:hidden space-y-3 mb-4">
+            <div className={`grid grid-cols-4 gap-1 p-1 rounded-xl border text-[10px] font-mono ${
+              isDarkMode ? 'bg-slate-950/80 border-slate-800' : 'bg-slate-100 border-slate-200'
+            }`}>
+              {nodes.map((node) => {
+                const isSelected = (inspectedNode?.id || activeStep) === node.id;
+                const isDone = activeStep >= node.id;
+                return (
+                  <button
+                    key={node.id}
+                    onClick={() => {
+                      sound.playClick();
+                      setInspectedNode(node);
+                      setActiveTab('state');
+                    }}
+                    className={`py-1.5 px-1 rounded-lg text-center transition-all cursor-pointer truncate ${
+                      isSelected
+                        ? 'bg-indigo-600 text-white font-bold shadow-xs'
+                        : isDone
+                          ? 'text-indigo-600 dark:text-indigo-400 font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
+                          : 'text-slate-400 dark:text-slate-600'
+                    }`}
+                  >
+                    {node.id}. {node.title.split(' ')[0]}
+                  </button>
+                );
+              })}
+            </div>
 
-            return (
-              <React.Fragment key={node.id}>
+            {/* Active Single Mobile Node */}
+            {(() => {
+              const activeNode = inspectedNode || nodes.find(n => n.id === activeStep) || nodes[nodes.length - 1];
+              return (
+                <div className={`p-3.5 rounded-xl border backdrop-blur-xl transition-all ${
+                  isDarkMode ? 'bg-slate-900/95 border-slate-700/90 shadow-md' : 'bg-white border-slate-200 shadow-sm'
+                }`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="p-2 rounded-lg bg-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                        {activeNode.icon}
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-bold block">
+                          Step {activeNode.id} of 4 • {activeNode.role}
+                        </span>
+                        <h4 className="font-bold text-xs font-mono text-slate-900 dark:text-white">
+                          {activeNode.title}
+                        </h4>
+                      </div>
+                    </div>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+                      isDarkMode ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 border border-slate-200 text-slate-700 font-semibold'
+                    }`}>
+                      {activeNode.badge}
+                    </span>
+                  </div>
+
+                  <p className="text-xs font-sans text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {activeNode.detail} — <span className="font-semibold text-indigo-600 dark:text-indigo-400">{activeNode.subdetail}</span>
+                  </p>
+                </div>
+              );
+            })()}
+
+            {/* Compact Synthesized Output on Mobile */}
+            <div className="p-3.5 rounded-xl border bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/40">
+              <div className="flex items-center justify-between mb-1 text-[10px] uppercase font-mono font-bold text-emerald-800 dark:text-emerald-400">
+                <span>Synthesized Response</span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">Verified</span>
+              </div>
+              <p className="text-xs text-emerald-950 dark:text-emerald-200 leading-relaxed font-sans font-medium">
+                {selectedScenario.output}
+              </p>
+            </div>
+          </div>
+
+          {/* DESKTOP / TABLET 4-COLUMN DAG GRID (>= 640px) */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 relative mb-5">
+            {nodes.map((node) => {
+              const isNodeActive = activeStep >= node.id;
+              const isCurrent = activeStep === node.id && isRunning;
+              const isInspected = inspectedNode?.id === node.id;
+
+              return (
                 <div
+                  key={node.id}
                   onClick={() => {
                     sound.playClick();
                     setInspectedNode(node);
@@ -376,17 +455,10 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
                     <span className="opacity-0 group-hover:opacity-100 transition-opacity font-bold">Inspect State ↗</span>
                   </div>
                 </div>
-
-                {/* Arrow connector on mobile */}
-                {index < nodes.length - 1 && (
-                  <div className="sm:hidden flex justify-center text-slate-400 py-0.5">
-                    <span className="text-xs">↓</span>
-                  </div>
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </>
       ) : (
         /* WATERFALL TRACE VIEW */
         <div className={`p-4 rounded-xl border mb-5 backdrop-blur-md ${
@@ -421,8 +493,8 @@ const AgentPipelineVisualizer = ({ isDarkMode }) => {
         </div>
       )}
 
-      {/* INSPECTOR PANEL TABS */}
-      <div className={`rounded-xl border overflow-hidden backdrop-blur-md ${
+      {/* INSPECTOR PANEL TABS (Desktop/Tablet Only to keep mobile decluttered) */}
+      <div className={`hidden sm:block rounded-xl border overflow-hidden backdrop-blur-md ${
         isDarkMode ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div className="flex items-center border-b border-slate-200 dark:border-slate-800 px-3 pt-2 space-x-3 text-xs font-mono">

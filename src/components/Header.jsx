@@ -101,7 +101,8 @@ const Header = ({ theme, isDarkMode }) => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="font-semibold tracking-wide">Available for AI Systems Engineering</span>
+          <span className="hidden sm:inline font-semibold tracking-wide">Available for AI Systems Engineering</span>
+          <span className="sm:hidden font-semibold tracking-wide">Available for AI Roles</span>
         </div>
 
         <div className={`hidden sm:flex items-center space-x-1.5 px-3 py-1 rounded-full border backdrop-blur-md ${
@@ -182,14 +183,17 @@ const Header = ({ theme, isDarkMode }) => {
 
         {/* Engineering Credential Pills */}
         <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-2 font-mono text-[10px] sm:text-[11px]">
-          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
-            LangGraph Multi-Agent Workflows
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
+            <span className="hidden sm:inline">LangGraph Multi-Agent Workflows</span>
+            <span className="sm:hidden">LangGraph Agents</span>
           </span>
-          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
-            Dual MCP Server Author
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
+            <span className="hidden sm:inline">Dual MCP Server Author</span>
+            <span className="sm:hidden">MCP Author</span>
           </span>
-          <span className="px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
-            Enterprise RAG Microservices
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
+            <span className="hidden sm:inline">Enterprise RAG Microservices</span>
+            <span className="sm:hidden">Enterprise RAG</span>
           </span>
         </div>
       </div>
