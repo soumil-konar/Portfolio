@@ -4,18 +4,14 @@ import { motion, useSpring } from 'framer-motion';
 const CustomCursor = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible] = useState(() => typeof window !== 'undefined' && window.matchMedia('(pointer: fine) and (hover: hover)').matches);
 
   // Smooth spring physics for cursor movement
   const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
   const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
 
   useEffect(() => {
-    // Only show custom cursor on desktop (non-touch devices)
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
-
-    setIsVisible(true);
+    if (!isVisible) return;
 
     const updateMousePosition = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -45,7 +41,7 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', updateMousePosition);
       document.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isVisible]);
 
   if (!isVisible) return null;
 

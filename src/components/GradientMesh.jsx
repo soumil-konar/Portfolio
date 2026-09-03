@@ -11,10 +11,21 @@ const GradientMesh = ({ isDarkMode }) => {
     let animationFrameId;
     let time = 0;
 
-    // Set canvas size
+    // Set canvas size (ignore mobile address bar hide/show height fluctuations)
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      
+      // On mobile, scrolling hides/shows URL bar (delta ~60px), which shouldn't wipe canvas
+      if (canvas.width === 0 || newWidth !== lastWidth || Math.abs(newHeight - lastHeight) > 100) {
+        lastWidth = newWidth;
+        lastHeight = newHeight;
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+      }
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);

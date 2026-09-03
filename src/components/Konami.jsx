@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+
+const KONAMI_CODE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
 const Konami = () => {
-  const [input, setInput] = useState([]);
   const [isGodMode, setIsGodMode] = useState(false);
-  const code = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
-  useEffect(() => {
-    const onKeyUp = (e) => {
-      const newInput = [...input, e.key];
-      if (newInput.length > 10) newInput.shift();
-      setInput(newInput);
-      if (JSON.stringify(newInput) === JSON.stringify(code)) {
-        toggleGodMode();
-        setInput([]); 
-      }
-    };
-    window.addEventListener('keyup', onKeyUp);
-    return () => window.removeEventListener('keyup', onKeyUp);
-  }, [input, isGodMode]);
+  const inputRef = useRef([]);
 
   const toggleGodMode = () => {
-    const newStatus = !isGodMode;
-    setIsGodMode(newStatus);
-    if (newStatus) {
-      document.body.style.filter = "invert(1) hue-rotate(180deg)";
-      document.body.style.transition = "filter 0.5s ease-in-out";
-    } else {
-      document.body.style.filter = "none";
-    }
+    setIsGodMode(prev => {
+      const next = !prev;
+      if (next) {
+        document.body.style.filter = "invert(1) hue-rotate(180deg)";
+        document.body.style.transition = "filter 0.5s ease-in-out";
+      } else {
+        document.body.style.filter = "none";
+      }
+      return next;
+    });
   };
 
   const handleManualExit = () => {
     setIsGodMode(false);
     document.body.style.filter = "none";
   };
+
+  useEffect(() => {
+    const onKeyUp = (e) => {
+      inputRef.current.push(e.key);
+      if (inputRef.current.length > 10) inputRef.current.shift();
+      if (JSON.stringify(inputRef.current) === JSON.stringify(KONAMI_CODE)) {
+        toggleGodMode();
+        inputRef.current = [];
+      }
+    };
+    window.addEventListener('keyup', onKeyUp);
+    return () => window.removeEventListener('keyup', onKeyUp);
+  }, []);
 
   if (!isGodMode) return null;
 
