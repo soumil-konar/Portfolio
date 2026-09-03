@@ -11,6 +11,10 @@ export default {
         'left': 'scroll-left linear infinite',
         'right': 'scroll-right linear infinite',
       },
+      spacing: {
+        '84': '21rem',
+        '88': '22rem',
+      },
       keyframes: {
         'scroll-left': {
           '0%': { transform: 'translateX(0)' },

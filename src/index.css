@@ -15,9 +15,21 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Prevent layout shifts */
+/* Prevent layout shifts and horizontal scroll */
 body {
   overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 /* Aesthetic Dotted Grid Pattern */
