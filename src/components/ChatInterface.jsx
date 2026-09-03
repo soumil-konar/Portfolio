@@ -171,21 +171,21 @@ const ChatInterface = ({ isDarkMode }) => {
     <section className="flex-1 flex flex-col justify-end min-h-0 pb-4 group select-none">
       <div className={`w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border flex flex-col h-[350px] sm:h-[440px] md:h-[480px] backdrop-blur-xl transition-all duration-300 ${
         isDarkMode 
-          ? 'bg-slate-900/90 border-slate-700/90 shadow-2xl' 
-          : 'bg-white/95 border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
+          ? 'bg-[#101014]/95 border-zinc-800/90 shadow-2xl' 
+          : 'bg-white/95 border-zinc-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
       }`}>
         
         {/* Terminal Header */}
         <div className={`h-9 shrink-0 flex items-center justify-between px-3 sm:px-4 backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-950 border-b border-slate-800' : 'bg-slate-100/90 border-b border-slate-200'
+          isDarkMode ? 'bg-[#08080a] border-b border-zinc-800' : 'bg-zinc-100/90 border-b border-zinc-200'
         }`}>
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-            <div className="ml-2 text-[10px] font-mono select-none text-slate-600 dark:text-slate-300 font-semibold flex items-center space-x-1.5">
+            <div className="ml-2 text-[10px] font-mono select-none text-zinc-600 dark:text-zinc-300 font-semibold flex items-center space-x-1.5">
               <span>soumil-agent-terminal.sh</span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">v2.6</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">v2.6</span>
             </div>
           </div>
 
@@ -193,7 +193,7 @@ const ChatInterface = ({ isDarkMode }) => {
             <button
               onClick={handleClearChat}
               title="Clear Terminal Session"
-              className="text-slate-400 hover:text-red-400 transition-colors p-1 cursor-pointer"
+              className="text-zinc-400 hover:text-red-400 transition-colors p-1 cursor-pointer"
             >
               <Trash2 size={12} />
             </button>
@@ -203,8 +203,8 @@ const ChatInterface = ({ isDarkMode }) => {
               onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
               className={`flex items-center space-x-1 text-[10px] font-mono px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                 isDarkMode 
-                  ? 'border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 bg-slate-900/50' 
-                  : 'border-slate-200 text-slate-600 hover:text-slate-900 bg-slate-50'
+                  ? 'border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 bg-[#16161b]' 
+                  : 'border-zinc-200 text-zinc-600 hover:text-zinc-900 bg-zinc-50'
               }`}
               title="Open Command Palette (Ctrl+K)"
             >
@@ -217,32 +217,32 @@ const ChatInterface = ({ isDarkMode }) => {
 
         {/* Chat Messages Body */}
         <div className={`flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 backdrop-blur-sm ${
-          isDarkMode ? 'bg-slate-950/50' : 'bg-slate-50/50'
+          isDarkMode ? 'bg-[#0a0a0d]/50' : 'bg-zinc-50/50'
         }`}>
           {chatHistory.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className="flex items-end gap-2 max-w-[90%] sm:max-w-[85%] group/msg">
                 {msg.type === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 shadow-sm shadow-indigo-500/40">
-                    <Terminal size={13} className="text-white"/>
+                  <div className="w-6 h-6 rounded-full bg-amber-500 text-black flex items-center justify-center shrink-0 shadow-sm shadow-amber-500/30">
+                    <Terminal size={13} className="text-black"/>
                   </div>
                 )}
                 
                 <div className="flex flex-col">
                   {/* Optional Thinking Accordion */}
                   {msg.thinking && (
-                    <div className="mb-1.5 text-[10px] font-mono text-slate-500 flex items-center space-x-1">
-                      <span className="text-indigo-400">⚡ Reasoning Graph:</span>
+                    <div className="mb-1.5 text-[10px] font-mono text-zinc-500 flex items-center space-x-1">
+                      <span className="text-amber-400">⚡ Reasoning Graph:</span>
                       <span className="italic">{msg.thinking}</span>
                     </div>
                   )}
 
                   <div className={`relative rounded-xl px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm leading-relaxed ${
                     msg.type === 'user'
-                      ? 'bg-indigo-600 text-white rounded-br-none shadow-md font-mono'
+                      ? 'bg-amber-500 text-black font-semibold rounded-br-none shadow-md font-mono'
                       : isDarkMode
-                        ? 'bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-none shadow-sm'
-                        : 'bg-white border border-slate-200 text-slate-800 rounded-bl-none shadow-xs'
+                        ? 'bg-[#16161b] border border-zinc-800 text-zinc-100 rounded-bl-none shadow-sm'
+                        : 'bg-white border border-zinc-200 text-zinc-800 rounded-bl-none shadow-xs'
                   }`}>
                     <div className="whitespace-pre-wrap font-sans">{msg.text}</div>
 
@@ -264,30 +264,30 @@ const ChatInterface = ({ isDarkMode }) => {
           {/* Real-Time Typewriter Streaming State */}
           {isTyping && (
             <div className="flex items-end gap-2 max-w-[90%]">
-              <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center shrink-0 shadow-sm shadow-indigo-500/40">
-                <Terminal size={13} className="text-white"/>
+              <div className="w-6 h-6 rounded-full bg-amber-500 text-black flex items-center justify-center shrink-0 shadow-sm shadow-amber-500/30">
+                <Terminal size={13} className="text-black"/>
               </div>
 
               <div className="flex flex-col">
                 {streamingThinking && (
-                  <div className="mb-1.5 text-[10px] font-mono text-indigo-400 flex items-center space-x-1 animate-pulse">
+                  <div className="mb-1.5 text-[10px] font-mono text-amber-400 flex items-center space-x-1 animate-pulse">
                     <span>⚡ Generating response...</span>
                   </div>
                 )}
 
                 <div className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed border ${
-                  isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+                  isDarkMode ? 'bg-[#16161b] border-zinc-800 text-zinc-200' : 'bg-white border-zinc-200 text-zinc-800'
                 }`}>
                   {streamingText ? (
                     <span>
                       {streamingText}
-                      <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-indigo-400 animate-pulse align-middle" />
+                      <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-amber-400 animate-pulse align-middle" />
                     </span>
                   ) : (
                     <div className="flex space-x-1 py-1">
-                      <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce"></div>
-                      <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce delay-100"></div>
-                      <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce delay-200"></div>
+                      <div className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce delay-100"></div>
+                      <div className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce delay-200"></div>
                     </div>
                   )}
                 </div>
@@ -300,7 +300,7 @@ const ChatInterface = ({ isDarkMode }) => {
 
         {/* Suggestion Chips */}
         <div className={`px-3 py-1.5 border-t backdrop-blur-md overflow-hidden ${
-          isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-200/90 bg-white/95'
+          isDarkMode ? 'border-zinc-800 bg-[#08080a]/90' : 'border-zinc-200 bg-white/95'
         }`}>
           <div className="flex sm:flex-wrap gap-1.5 overflow-x-auto no-scrollbar py-0.5">
             {SUGGESTED_QUESTIONS.map((q, i) => (
@@ -310,8 +310,8 @@ const ChatInterface = ({ isDarkMode }) => {
                 disabled={isTyping} 
                 className={`text-[10px] sm:text-[11px] px-2.5 py-1 rounded-full border transition-all hover:-translate-y-0.5 font-mono cursor-pointer whitespace-nowrap shrink-0 ${
                   isDarkMode 
-                    ? 'border-slate-800 bg-slate-900/80 hover:bg-indigo-950/60 hover:border-indigo-400 text-indigo-300 hover:text-white' 
-                    : 'border-slate-200 bg-white hover:bg-indigo-50 hover:border-indigo-300 text-indigo-700 shadow-2xs'
+                    ? 'border-zinc-800 bg-[#16161b] hover:bg-[#202026] hover:border-amber-400 text-amber-300 hover:text-white' 
+                    : 'border-zinc-200 bg-white hover:bg-amber-50 hover:border-amber-400 text-amber-700 shadow-2xs'
                 }`}
               >
                 {q}
@@ -324,10 +324,10 @@ const ChatInterface = ({ isDarkMode }) => {
         <form
           onSubmit={handleSubmit}
           className={`p-2 sm:p-2.5 border-t flex items-center gap-2 backdrop-blur-md ${
-            isDarkMode ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-slate-50'
+            isDarkMode ? 'border-zinc-800 bg-[#08080a]' : 'border-zinc-200 bg-zinc-50'
           }`}
         >
-          <span className="text-[11px] font-mono text-indigo-500 font-bold pl-2 hidden sm:inline">$</span>
+          <span className="text-[11px] font-mono text-amber-500 font-bold pl-2 hidden sm:inline">$</span>
           <input
             type="text"
             value={inputValue}
@@ -335,13 +335,15 @@ const ChatInterface = ({ isDarkMode }) => {
             disabled={isTyping}
             placeholder="Ask about LangGraph, MCP, or type /help..."
             className={`flex-1 bg-transparent px-2 py-1.5 text-xs sm:text-sm font-mono outline-none ${
-              isDarkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
+              isDarkMode ? 'text-white placeholder:text-zinc-500' : 'text-zinc-900 placeholder:text-zinc-400'
             }`}
           />
           <button
             type="submit"
             disabled={isTyping || !inputValue.trim()}
-            className="p-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white disabled:opacity-40 transition-all cursor-pointer shrink-0 active:scale-95"
+            className={`p-2 rounded-xl text-black font-bold disabled:opacity-40 transition-all cursor-pointer shrink-0 active:scale-95 ${
+              isDarkMode ? 'bg-amber-500 hover:bg-amber-400' : 'bg-amber-500 hover:bg-amber-600 text-black'
+            }`}
           >
             <Send size={13} />
           </button>

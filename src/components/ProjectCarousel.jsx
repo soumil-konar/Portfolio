@@ -75,14 +75,14 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
           <div className="flex items-center space-x-2">
             {/* Filter Pills */}
             <div className={`flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[10px] font-mono ${
-              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
+              isDarkMode ? 'bg-[#101014]/90 border-zinc-800' : 'bg-zinc-100 border-zinc-200 shadow-2xs'
             }`}>
               <button
                 onClick={() => { sound.playClick(); setFilterCategory('all'); }}
                 className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
                   filterCategory === 'all'
-                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
-                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
+                    ? isDarkMode ? 'bg-amber-500 text-black font-bold shadow-sm' : 'bg-amber-600 text-white font-bold shadow-sm'
+                    : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80 font-medium'
                 }`}
               >
                 All ({PROJECTS.length})
@@ -91,8 +91,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                 onClick={() => { sound.playClick(); setFilterCategory('enterprise'); }}
                 className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
                   filterCategory === 'enterprise'
-                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
-                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
+                    ? isDarkMode ? 'bg-amber-500 text-black font-bold shadow-sm' : 'bg-amber-600 text-white font-bold shadow-sm'
+                    : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80 font-medium'
                 }`}
               >
                 Enterprise ({enterpriseCount})
@@ -101,8 +101,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                 onClick={() => { sound.playClick(); setFilterCategory('opensource'); }}
                 className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
                   filterCategory === 'opensource'
-                    ? 'bg-indigo-600 text-white font-semibold shadow-sm'
-                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
+                    ? isDarkMode ? 'bg-amber-500 text-black font-bold shadow-sm' : 'bg-amber-600 text-white font-bold shadow-sm'
+                    : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80 font-medium'
                 }`}
               >
                 OSS ({openSourceCount})
@@ -111,15 +111,15 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
 
             {/* View Mode Switcher (Desktop/Tablet Only) */}
             <div className={`hidden sm:flex items-center space-x-1 p-1 rounded-lg border backdrop-blur-md text-[11px] font-mono ${
-              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-100 border-slate-200 shadow-2xs'
+              isDarkMode ? 'bg-[#101014]/90 border-zinc-800' : 'bg-zinc-100 border-zinc-200 shadow-2xs'
             }`}>
               <button
                 onClick={() => { sound.playClick(); setViewMode('track'); }}
                 title="Continuous Showcase Track"
                 className={`p-1 rounded transition-all cursor-pointer ${
                   viewMode === 'track'
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
+                    ? isDarkMode ? 'bg-amber-500 text-black font-bold shadow-sm' : 'bg-amber-600 text-white shadow-sm'
+                    : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80'
                 }`}
               >
                 <Activity size={13} />
@@ -129,8 +129,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                 title="Architectural Grid View"
                 className={`p-1 rounded transition-all cursor-pointer ${
                   viewMode === 'grid'
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
+                    ? isDarkMode ? 'bg-amber-500 text-black font-bold shadow-sm' : 'bg-amber-600 text-white shadow-sm'
+                    : isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-700 hover:text-zinc-900 hover:bg-white/80'
                 }`}
               >
                 <LayoutGrid size={13} />
@@ -165,14 +165,14 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                       data-cursor-hover
                       className={`w-[84vw] max-w-[320px] sm:w-[380px] md:w-[410px] lg:w-[430px] p-4 sm:p-6 md:p-7 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between min-h-[265px] sm:min-h-[330px] md:h-[350px] border ${
                         isDarkMode 
-                          ? 'bg-slate-900/90 border-slate-700/90 hover:border-indigo-400 hover:bg-slate-800/95 shadow-2xl hover:shadow-indigo-500/20 text-slate-100' 
-                          : 'bg-white/95 border-slate-200/90 hover:border-indigo-400 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(99,102,241,0.12)] text-slate-900'
+                          ? 'bg-[#101014]/95 border-zinc-800/90 hover:border-amber-400 hover:bg-[#141419] shadow-2xl hover:shadow-amber-500/10 text-zinc-100' 
+                          : 'bg-white/95 border-zinc-200/90 hover:border-amber-500 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.12)] text-zinc-900'
                       }`}
                     >
                       <div>
                         <div className="flex items-start justify-between mb-3 sm:mb-4">
                           <div className={`p-2.5 sm:p-3 rounded-xl backdrop-blur-sm ${
-                            isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
+                            isDarkMode ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30' : 'bg-amber-50 border border-amber-200 text-amber-700'
                           }`}>
                             {proj.icon}
                           </div>
@@ -186,8 +186,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                                 onClick={(e) => e.stopPropagation()}
                                 className={`p-1.5 px-2 sm:px-2.5 rounded-lg border transition-all duration-200 flex items-center space-x-1.5 text-[11px] font-mono group/btn ${
                                   isDarkMode 
-                                    ? 'bg-slate-800 border-slate-700 hover:border-indigo-400 hover:text-white text-slate-200' 
-                                    : 'bg-slate-50 border-slate-200 hover:border-indigo-500 hover:text-indigo-600 text-slate-800 shadow-2xs'
+                                    ? 'bg-[#16161b] border-zinc-800 hover:border-amber-400 hover:text-white text-zinc-200' 
+                                    : 'bg-zinc-50 border-zinc-200 hover:border-amber-500 hover:text-amber-700 text-zinc-800 shadow-2xs'
                                 }`}
                                 title="View Source on GitHub"
                               >
@@ -201,8 +201,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                               <div 
                                 className={`px-2 py-1 rounded-md border flex items-center space-x-1 text-[10px] font-mono ${
                                   isDarkMode 
-                                    ? 'bg-slate-800 border-slate-700 text-slate-300 font-medium' 
-                                    : 'bg-slate-100 border-slate-200 text-slate-700 font-medium'
+                                    ? 'bg-[#16161b] border-zinc-800 text-zinc-300 font-medium' 
+                                    : 'bg-zinc-100 border-zinc-200 text-zinc-700 font-medium'
                                 }`}
                               >
                                 <Lock size={10} />
@@ -212,11 +212,11 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                           </div>
                         </div>
 
-                        <h3 className="font-bold text-base md:text-lg mb-1.5 sm:mb-2 line-clamp-1 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors flex items-center justify-between">
+                        <h3 className="font-bold text-base md:text-lg mb-1.5 sm:mb-2 line-clamp-1 text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex items-center justify-between">
                           <span>{proj.title}</span>
-                          <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400 shrink-0 ml-1" />
+                          <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-amber-500 dark:text-amber-400 shrink-0 ml-1" />
                         </h3>
-                        <p className="text-xs md:text-sm leading-relaxed font-sans pointer-events-none line-clamp-2 sm:line-clamp-3 mb-2.5 sm:mb-3 text-slate-600 dark:text-slate-200">
+                        <p className="text-xs md:text-sm leading-relaxed font-sans pointer-events-none line-clamp-2 sm:line-clamp-3 mb-2.5 sm:mb-3 text-zinc-600 dark:text-zinc-300">
                           {proj.desc}
                         </p>
                       </div>
@@ -229,8 +229,8 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                                 key={i} 
                                 className={`text-[10px] font-mono px-2 py-0.5 rounded-md border ${
                                   isDarkMode 
-                                    ? 'bg-slate-800 border-slate-700 text-indigo-300 font-medium' 
-                                    : 'bg-indigo-50 border-indigo-100 text-indigo-700 font-medium'
+                                    ? 'bg-[#16161b] border-zinc-800 text-amber-300/90 font-medium' 
+                                    : 'bg-amber-50 border-amber-200/80 text-amber-800 font-medium'
                                 }`}
                               >
                                 {tag}
@@ -239,15 +239,15 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                           </div>
                         )}
                         
-                        <div className="flex items-center justify-between pt-1 text-[10px] text-slate-600 dark:text-slate-300">
+                        <div className="flex items-center justify-between pt-1 text-[10px] text-zinc-600 dark:text-zinc-300">
                            <div className="flex items-center space-x-1.5 font-medium">
-                             <div className={`w-2 h-2 rounded-full ${proj.github ? 'bg-indigo-500' : 'bg-emerald-500'}`} />
+                             <div className={`w-2 h-2 rounded-full ${proj.github ? 'bg-amber-500' : 'bg-emerald-500'}`} />
                              <span className="uppercase tracking-wider font-semibold">
                                {proj.github ? 'Open Source' : 'Production Platform'}
                              </span>
                            </div>
 
-                           <span className="font-mono text-indigo-600 dark:text-indigo-400 font-bold group-hover:underline">
+                           <span className="font-mono text-amber-600 dark:text-amber-400 font-bold group-hover:underline">
                              Case Study ↗
                            </span>
                         </div>
@@ -275,14 +275,14 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                     onClick={() => handleCardClick(proj)}
                     className={`p-5 rounded-2xl cursor-pointer select-none backdrop-blur-xl transition-all duration-300 flex flex-col justify-between min-h-[320px] border ${
                       isDarkMode 
-                        ? 'bg-slate-900/90 border-slate-700/90 hover:border-indigo-400 hover:bg-slate-800/95 shadow-xl hover:shadow-indigo-500/20 text-slate-100' 
-                        : 'bg-white/95 border-slate-200/90 hover:border-indigo-400 shadow-sm hover:shadow-md text-slate-900'
+                        ? 'bg-[#101014]/95 border-zinc-800/90 hover:border-amber-400 hover:bg-[#141419] shadow-xl hover:shadow-amber-500/10 text-zinc-100' 
+                        : 'bg-white/95 border-zinc-200/90 hover:border-amber-500 shadow-sm hover:shadow-md text-zinc-900'
                     }`}
                   >
                     <div>
                       <div className="flex items-start justify-between mb-3">
                         <div className={`p-2.5 rounded-xl ${
-                          isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
+                          isDarkMode ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30' : 'bg-amber-50 border border-amber-200 text-amber-700'
                         }`}>
                           {proj.icon}
                         </div>
@@ -290,7 +290,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                         <div className="flex items-center space-x-1.5">
                           {proj.isEnterprise && (
                             <div className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
-                              isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700 font-semibold'
+                              isDarkMode ? 'bg-[#16161b] border-zinc-800 text-zinc-300' : 'bg-zinc-100 border-zinc-200 text-zinc-700 font-semibold'
                             }`}>
                               Enterprise
                             </div>
@@ -302,7 +302,7 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                               className={`p-1.5 rounded-lg border transition-colors ${
-                                isDarkMode ? 'border-slate-700 text-slate-300 hover:text-white' : 'border-slate-200 text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50'
+                                isDarkMode ? 'border-zinc-800 text-zinc-300 hover:text-white' : 'border-zinc-200 text-zinc-700 hover:text-zinc-900 bg-white hover:bg-zinc-50'
                               }`}
                             >
                               <Github size={12} />
@@ -311,10 +311,10 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                         </div>
                       </div>
 
-                      <h3 className="font-bold text-base mb-2 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      <h3 className="font-bold text-base mb-2 text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                         {proj.title}
                       </h3>
-                      <p className="text-xs leading-relaxed font-sans line-clamp-3 mb-3 text-slate-600 dark:text-slate-300">
+                      <p className="text-xs leading-relaxed font-sans line-clamp-3 mb-3 text-zinc-600 dark:text-zinc-300">
                         {proj.desc}
                       </p>
                     </div>
@@ -323,18 +323,19 @@ const ProjectCarousel = ({ theme, isDarkMode, selectedProject: propSelectedProje
                       <div className="flex flex-wrap gap-1.5 mb-3">
                         {proj.tags.slice(0, 3).map((tag, i) => (
                           <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                            isDarkMode ? 'border-slate-800 bg-slate-950/50 text-indigo-300' : 'border-indigo-100 bg-indigo-50 text-indigo-700 font-medium'
+                            isDarkMode ? 'border-zinc-800 bg-[#16161b] text-amber-300/90 font-medium' : 'border-amber-200/80 bg-amber-50 text-amber-800 font-medium'
                           }`}>
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      <div className={`flex items-center justify-between pt-2 border-t text-[10px] font-mono ${
-                        isDarkMode ? 'border-slate-800/80 text-indigo-400' : 'border-slate-100 text-indigo-600 font-semibold'
-                      }`}>
-                        <span>Inspect Architecture</span>
-                        <span>↗</span>
+                      <div className="flex items-center justify-between text-[11px] font-mono pt-1 text-zinc-500">
+                        <span>Production Readiness</span>
+                        <span className="text-amber-600 dark:text-amber-400 font-bold flex items-center space-x-0.5 group-hover:translate-x-0.5 transition-transform">
+                          <span>View Specs</span>
+                          <span>→</span>
+                        </span>
                       </div>
                     </div>
                   </motion.div>

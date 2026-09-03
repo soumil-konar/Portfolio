@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <!-- Background Gradient -->
+    <!-- Background Gradient: Deep Obsidian Carbon -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#07090e"/>
-      <stop offset="100%" stop-color="#1e1b4b"/>
+      <stop offset="0%" stop-color="#08080a"/>
+      <stop offset="100%" stop-color="#141418"/>
     </linearGradient>
 
-    <!-- Border Glow -->
+    <!-- Border Glow: Titanium Gold to Solar Amber -->
     <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
       <stop offset="100%" stop-color="#10b981"/>
     </linearGradient>
 
-    <!-- Core Glow -->
+    <!-- Core Glow: Solar Amber Core -->
     <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60a5fa"/>
-      <stop offset="50%" stop-color="#818cf8"/>
-      <stop offset="100%" stop-color="#34d399"/>
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
     </linearGradient>
 
     <!-- Glow Filter -->
@@ -30,8 +30,8 @@
   <!-- Squircle Base with Border -->
   <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="2"/>
 
-  <!-- Subtle Inner Grid / Synaptic Lines -->
-  <g opacity="0.65" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round">
+  <!-- Synaptic Grid Lines: Amber -->
+  <g opacity="0.65" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round">
     <!-- Center to Top-Left -->
     <line x1="32" y1="32" x2="18" y2="20"/>
     <!-- Center to Top-Right -->
@@ -43,12 +43,12 @@
   </g>
 
   <!-- Peripheral Neural Nodes -->
-  <circle cx="18" cy="20" r="4" fill="#38bdf8" filter="url(#glow)"/>
-  <circle cx="46" cy="20" r="4" fill="#818cf8" filter="url(#glow)"/>
-  <circle cx="32" cy="48" r="4" fill="#34d399" filter="url(#glow)"/>
+  <circle cx="18" cy="20" r="4" fill="#fbbf24" filter="url(#glow)"/>
+  <circle cx="46" cy="20" r="4" fill="#f59e0b" filter="url(#glow)"/>
+  <circle cx="32" cy="48" r="4" fill="#10b981" filter="url(#glow)"/>
 
   <!-- Outer Pulse Ring -->
-  <circle cx="32" cy="32" r="10" fill="none" stroke="#6366f1" stroke-width="1.5" opacity="0.5" stroke-dasharray="3 2"/>
+  <circle cx="32" cy="32" r="10" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5" stroke-dasharray="3 2"/>
 
   <!-- Central Intelligence Core -->
   <circle cx="32" cy="32" r="6.5" fill="url(#coreGrad)" filter="url(#glow)"/>

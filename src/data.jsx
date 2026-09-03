@@ -3,20 +3,20 @@ import { Database, Cpu, Server, Workflow, Network, Boxes, Sparkles, Smartphone, 
 
 export const PASTEL_PALETTE = {
   light: { 
-    bg: 'bg-[#fafaf9]', 
-    text: 'text-slate-900', 
-    card: 'bg-white/90 border-slate-200/80 shadow-sm', 
-    chatUser: 'bg-indigo-600 text-white font-medium',
-    chatBot: 'bg-white border border-slate-200/90 text-slate-800 shadow-sm',
-    accent: 'text-indigo-600' 
+    bg: 'bg-[#fcfcfd]', 
+    text: 'text-zinc-900', 
+    card: 'bg-white/95 border-zinc-200/90 shadow-sm', 
+    chatUser: 'bg-amber-600 text-white font-medium',
+    chatBot: 'bg-white border border-zinc-200 text-zinc-800 shadow-sm',
+    accent: 'text-amber-600' 
   },
   dark: { 
-    bg: 'bg-[#0b0f19]', 
-    text: 'text-slate-100', 
-    card: 'bg-slate-900/90 border-slate-700/80 shadow-xl', 
-    chatUser: 'bg-indigo-600 text-white font-semibold',
-    chatBot: 'bg-slate-800/90 border border-slate-700 text-slate-100 shadow-md font-medium',
-    accent: 'text-indigo-400' 
+    bg: 'bg-[#08080a]', 
+    text: 'text-zinc-100', 
+    card: 'bg-[#101014]/95 border-zinc-800/90 shadow-2xl', 
+    chatUser: 'bg-amber-500 text-black font-semibold',
+    chatBot: 'bg-[#141418] border border-zinc-800 text-zinc-100 shadow-md font-medium',
+    accent: 'text-amber-400' 
   }
 };
 

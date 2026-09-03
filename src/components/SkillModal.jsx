@@ -85,33 +85,33 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
           transition={{ type: 'spring', damping: 26, stiffness: 300 }}
           className={`relative w-full max-w-2xl rounded-2xl border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh] sm:max-h-[85vh] backdrop-blur-2xl ${
             isDarkMode 
-              ? 'bg-slate-900/95 border-slate-700/80 text-slate-100' 
-              : 'bg-white border-slate-200 shadow-2xl text-slate-900'
+              ? 'bg-[#101014]/98 border-zinc-800 text-zinc-100' 
+              : 'bg-white border-zinc-200 shadow-2xl text-zinc-900'
           }`}
         >
           {/* Top Bar / Header */}
           <div className={`px-4 sm:px-6 py-3.5 sm:py-5 border-b flex items-center justify-between shrink-0 gap-3 ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/60'
+            isDarkMode ? 'border-zinc-800 bg-[#08080a]' : 'border-zinc-100 bg-zinc-50/60'
           }`}>
             <div className="flex items-center space-x-3 min-w-0">
               <div className={`p-2 sm:p-2.5 rounded-xl shadow-sm shrink-0 ${
-                isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
+                isDarkMode ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30' : 'bg-amber-50 border border-amber-200 text-amber-700'
               }`}>
                 {skillIcon}
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-base sm:text-lg md:text-xl tracking-tight text-slate-900 dark:text-white truncate">
+                <h3 className="font-bold text-base sm:text-lg md:text-xl tracking-tight text-zinc-900 dark:text-white truncate">
                   {skill.name}
                 </h3>
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-0.5">
-                  <span className="text-[10px] sm:text-[11px] font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+                  <span className="text-[10px] sm:text-[11px] font-mono font-semibold text-amber-600 dark:text-amber-400">
                     {skill.category}
                   </span>
-                  <span className="text-slate-400 dark:text-slate-600 text-xs">•</span>
+                  <span className="text-zinc-400 dark:text-zinc-600 text-xs">•</span>
                   <span className={`text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-md border font-medium ${
                     isDarkMode 
-                      ? 'bg-slate-800 border-slate-700 text-slate-300' 
-                      : 'bg-slate-100 border-slate-200 text-slate-700'
+                      ? 'bg-[#16161b] border-zinc-800 text-zinc-300' 
+                      : 'bg-zinc-100 border-zinc-200 text-zinc-700'
                   }`}>
                     {skill.experience}
                   </span>
@@ -124,8 +124,8 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
               onClick={onClose}
               className={`p-1.5 sm:p-2 rounded-xl border transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center shrink-0 ${
                 isDarkMode 
-                  ? 'border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white' 
-                  : 'border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900'
+                  ? 'border-zinc-800 hover:bg-[#16161b] text-zinc-300 hover:text-white' 
+                  : 'border-zinc-200 hover:bg-zinc-100 text-zinc-600 hover:text-zinc-900'
               }`}
               title="Close (Esc)"
               aria-label="Close dialog"
@@ -139,10 +139,10 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
             {/* Overview / Depth Card */}
             <div className={`p-3.5 sm:p-4 rounded-xl border leading-relaxed text-xs md:text-sm font-sans ${
               isDarkMode 
-                ? 'bg-slate-950/80 border-slate-700/80 text-slate-200 font-medium' 
-                : 'bg-indigo-50/70 border-indigo-100 text-slate-800 font-medium'
+                ? 'bg-[#08080a] border-zinc-800 text-zinc-200 font-medium' 
+                : 'bg-amber-50/60 border-amber-200/60 text-zinc-800 font-medium'
             }`}>
-              <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1 text-indigo-600 dark:text-indigo-400">
+              <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1 text-amber-600 dark:text-amber-400">
                 Technical Depth & Engineering Application:
               </span>
               {skill.overview}
@@ -161,11 +161,11 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
                       key={i}
                       className={`px-3 py-2 rounded-lg border text-xs font-mono flex items-center space-x-2 ${
                         isDarkMode
-                          ? 'bg-slate-950/70 border-slate-800 text-slate-200'
-                          : 'bg-slate-50 border-slate-200 text-slate-800 font-medium'
+                          ? 'bg-[#16161b] border-zinc-800 text-zinc-200'
+                          : 'bg-zinc-50 border-zinc-200 text-zinc-800 font-medium'
                       }`}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
                       <span className="truncate">{cap}</span>
                     </div>
                   ))}
@@ -176,8 +176,8 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
             {/* Related Projects Section */}
             {skill.relatedProjects && skill.relatedProjects.length > 0 && (
               <div className="space-y-2.5 sm:space-y-3">
-                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
-                  <Workflow size={13} className="text-indigo-500" />
+                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                  <Workflow size={13} className="text-amber-500" />
                   <span>Deployed In These Portfolio Systems ({skill.relatedProjects.length}):</span>
                 </h4>
 
@@ -191,26 +191,26 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
                         key={idx}
                         className={`p-3.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between gap-3 ${
                           isDarkMode
-                            ? 'bg-slate-950/80 border-slate-700/80 hover:border-indigo-400/80 shadow-md'
-                            : 'bg-white border-slate-200 hover:border-indigo-300 shadow-xs'
+                            ? 'bg-[#08080a] border-zinc-800 hover:border-amber-400/80 shadow-md'
+                            : 'bg-white border-zinc-200 hover:border-amber-400 shadow-xs'
                         }`}
                       >
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-1.5">
                             <div className="flex items-center space-x-2 flex-wrap gap-1">
-                              <span className="font-bold text-sm text-slate-900 dark:text-white">
+                              <span className="font-bold text-sm text-zinc-900 dark:text-white">
                                 {fullProject.title}
                               </span>
                               {fullProject.isEnterprise ? (
                                 <span className={`px-1.5 py-0.5 rounded text-[9px] font-mono border flex items-center space-x-1 ${
-                                  isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700 font-medium'
+                                  isDarkMode ? 'bg-[#16161b] border-zinc-800 text-zinc-300' : 'bg-zinc-100 border-zinc-200 text-zinc-700 font-medium'
                                 }`}>
                                   <Lock size={8} />
                                   <span>Enterprise</span>
                                 </span>
                               ) : (
                                 <span className={`px-1.5 py-0.5 rounded text-[9px] font-mono border flex items-center space-x-1 ${
-                                  isDarkMode ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300' : 'bg-indigo-50 border-indigo-200 text-indigo-700 font-medium'
+                                  isDarkMode ? 'bg-amber-500/15 border-amber-500/30 text-amber-300' : 'bg-amber-50 border-amber-200 text-amber-800 font-medium'
                                 }`}>
                                   <Sparkles size={8} />
                                   <span>Open Source</span>
@@ -219,18 +219,18 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
                             </div>
                           </div>
 
-                          <p className="text-xs font-sans leading-relaxed text-slate-700 dark:text-slate-300 mt-1">
+                          <p className="text-xs font-sans leading-relaxed text-zinc-700 dark:text-zinc-300 mt-1">
                             {item.usage}
                           </p>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-2 border-t border-slate-200/40 dark:border-slate-800/80 gap-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-2 border-t border-zinc-200/50 dark:border-zinc-800/80 gap-2">
                           <div className="flex flex-wrap gap-1">
                             {fullProject.tags && fullProject.tags.slice(0, 3).map((tag, tIdx) => (
                               <span
                                 key={tIdx}
                                 className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
-                                  isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
+                                  isDarkMode ? 'bg-[#16161b] border-zinc-800 text-zinc-400' : 'bg-zinc-50 border-zinc-200 text-zinc-600'
                                 }`}
                               >
                                 {tag}
@@ -240,14 +240,14 @@ const SkillModal = ({ skill, isOpen, onClose, onSelectProject, projects = [], is
 
                           <button
                             onClick={() => handleOpenProject(fullProject)}
-                            className={`flex items-center justify-center space-x-1 text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all cursor-pointer self-stretch sm:self-auto ${
+                            className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-all self-start sm:self-auto cursor-pointer ${
                               isDarkMode
-                                ? 'bg-indigo-600/30 border-indigo-400/80 hover:bg-indigo-600 text-white shadow-xs'
-                                : 'bg-indigo-50 border-indigo-200 hover:bg-indigo-600 hover:text-white text-indigo-700 shadow-2xs'
+                                ? 'bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25 hover:text-white'
+                                : 'bg-amber-50 border-amber-200 text-amber-800 hover:bg-amber-100 shadow-2xs'
                             }`}
                           >
-                            <span>Inspect Architecture</span>
-                            <ChevronRight size={14} />
+                            <span>Inspect System</span>
+                            <ChevronRight size={12} />
                           </button>
                         </div>
                       </div>

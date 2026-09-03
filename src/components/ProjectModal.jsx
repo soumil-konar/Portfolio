@@ -98,32 +98,32 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
           transition={{ type: 'spring', damping: 26, stiffness: 300 }}
           className={`relative w-full max-w-3xl rounded-2xl border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh] sm:max-h-[86vh] backdrop-blur-2xl ${
             isDarkMode 
-              ? 'bg-slate-900/95 border-slate-700/80 text-slate-100' 
-              : 'bg-white border-slate-200 shadow-2xl text-slate-900'
+              ? 'bg-[#101014]/98 border-zinc-800 text-zinc-100' 
+              : 'bg-white border-zinc-200 shadow-2xl text-zinc-900'
           }`}
         >
           {/* Top Bar / Header */}
           <div className={`px-4 sm:px-6 py-3.5 sm:py-5 border-b flex items-center justify-between shrink-0 gap-3 ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/60'
+            isDarkMode ? 'border-zinc-800 bg-[#08080a]' : 'border-zinc-100 bg-zinc-50/60'
           }`}>
             <div className="flex items-center space-x-3 min-w-0">
               <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 ${
-                isDarkMode ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-indigo-50 border border-indigo-100 text-indigo-600'
+                isDarkMode ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30' : 'bg-amber-50 border border-amber-200 text-amber-700'
               }`}>
                 {project.icon}
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-base sm:text-lg md:text-xl tracking-tight text-slate-900 dark:text-white truncate">
+                <h3 className="font-bold text-base sm:text-lg md:text-xl tracking-tight text-zinc-900 dark:text-white truncate">
                   {project.title}
                 </h3>
                 <div className="flex items-center space-x-2 mt-0.5">
                   {project.github ? (
-                    <span className="text-[10px] sm:text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-1">
+                    <span className="text-[10px] sm:text-[11px] font-mono text-amber-600 dark:text-amber-400 font-semibold flex items-center space-x-1">
                       <Sparkles size={11} />
                       <span>Open Source System</span>
                     </span>
                   ) : (
-                    <span className="text-[10px] sm:text-[11px] font-mono font-medium text-slate-600 dark:text-slate-300 flex items-center space-x-1">
+                    <span className="text-[10px] sm:text-[11px] font-mono font-medium text-zinc-600 dark:text-zinc-300 flex items-center space-x-1">
                       <Lock size={10} />
                       <span>Enterprise Platform</span>
                     </span>
@@ -140,10 +140,10 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => sound.playClick()}
-                  className={`p-1.5 sm:p-2 px-2.5 sm:px-3 rounded-lg border text-xs font-mono flex items-center space-x-1.5 transition-all shadow-xs font-semibold ${
+                  className={`p-1.5 sm:p-2 px-2.5 sm:px-3 rounded-lg border text-xs font-mono flex items-center space-x-1.5 transition-all shadow-xs font-bold ${
                     isDarkMode
-                      ? 'bg-indigo-600 hover:bg-indigo-500 text-white border-indigo-400'
-                      : 'bg-slate-900 hover:bg-slate-800 text-white border-slate-900'
+                      ? 'bg-amber-500 hover:bg-amber-400 text-black border-amber-400'
+                      : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-900'
                   }`}
                   title="View GitHub Repository"
                 >
@@ -156,8 +156,8 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                 onClick={() => { sound.playClick(); onClose(); }}
                 className={`p-1.5 sm:p-2 rounded-xl border transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center ${
                   isDarkMode 
-                    ? 'border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white' 
-                    : 'border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900'
+                    ? 'border-zinc-800 hover:bg-[#16161b] text-zinc-300 hover:text-white' 
+                    : 'border-zinc-200 hover:bg-zinc-100 text-zinc-600 hover:text-zinc-900'
                 }`}
                 title="Close (Esc)"
                 aria-label="Close dialog"
@@ -169,7 +169,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
 
           {/* Sub Navigation Tabs */}
           <div className={`px-4 sm:px-6 pt-2 sm:pt-3 flex space-x-4 sm:space-x-6 border-b text-xs font-mono shrink-0 overflow-x-auto no-scrollbar ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/40' : 'border-slate-100 bg-slate-50/30'
+            isDarkMode ? 'border-zinc-800 bg-[#08080a]' : 'border-zinc-100 bg-zinc-50/30'
           }`}>
             {[
               { id: 'architecture', label: 'Architecture & Flow', icon: <Workflow size={13} /> },
@@ -182,8 +182,8 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                 onClick={() => { sound.playClick(); setActiveTab(tab.id); }}
                 className={`flex items-center space-x-1.5 pb-2 sm:pb-2.5 border-b-2 transition-all cursor-pointer font-semibold whitespace-nowrap shrink-0 text-xs ${
                   activeTab === tab.id
-                    ? isDarkMode ? 'border-indigo-400 text-indigo-300' : 'border-indigo-600 text-indigo-700'
-                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? isDarkMode ? 'border-amber-400 text-amber-300 font-bold' : 'border-amber-600 text-amber-700 font-bold'
+                    : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                 }`}
               >
                 <span>{tab.icon}</span>
@@ -198,10 +198,10 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
             {project.problem && (
               <div className={`p-3.5 sm:p-4 rounded-xl border leading-relaxed text-xs md:text-sm font-sans ${
                 isDarkMode 
-                  ? 'bg-slate-950/80 border-slate-700/80 text-slate-200 font-medium' 
-                  : 'bg-indigo-50/70 border-indigo-100 text-slate-800 font-medium'
+                  ? 'bg-[#08080a] border-zinc-800 text-zinc-200 font-medium' 
+                  : 'bg-amber-50/60 border-amber-200/60 text-zinc-800 font-medium'
               }`}>
-                <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1 text-indigo-600 dark:text-indigo-400">
+                <span className="font-bold uppercase tracking-wider text-[10px] font-mono block mb-1 text-amber-600 dark:text-amber-400">
                   Engineering Challenge / Problem Statement:
                 </span>
                 {project.problem}
@@ -223,15 +223,15 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                         key={i}
                         className={`p-3 sm:p-3.5 rounded-xl border transition-all ${
                           isDarkMode
-                            ? 'bg-slate-950/80 border-slate-700/80 hover:border-indigo-400/80 text-slate-200'
-                            : 'bg-slate-50 border-slate-200 shadow-2xs hover:border-indigo-300 text-slate-800'
+                            ? 'bg-[#08080a] border-zinc-800 hover:border-amber-400/80 text-zinc-200'
+                            : 'bg-zinc-50 border-zinc-200 shadow-2xs hover:border-amber-400 text-zinc-800'
                         }`}
                       >
-                        <div className="flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-mono font-bold text-xs mb-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
+                        <div className="flex items-center space-x-2 text-amber-600 dark:text-amber-400 font-mono font-bold text-xs mb-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
                           <span>{node.step}</span>
                         </div>
-                        <p className="text-xs font-sans leading-relaxed text-slate-700 dark:text-slate-200">{node.detail}</p>
+                        <p className="text-xs font-sans leading-relaxed text-zinc-700 dark:text-zinc-200">{node.detail}</p>
                       </div>
                     ))}
                   </div>
@@ -242,7 +242,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
             {/* TAB 2: HIGHLIGHTS */}
             {activeTab === 'highlights' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
+                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
                   <CheckCircle2 size={13} />
                   <span>Technical Accomplishments:</span>
                 </h4>
@@ -253,11 +253,11 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                       <div
                         key={i}
                         className={`flex items-start space-x-2.5 sm:space-x-3 p-2.5 sm:p-3 rounded-xl border ${
-                          isDarkMode ? 'bg-slate-950/70 border-slate-700/80 text-slate-100 font-medium' : 'bg-slate-50 border-slate-200 shadow-2xs text-slate-800 font-medium'
+                          isDarkMode ? 'bg-[#08080a] border-zinc-800 text-zinc-100 font-medium' : 'bg-zinc-50 border-zinc-200 shadow-2xs text-zinc-800 font-medium'
                         }`}
                       >
                         <ShieldCheck size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="text-xs md:text-sm font-sans leading-relaxed text-slate-800 dark:text-slate-100">{item}</span>
+                        <span className="text-xs md:text-sm font-sans leading-relaxed text-zinc-800 dark:text-zinc-100">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -268,7 +268,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
             {/* TAB 3: METRICS */}
             {activeTab === 'metrics' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3 sm:space-y-4">
-                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
+                <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
                   <Activity size={13} />
                   <span>Telemetry & Measurable Outcomes:</span>
                 </h4>
@@ -280,14 +280,14 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                         key={i}
                         className={`p-3 sm:p-4 rounded-xl border text-center flex flex-col justify-center ${
                           isDarkMode
-                            ? 'bg-slate-950/80 border-slate-700/80 shadow-md'
-                            : 'bg-indigo-50/60 border-indigo-100 shadow-2xs'
+                            ? 'bg-[#08080a] border-zinc-800 shadow-md'
+                            : 'bg-amber-50/60 border-amber-100 shadow-2xs'
                         }`}
                       >
-                        <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300 block mb-1">
+                        <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold text-zinc-600 dark:text-zinc-300 block mb-1">
                           {metric.label}
                         </span>
-                        <span className="font-mono font-bold text-xs sm:text-sm md:text-base text-indigo-600 dark:text-indigo-400">
+                        <span className="font-mono font-bold text-xs sm:text-sm md:text-base text-amber-600 dark:text-amber-400">
                           {metric.val}
                         </span>
                       </div>
@@ -302,11 +302,11 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
-                      <Terminal size={13} className="text-indigo-400" />
+                    <h4 className="font-mono text-xs uppercase tracking-wider font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                      <Terminal size={13} className="text-amber-400" />
                       <span>Live Multi-Step Agent Execution Simulator:</span>
                     </h4>
-                    <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                    <p className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
                       Trace pipeline dispatch, context retrieval, and token synthesis
                     </p>
                   </div>
@@ -314,7 +314,7 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                   <button
                     onClick={runSimulation}
                     disabled={isTracing}
-                    className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-semibold shadow-md active:scale-95 disabled:opacity-50 cursor-pointer"
+                    className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-mono text-xs font-bold shadow-md active:scale-95 disabled:opacity-50 cursor-pointer"
                   >
                     <Play size={12} className={isTracing ? 'animate-spin' : ''} />
                     <span>{isTracing ? 'Tracing...' : 'Run Live Trace'}</span>
@@ -333,15 +333,15 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                       key={idx}
                       className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
                         traceStep >= idx
-                          ? isDarkMode ? 'bg-slate-950/90 border-emerald-500/40 text-slate-200' : 'bg-emerald-50/50 border-emerald-300 text-slate-900'
-                          : 'opacity-40 border-slate-800 bg-slate-950/20'
+                          ? isDarkMode ? 'bg-[#08080a] border-emerald-500/40 text-zinc-200' : 'bg-emerald-50/50 border-emerald-300 text-zinc-900'
+                          : 'opacity-40 border-zinc-800 bg-[#08080a]/20'
                       }`}
                     >
                       <div className="flex items-center space-x-2.5">
-                        <span className={`w-2 h-2 rounded-full ${traceStep >= idx ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}`} />
+                        <span className={`w-2 h-2 rounded-full ${traceStep >= idx ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-600'}`} />
                         <div>
                           <span className="font-bold block">{s.step}</span>
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-sans">{s.detail}</span>
+                          <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-sans">{s.detail}</span>
                         </div>
                       </div>
                       <span className="text-emerald-500 dark:text-emerald-400 font-bold shrink-0">{s.latency}</span>
@@ -350,18 +350,18 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
                 </div>
 
                 {/* Raw Telemetry JSON Box */}
-                <div className="p-3 rounded-xl border border-slate-800 bg-slate-950/90 font-mono text-[11px] text-slate-300 relative group/trace">
-                  <div className="flex items-center justify-between text-[10px] text-slate-500 mb-1 border-b border-slate-800/80 pb-1">
+                <div className="p-3 rounded-xl border border-zinc-800 bg-[#08080a] font-mono text-[11px] text-zinc-300 relative group/trace">
+                  <div className="flex items-center justify-between text-[10px] text-zinc-500 mb-1 border-b border-zinc-800/80 pb-1">
                     <span>telemetry_trace.json</span>
                     <button
                       onClick={handleCopyTrace}
-                      className="flex items-center space-x-1 text-indigo-400 hover:text-indigo-300 cursor-pointer"
+                      className="flex items-center space-x-1 text-amber-400 hover:text-amber-300 cursor-pointer"
                     >
                       {copiedTrace ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
                       <span>{copiedTrace ? 'Copied' : 'Copy Trace'}</span>
                     </button>
                   </div>
-                  <pre className="overflow-x-auto text-[10px] text-indigo-300">
+                  <pre className="overflow-x-auto text-[10px] text-amber-300">
 {`{
   "project": "${project.title}",
   "trace_id": "tr_0x8f4c2e",
@@ -377,17 +377,17 @@ const ProjectModal = ({ project, isOpen, onClose, isDarkMode }) => {
 
           {/* Footer Bar with Tech Tags */}
           <div className={`px-4 sm:px-6 py-3 sm:py-4 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shrink-0 ${
-            isDarkMode ? 'border-slate-800 bg-slate-950/80' : 'border-slate-100 bg-slate-50/50'
+            isDarkMode ? 'border-zinc-800 bg-[#08080a]' : 'border-zinc-100 bg-zinc-50/50'
           }`}>
             <div className="flex flex-wrap gap-1 sm:gap-1.5 items-center">
-              <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase mr-1">Stack:</span>
+              <span className="text-[10px] font-mono font-bold text-zinc-500 dark:text-zinc-400 uppercase mr-1">Stack:</span>
               {project.tags.map((tag, i) => (
                 <span
                   key={i}
                   className={`text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-md border ${
                     isDarkMode
-                      ? 'bg-slate-800 border-slate-700 text-indigo-300 font-medium'
-                      : 'bg-indigo-50 border-indigo-100 text-indigo-700 font-medium'
+                      ? 'bg-[#16161b] border-zinc-800 text-amber-300/90 font-medium'
+                      : 'bg-amber-50 border-amber-200/80 text-amber-800 font-medium'
                   }`}
                 >
                   {tag}

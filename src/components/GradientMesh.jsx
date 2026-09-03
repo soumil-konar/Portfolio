@@ -67,18 +67,18 @@ const GradientMesh = ({ isDarkMode }) => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Deep Dark Mode Blobs (Obsidian + Bioluminescent Indigo/Blue)
+    // Deep Dark Mode Blobs (Luxury Obsidian + Solar Amber & Deep Titanium)
     const darkBlobs = [
-      { x: 0.25, y: 0.3, radius: 0.5, speedX: 0.00015, speedY: 0.00012, color: '#1e1b4b' },
-      { x: 0.75, y: 0.65, radius: 0.55, speedX: -0.00014, speedY: 0.00016, color: '#172554' },
-      { x: 0.5, y: 0.85, radius: 0.45, speedX: 0.00012, speedY: -0.00012, color: '#1e293b' },
+      { x: 0.25, y: 0.3, radius: 0.5, speedX: 0.00015, speedY: 0.00012, color: '#3d1c02' }, // Warm Solar Amber
+      { x: 0.75, y: 0.65, radius: 0.55, speedX: -0.00014, speedY: 0.00016, color: '#18181b' }, // Deep Titanium Carbon
+      { x: 0.5, y: 0.85, radius: 0.45, speedX: 0.00012, speedY: -0.00012, color: '#064e3b' }, // Subtle Signal Emerald
     ];
 
-    // Elegant, Luminous Light Mode Blobs (Soft Alabaster, Warm Pearl, Silky Indigo/Lavender Mist)
+    // Elegant, Luminous Light Mode Blobs (Soft Alabaster, Warm Pearl, Silky Amber Mist)
     const lightBlobs = [
-      { x: 0.2, y: 0.2, radius: 0.55, speedX: 0.0001, speedY: 0.00008, color: '#e0e7ff' }, // Soft Indigo Mist
-      { x: 0.8, y: 0.6, radius: 0.6, speedX: -0.00008, speedY: 0.0001, color: '#f3e8ff' },  // Soft Lavender Aura
-      { x: 0.5, y: 0.85, radius: 0.5, speedX: 0.00008, speedY: -0.00008, color: '#e0f2fe' }, // Soft Cyan Mist
+      { x: 0.2, y: 0.2, radius: 0.55, speedX: 0.0001, speedY: 0.00008, color: '#fef3c7' }, // Soft Amber Mist
+      { x: 0.8, y: 0.6, radius: 0.6, speedX: -0.00008, speedY: 0.0001, color: '#f3f4f6' },  // Soft Platinum
+      { x: 0.5, y: 0.85, radius: 0.5, speedX: 0.00008, speedY: -0.00008, color: '#ecfdf5' }, // Soft Mint Mist
     ];
 
     const animate = () => {
@@ -91,8 +91,8 @@ const GradientMesh = ({ isDarkMode }) => {
         return;
       }
 
-      // Base Background Fill (Deep Obsidian in Dark, Warm Porcelain in Light)
-      ctx.fillStyle = isDarkMode ? '#07090e' : '#fcfcfd';
+      // Base Background Fill (Deep Matte Obsidian in Dark, Warm Porcelain in Light)
+      ctx.fillStyle = isDarkMode ? '#08080a' : '#fcfcfd';
       ctx.fillRect(0, 0, w, h);
 
       // 1. Ambient Volumetric Glow Blobs
@@ -111,11 +111,11 @@ const GradientMesh = ({ isDarkMode }) => {
         ctx.fillRect(0, 0, w, h);
       });
 
-      // 2. Neural Embedding Synaptic Graph (Render ONLY in Dark Mode to keep Light Mode clean & pristine)
+      // 2. Neural Embedding Synaptic Graph (Golden Amber Synaptic Grid in Dark Mode)
       if (isDarkMode) {
         const maxDist = 120;
-        const nodeColor = 'rgba(129, 140, 248,';
-        const lineColor = 'rgba(99, 102, 241,';
+        const nodeColor = 'rgba(251, 191, 36,';
+        const lineColor = 'rgba(217, 119, 6,';
 
         for (let i = 0; i < nodes.length; i++) {
           const n = nodes[i];

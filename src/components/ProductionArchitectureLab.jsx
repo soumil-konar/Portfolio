@@ -204,13 +204,13 @@ const ProductionArchitectureLab = ({ isDarkMode, onSelectProject }) => {
             onClick={() => handleBenchmarkSelect(b)}
             className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all whitespace-nowrap cursor-pointer shrink-0 ${
               selectedBenchmark.id === b.id
-                ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm font-semibold'
+                ? isDarkMode ? 'bg-amber-500 text-black border-amber-400 shadow-sm font-bold' : 'bg-amber-600 text-white border-amber-600 shadow-sm font-bold'
                 : isDarkMode
-                  ? 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-                  : 'bg-white border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 shadow-2xs font-medium'
+                  ? 'bg-[#101014]/90 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-[#16161b]'
+                  : 'bg-white border-zinc-200 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-50 shadow-2xs font-medium'
             }`}
           >
-            <span className={selectedBenchmark.id === b.id ? 'text-white' : 'text-indigo-500 dark:text-indigo-400'}>
+            <span className={selectedBenchmark.id === b.id ? (isDarkMode ? 'text-black' : 'text-white') : 'text-amber-500 dark:text-amber-400'}>
               {b.icon}
             </span>
             <span className="hidden sm:inline">{b.title}</span>
@@ -221,11 +221,11 @@ const ProductionArchitectureLab = ({ isDarkMode, onSelectProject }) => {
 
       {/* THE BENCHMARK CARD */}
       <div className={`rounded-2xl border backdrop-blur-xl p-4 sm:p-6 transition-all duration-300 relative overflow-hidden shadow-md ${
-        isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+        isDarkMode ? 'bg-[#101014]/95 border-zinc-800' : 'bg-white border-zinc-200 shadow-sm'
       }`}>
         
         {/* Top Ribbon: Mode Switcher & Domain */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-zinc-200 dark:border-zinc-800">
           <div>
             <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-slate-600 dark:text-slate-300 block">
               Test Case Domain
@@ -420,8 +420,8 @@ const ProductionArchitectureLab = ({ isDarkMode, onSelectProject }) => {
               }}
               className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-colors cursor-pointer ${
                 isDarkMode 
-                  ? 'bg-slate-800/80 border-slate-700 text-slate-300 hover:text-white' 
-                  : 'bg-slate-100 border-slate-200 text-slate-700 hover:text-slate-900'
+                  ? 'bg-[#16161b] border-zinc-800 text-zinc-300 hover:text-white' 
+                  : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-zinc-900'
               }`}
             >
               <span>{showCode ? 'Hide Implementation' : 'View Code Implementation'}</span>
@@ -437,8 +437,8 @@ const ProductionArchitectureLab = ({ isDarkMode, onSelectProject }) => {
                 }}
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-colors cursor-pointer ${
                   isDarkMode
-                    ? 'bg-indigo-950/40 border-indigo-800/50 text-indigo-300 hover:bg-indigo-900/50 hover:text-white'
-                    : 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100 hover:text-indigo-900 shadow-2xs'
+                    ? 'bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25 hover:text-white'
+                    : 'bg-amber-50 border-amber-200 text-amber-800 hover:bg-amber-100 shadow-2xs'
                 }`}
               >
                 <span>Deep Dive Architecture</span>

@@ -106,11 +106,11 @@ const Header = ({ theme, isDarkMode }) => {
         </div>
 
         <div className={`hidden sm:flex items-center space-x-1.5 px-3 py-1 rounded-full border backdrop-blur-md ${
-          isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-700 shadow-2xs font-semibold'
+          isDarkMode ? 'bg-[#101014]/90 border-zinc-800 text-zinc-400' : 'bg-white border-zinc-200 text-zinc-700 shadow-2xs font-semibold'
         }`}>
           <span>Mumbai, IN</span>
           <span>•</span>
-          <span className="font-semibold text-indigo-600 dark:text-indigo-400">{currentTime || '23:45'} IST</span>
+          <span className="font-semibold text-amber-600 dark:text-amber-400">{currentTime || '23:45'} IST</span>
         </div>
 
         {/* Audio Mute/Unmute Toggle */}
@@ -119,16 +119,16 @@ const Header = ({ theme, isDarkMode }) => {
           title={isAudioMuted ? "Enable Audio FX" : "Mute Audio FX"}
           className={`flex items-center space-x-1 px-2.5 py-1 rounded-full border text-[10px] transition-all cursor-pointer ${
             isDarkMode 
-              ? 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white' 
-              : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 shadow-2xs font-semibold'
+              ? 'bg-[#101014]/90 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white' 
+              : 'bg-white border-zinc-200 hover:border-zinc-300 text-zinc-700 hover:text-zinc-900 shadow-2xs font-semibold'
           }`}
         >
-          {isAudioMuted ? <VolumeX size={12} className="text-slate-500" /> : <Volume2 size={12} className="text-indigo-600 dark:text-indigo-400 animate-pulse" />}
+          {isAudioMuted ? <VolumeX size={12} className="text-zinc-500" /> : <Volume2 size={12} className="text-amber-500 dark:text-amber-400 animate-pulse" />}
           <span className="hidden md:inline">{isAudioMuted ? "Sound Off" : "Sound On"}</span>
         </button>
       </div>
 
-      {/* Modern 3D Tech Avatar with Spinning Iridescent Halo */}
+      {/* Modern 3D Tech Avatar with Precision Amber Aperture Ring */}
       <div 
         className="relative group/avatar cursor-pointer"
         onClick={() => {
@@ -139,9 +139,9 @@ const Header = ({ theme, isDarkMode }) => {
       >
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full p-[3px]">
           {/* Glowing Animated Gradient Ring */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-emerald-400 animate-spin-slow opacity-80 blur-[2px] group-hover/avatar:opacity-100 group-hover/avatar:blur-[4px] transition-all duration-500" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-400 via-orange-500 to-yellow-300 animate-spin-slow opacity-85 blur-[2px] group-hover/avatar:opacity-100 group-hover/avatar:blur-[4px] transition-all duration-500" />
           
-          <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-950 border-2 border-white/40 dark:border-slate-900 shadow-xl">
+          <div className="relative w-full h-full rounded-full overflow-hidden bg-[#08080a] border-2 border-white/40 dark:border-zinc-800 shadow-xl">
             <img 
               src="/avatar.jpg" 
               alt="Soumil Konar - Generative AI Engineer" 
@@ -152,10 +152,10 @@ const Header = ({ theme, isDarkMode }) => {
 
         {/* Bottom Micro Badge */}
         <div 
-          className="absolute -bottom-1 -right-1 sm:bottom-0.5 sm:right-0.5 flex items-center justify-center p-1 rounded-full backdrop-blur-md bg-slate-950/80 border border-white/20 shadow-lg"
+          className="absolute -bottom-1 -right-1 sm:bottom-0.5 sm:right-0.5 flex items-center justify-center p-1 rounded-full backdrop-blur-md bg-[#08080a]/90 border border-zinc-700 shadow-lg"
           title="Autonomous Agent Core: Online"
         >
-          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 animate-pulse" />
+          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 animate-pulse" />
         </div>
       </div>
 
@@ -164,11 +164,11 @@ const Header = ({ theme, isDarkMode }) => {
         <h1 
           className={`text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight transition-all duration-300 ${
             isScrambling 
-              ? 'text-emerald-400 font-mono' 
-              : 'font-sans text-slate-900 dark:text-white'
+              ? 'text-amber-400 font-mono' 
+              : 'font-sans text-zinc-900 dark:text-white'
           }`}
           style={isScrambling ? {
-            textShadow: '0 0 12px rgba(52, 211, 153, 0.8), 0 0 24px rgba(52, 211, 153, 0.3)',
+            textShadow: '0 0 12px rgba(251, 191, 36, 0.8), 0 0 24px rgba(245, 158, 11, 0.3)',
             letterSpacing: '0.04em'
           } : {}}
         >
@@ -176,22 +176,22 @@ const Header = ({ theme, isDarkMode }) => {
         </h1>
         
         <div className="flex items-center justify-center gap-2 mt-1.5 flex-wrap">
-          <span className="text-xs sm:text-sm md:text-base font-mono font-bold text-indigo-600 dark:text-indigo-400">
+          <span className="text-xs sm:text-sm md:text-base font-mono font-bold text-amber-600 dark:text-amber-400">
             {'<'}Generative AI Systems Engineer & LLM Architect/{'>'}
           </span>
         </div>
 
         {/* Engineering Credential Pills */}
         <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-2 font-mono text-[10px] sm:text-[11px]">
-          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#101014]/90 text-zinc-700 dark:text-zinc-300 shadow-2xs font-semibold">
             <span className="hidden sm:inline">LangGraph Multi-Agent Workflows</span>
             <span className="sm:hidden">LangGraph Agents</span>
           </span>
-          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#101014]/90 text-zinc-700 dark:text-zinc-300 shadow-2xs font-semibold">
             <span className="hidden sm:inline">Dual MCP Server Author</span>
             <span className="sm:hidden">MCP Author</span>
           </span>
-          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 shadow-2xs font-semibold">
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#101014]/90 text-zinc-700 dark:text-zinc-300 shadow-2xs font-semibold">
             <span className="hidden sm:inline">Enterprise RAG Microservices</span>
             <span className="sm:hidden">Enterprise RAG</span>
           </span>
@@ -210,12 +210,12 @@ const Header = ({ theme, isDarkMode }) => {
           }}
           className={`flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-mono font-bold border transition-all duration-200 shadow-md hover:scale-105 active:scale-95 group cursor-pointer ${
             isDarkMode 
-              ? 'bg-indigo-600/30 border-indigo-400/80 hover:bg-indigo-600 text-white shadow-indigo-500/20' 
-              : 'bg-indigo-600 hover:bg-indigo-700 border-indigo-600 text-white shadow-md shadow-indigo-600/20'
+              ? 'bg-amber-500 hover:bg-amber-400 border-amber-400 text-black shadow-amber-500/20 font-extrabold' 
+              : 'bg-amber-600 hover:bg-amber-700 border-amber-600 text-white shadow-md shadow-amber-600/20 font-bold'
           }`}
           title="Download Full Resume PDF"
         >
-          <FileText size={13} className="text-indigo-200 dark:text-indigo-300 group-hover:text-white transition-colors" />
+          <FileText size={13} className={isDarkMode ? "text-black" : "text-amber-100 group-hover:text-white"} />
           <span>Resume (PDF)</span>
           <Download size={12} className="opacity-80 group-hover:translate-y-0.5 transition-transform" />
         </a>
@@ -225,8 +225,8 @@ const Header = ({ theme, isDarkMode }) => {
           onClick={handleCopyEmail}
           className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-full text-xs font-mono font-semibold border transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer ${
             isDarkMode 
-              ? 'bg-slate-900/80 border-slate-700/80 hover:border-slate-600 text-slate-200 hover:text-white shadow-md' 
-              : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 hover:bg-slate-50 shadow-2xs'
+              ? 'bg-[#101014]/90 border-zinc-800 hover:border-amber-400 text-zinc-200 hover:text-white shadow-md' 
+              : 'bg-white border-zinc-200 hover:border-amber-500 text-zinc-800 hover:bg-zinc-50 shadow-2xs'
           }`}
           title="Copy Email Address"
         >
@@ -237,23 +237,23 @@ const Header = ({ theme, isDarkMode }) => {
             </>
           ) : (
             <>
-              <Copy size={13} className="text-slate-500 dark:text-slate-400" />
+              <Copy size={13} className="text-zinc-500 dark:text-zinc-400" />
               <span>Copy Email</span>
             </>
           )}
         </button>
 
         {/* Social Icons with accessible touch targets */}
-        <div className="flex space-x-1 sm:space-x-1.5 text-slate-700 dark:text-slate-300 items-center">
+        <div className="flex space-x-1 sm:space-x-1.5 text-zinc-700 dark:text-zinc-300 items-center">
           <a 
             href={SOCIAL_LINKS.github} 
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="GitHub Profile"
             onClick={() => sound.playClick()}
-            className="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
+            className="p-2 rounded-lg hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
-            <Github className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-indigo-600 dark:hover:text-indigo-400" />
+            <Github className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-amber-600 dark:hover:text-amber-400" />
           </a>
 
           <a 
@@ -262,18 +262,20 @@ const Header = ({ theme, isDarkMode }) => {
             rel="noopener noreferrer" 
             aria-label="LinkedIn Profile"
             onClick={() => sound.playClick()}
-            className="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
+            className="p-2 rounded-lg hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
-            <Linkedin className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2] dark:hover:text-[#38bdf8]" />
+            <Linkedin className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-amber-600 dark:hover:text-amber-400" />
           </a>
 
           <a 
-            href={SOCIAL_LINKS.email} 
-            aria-label="Send Email"
+            href={SOCIAL_LINKS.twitter} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="Twitter Profile"
             onClick={() => sound.playClick()}
-            className="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
+            className="p-2 rounded-lg hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center min-w-[38px] min-h-[38px]"
           >
-            <Mail className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-red-500 dark:hover:text-red-400" />
+            <Twitter className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-amber-600 dark:hover:text-amber-400" />
           </a>
         </div>
       </div>

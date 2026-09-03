@@ -30,7 +30,7 @@ const ThemeToggle = ({ isDarkMode, toggleTheme }) => {
         <div className="w-0.5 h-12 sm:h-16 md:h-24 border-l-2 border-dotted border-gray-400 shadow-sm group-hover:border-gray-500 transition-colors"></div>
         <div className="w-1 h-2 bg-gradient-to-b from-gray-300 to-gray-500 rounded-sm"></div>
         <div className="p-1 -m-1 flex items-center justify-center">
-          <div className={`w-6 h-6 rounded-full shadow-lg border border-black/10 relative overflow-hidden transition-all duration-500 ${isDarkMode ? 'bg-gradient-to-br from-slate-600 via-slate-800 to-black ring-2 ring-slate-500' : 'bg-gradient-to-br from-amber-200 via-yellow-500 to-amber-700 ring-2 ring-yellow-600/50'}`}>
+          <div className={`w-6 h-6 rounded-full shadow-lg border border-black/10 relative overflow-hidden transition-all duration-500 ${isDarkMode ? 'bg-gradient-to-br from-zinc-700 via-zinc-900 to-black ring-2 ring-amber-500/40 shadow-amber-500/20' : 'bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600 ring-2 ring-amber-500/50'}`}>
             <div className="absolute top-1 left-1.5 w-2 h-1.5 bg-white opacity-40 rounded-full blur-[1px]"></div>
             <div className="absolute bottom-1 right-1.5 w-2 h-2 bg-white opacity-10 rounded-full blur-[2px]"></div>
           </div>
