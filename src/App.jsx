@@ -7,7 +7,7 @@ import ThemeToggle from './components/ThemeToggle';
 import Header from './components/Header';
 import SkillsTicker from './components/SkillsTicker';
 import ProjectCarousel from './components/ProjectCarousel';
-import AgentPipelineVisualizer from './components/AgentPipelineVisualizer';
+import ProductionArchitectureLab from './components/ProductionArchitectureLab';
 import ChatInterface from './components/ChatInterface';
 import EasterEgg from './components/EasterEgg';
 import StatusFooter from './components/StatusFooter';
@@ -143,8 +143,8 @@ const App = () => {
           
           {/* Main Focused Content Section */}
           <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 md:px-8 flex flex-col flex-1">
-            {/* Live Agent & LangGraph Pipeline Visualizer */}
-            <AgentPipelineVisualizer theme={theme} isDarkMode={isDarkMode} />
+            {/* Interactive AI Production Architecture Lab */}
+            <ProductionArchitectureLab theme={theme} isDarkMode={isDarkMode} onSelectProject={setSelectedProject} />
             
             {/* Interactive AI Terminal */}
             <ChatInterface isDarkMode={isDarkMode} theme={theme} />
