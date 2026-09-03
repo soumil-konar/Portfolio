@@ -64,11 +64,11 @@ const Header = ({ theme, isDarkMode }) => {
   };
 
   return (
-    <header className="flex flex-col items-center justify-center space-y-3 md:space-y-4 mt-6 md:mt-10 shrink-0">
+    <header className="flex flex-col items-center justify-center space-y-3 sm:space-y-3.5 md:space-y-4 mt-4 sm:mt-6 md:mt-10 shrink-0 px-2">
       
       {/* Modern 3D Tech Avatar with Glowing Gradient Halo */}
       <div className="relative group/avatar cursor-pointer">
-        <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-[3px] bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-400 shadow-2xl shadow-indigo-500/20 group-hover/avatar:shadow-indigo-500/40 transition-all duration-500">
+        <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full p-[3px] bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-400 shadow-2xl shadow-indigo-500/20 group-hover/avatar:shadow-indigo-500/40 transition-all duration-500">
           <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-white/20">
             <img 
               src="/avatar.jpg" 
@@ -80,17 +80,17 @@ const Header = ({ theme, isDarkMode }) => {
 
         {/* Live Active Status Indicator */}
         <div 
-          className="absolute bottom-1 right-1.5 flex items-center justify-center" 
+          className="absolute bottom-0.5 right-1 sm:bottom-1 sm:right-1.5 flex items-center justify-center" 
           title="Available for AI Systems Engineering"
         >
-          <span className="w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 shadow-md ring-4 ring-emerald-500/20 animate-pulse" />
+          <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 shadow-md ring-4 ring-emerald-500/20 animate-pulse" />
         </div>
       </div>
 
-      <div className="text-center">
+      <div className="text-center max-w-sm sm:max-w-md md:max-w-xl mx-auto px-2">
         {/* --- HACKER NAME WITH DECRYPTION EFFECT --- */}
         <h1 
-          className={`text-2xl md:text-4xl font-bold tracking-tight transition-all duration-300 ${
+          className={`text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight transition-all duration-300 ${
             isScrambling 
               ? 'text-emerald-400 font-mono' 
               : 'font-sans text-slate-900 dark:text-white'
@@ -103,17 +103,17 @@ const Header = ({ theme, isDarkMode }) => {
           {displayText}
         </h1>
         
-        <p className={`text-xs md:text-sm font-mono font-bold ${theme.accent}`}>{'<'}Generative AI Engineer /{'>'}</p>
-        <p className="text-[10px] md:text-[11px] mt-1 tracking-wider uppercase font-semibold text-slate-600 dark:text-slate-300">LLMs, RAG & Agentic Systems</p>
+        <p className={`text-xs sm:text-sm font-mono font-bold mt-1 ${theme.accent}`}>{'<'}Generative AI Engineer /{'>'}</p>
+        <p className="text-[10px] sm:text-[11px] mt-1 tracking-wider uppercase font-semibold text-slate-600 dark:text-slate-300">LLMs, RAG & Agentic Systems</p>
       </div>
 
       {/* Hero CTA & Social Connect Bar */}
-      <div className="flex flex-wrap items-center justify-center gap-3 pt-1.5">
+      <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-1">
         {/* Direct Resume Download Button */}
         <a 
           href="/resume.pdf" 
           download="Soumil_Resume.pdf"
-          className={`flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold border transition-all duration-200 shadow-md hover:scale-105 active:scale-95 group ${
+          className={`flex items-center space-x-2 px-3.5 sm:px-4 py-2 sm:py-1.5 rounded-full text-xs font-mono font-bold border transition-all duration-200 shadow-md hover:scale-105 active:scale-95 group ${
             isDarkMode 
               ? 'bg-indigo-600/30 border-indigo-400/80 hover:bg-indigo-600 text-white shadow-indigo-500/20' 
               : 'bg-indigo-50 border-indigo-300 hover:bg-indigo-600 hover:text-white text-indigo-700 shadow-sm'
@@ -125,14 +125,14 @@ const Header = ({ theme, isDarkMode }) => {
           <Download size={12} className="opacity-80 group-hover:translate-y-0.5 transition-transform" />
         </a>
 
-        {/* Social Icons */}
-        <div className="flex space-x-4 pl-2 text-slate-600 dark:text-slate-300 items-center">
+        {/* Social Icons with accessible touch padding */}
+        <div className="flex space-x-1 sm:space-x-2 text-slate-600 dark:text-slate-300 items-center">
           <a 
             href={SOCIAL_LINKS.github} 
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="GitHub Profile"
-            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[36px] min-h-[36px]"
           >
             <Github className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-indigo-600 dark:hover:text-indigo-400" />
           </a>
@@ -142,15 +142,15 @@ const Header = ({ theme, isDarkMode }) => {
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="LinkedIn Profile"
-            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[36px] min-h-[36px]"
           >
             <Linkedin className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-[#0A66C2] dark:hover:text-[#38bdf8]" />
           </a>
 
           <a 
-            href={SOCIAL_LINKS.email}
+            href={SOCIAL_LINKS.email} 
             aria-label="Send Email"
-            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center min-w-[36px] min-h-[36px]"
           >
             <Mail className="w-4 h-4 cursor-pointer hover:scale-110 transition-transform hover:text-red-500 dark:hover:text-red-400" />
           </a>

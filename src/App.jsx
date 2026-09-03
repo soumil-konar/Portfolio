@@ -114,14 +114,14 @@ const App = () => {
           toggleTheme={handleThemeToggle} 
         />
 
-        <div className="w-full py-6 flex flex-col min-h-dvh">
+        <div className="w-full py-3 sm:py-6 flex flex-col min-h-dvh">
           {/* Centered Hero Header */}
-          <div className="w-full max-w-4xl mx-auto px-4 md:px-6">
+          <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 md:px-8">
             <Header theme={theme} isDarkMode={isDarkMode} />
           </div>
           
           {/* Expanded Full-Width Marquee Skills Ticker */}
-          <div className="w-full max-w-[1440px] mx-auto px-2 md:px-6 my-2">
+          <div className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 md:px-6 my-1 sm:my-2">
             <SkillsTicker 
               theme={theme} 
               isDarkMode={isDarkMode} 
@@ -130,7 +130,7 @@ const App = () => {
           </div>
 
           {/* Expanded Full-Width Project Carousel */}
-          <div className="w-full max-w-[1440px] mx-auto px-2 md:px-6 my-2">
+          <div className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 md:px-6 my-1 sm:my-2">
             <ProjectCarousel 
               theme={theme} 
               isDarkMode={isDarkMode} 
@@ -140,7 +140,7 @@ const App = () => {
           </div>
           
           {/* Main Focused Content Section */}
-          <div className="w-full max-w-5xl mx-auto px-4 md:px-6 flex flex-col flex-1">
+          <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 md:px-8 flex flex-col flex-1">
             {/* Live Agent & LangGraph Pipeline Visualizer */}
             <AgentPipelineVisualizer theme={theme} isDarkMode={isDarkMode} />
             
